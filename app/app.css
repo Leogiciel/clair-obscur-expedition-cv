@@ -1,15 +1,81 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Cinzel", serif, ui-serif, Georgia,
+  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-serif: "IM Fell Double Pica", serif, ui-serif, Georgia;
+  --font-display: "Bebas Neue", sans-serif, ui-sans-serif, system-ui;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace;
+
+  --font-primary: "Cinzel", serif;
+  --font-secondary: "IM Fell Double Pica", serif;
+  --font-number: "Bebas Neue", sans-serif;
+}
+
+:root {
+  --font-primary: "Cinzel", serif;
+  --font-secondary: "IM Fell Double Pica", serif;
+  --font-number: "Bebas Neue", sans-serif;
+  --font-label: "EB Garamond", "IM Fell Double Pica", serif;
+
+  /* Single source of the UI colors. */
+  --stage-bg: #070707;
+  --ui-bg: #070707;
+  --ui-panel: #11130f;
+  --ui-plate: #141412;
+  --ui-plate-end: #0d0d0c;
+  --ui-damask: 0.13;
+  --ui-select: #4a2a45;
+  --ui-select-end: #24161f;
+  --ui-text: #d9d4c4;
+  --ui-text-dim: #9e9a8e;
+  --ui-line: #a7a59a;
+  --ui-line-bright: #dcd8cc;
+  --ui-gold: #c8bb8d;
+  --ui-gold-name: #e2cf9f;
+  --ui-gold-select: #e6c9a0;
+  --el-green: #25ec60;
+  --el-red: #cc0c1c;
+  --el-cyan: #3fd9b0;
+  --key-x: #5f63d8;
 }
 
 html,
 body {
-  @apply bg-white dark:bg-gray-950;
+  background-color: #000;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
+  }
+}
+
+@layer components {
+  /* Very light film grain over the UI to break the digital look. */
+  .ui-grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .ui-grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0 0.5  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23g)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+    opacity: 0.35;
+  }
+}
+
+/* Mimics the slightly blurry capture where letters bleed into the background; text-shadow only
+   affects glyphs, so textures are untouched. Apply on a menu screen root. */
+@layer components {
+  .ui-film {
+    text-shadow:
+      0 0 0.8px color-mix(in srgb, currentColor 70%, transparent),
+      0 0 2px color-mix(in srgb, currentColor 22%, transparent),
+      0 1px 2px rgb(0 0 0 / 0.55);
+    -webkit-font-smoothing: antialiased;
   }
 }
