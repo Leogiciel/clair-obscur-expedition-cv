@@ -1,0 +1,31 @@
+// Texture 658×818; fixed slices: 100px top (bevelled corner, damask band), 70px left (vertical rule),
+// 120px right (corner + damask), 200px bottom (veil fade).
+@layer components {
+  .TextureListPanel {
+    position: relative;
+    flex: none;
+    min-width: 190px;
+    min-height: 300px;
+    color: var(--ui-text);
+  }
+
+  .TextureListPanel-tex {
+    position: absolute;
+    inset: 0;
+    border-image: url('/ui/tex/weapon-screen-panel.webp') 100 120 200 70 fill / 100px 120px 200px 70px stretch;
+    pointer-events: none;
+  }
+
+  // First row (selected TextureWeaponRows, 488px) starts here; a "normal" row (420px) sits 44px further right.
+  .TextureListPanel-list {
+    position: absolute;
+    top: 32px;
+    left: 100px;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}

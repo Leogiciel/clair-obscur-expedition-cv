@@ -1,0 +1,42 @@
+// Native size uses the texture as-is (no resampling); other sizes 9-slice a square texture and rotate
+// it -45° back into a diamond.
+@layer components {
+  .TextureEmpty {
+    position: relative;
+    flex: none;
+    display: grid;
+    place-items: center;
+    color: var(--ui-text);
+  }
+
+  .TextureEmpty-tex {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .TextureEmpty--native .TextureEmpty-tex {
+    inset: 0;
+    background: url('/ui/tex/empty-slot.webp') no-repeat 0 0 / 100% 100%;
+  }
+
+  .TextureEmpty--scaled .TextureEmpty-tex {
+    top: 50%;
+    left: 50%;
+    width: var(--side);
+    height: var(--side);
+    translate: -50% -50%;
+    rotate: -45deg;
+    border-image: url('/ui/tex/empty-square.webp') var(--slice) fill / var(--slice-px) stretch;
+  }
+
+  .TextureEmpty-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    height: 60%;
+    text-align: center;
+    font-family: var(--font-label);
+  }
+}

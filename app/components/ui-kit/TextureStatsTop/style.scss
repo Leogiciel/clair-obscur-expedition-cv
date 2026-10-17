@@ -1,0 +1,71 @@
+@layer components {
+  .TextureStatsTop {
+    position: relative;
+    min-width: 140px;
+    min-height: 80px;
+    color: var(--ui-text);
+  }
+
+  // The texture overflows the box: 18 px above (frays), 8 px left, 2 px right.
+  .TextureStatsTop-tex {
+    position: absolute;
+    inset: -18px -2px 0 -8px;
+    border-image: url('/ui/tex/stats-top-frame.webp') 72 84 0 48 / 72px 84px 0 48px stretch;
+    pointer-events: none;
+  }
+
+  // 580×840 texture aligned on the frame (20 px overflow top and left, as in the game), cut at the
+  // column's bottom. The veil keeps text readable over the video.
+  .TextureStatsTop-backdrop {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    right: -70px;
+    bottom: 0;
+    background:
+      url('/ui/tex/stats-backdrop.webp') 0 0 / 580px 840px no-repeat,
+      linear-gradient(rgb(8 8 7 / 0.45), rgb(8 8 7 / 0.45)) 20px 20px / calc(100% - 90px) 100% no-repeat;
+    pointer-events: none;
+  }
+
+  .TextureStatsTop-content {
+    position: absolute;
+    inset: 0;
+  }
+
+  .TextureStatsBar {
+    position: relative;
+    flex: none;
+    min-width: calc(var(--tex-left) + var(--tex-right) + 8px);
+  }
+
+  .TextureStatsBar-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  // 167×25 texture, 3-slice (left edge 3 px | stretched | right end 4 px).
+  .TextureStatsBar-fill {
+    position: absolute;
+    top: 2px;
+    left: var(--track-left);
+    height: 25px;
+    width: max(7px, calc((100% - var(--track-left) - var(--track-right)) * var(--ratio)));
+    border-image: url('/ui/tex/stats-top-bar-fill.webp') 0 4 0 3 fill / 0 4px 0 3px stretch;
+    pointer-events: none;
+  }
+
+  // Digits 2 px above the rail, aligned with the end of the right arrow.
+  .TextureStatsBar-value {
+    position: absolute;
+    right: 10px;
+    bottom: calc(100% - 3px);
+    font-family: var(--font-label);
+    font-size: 24px;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--ui-text);
+  }
+}

@@ -1,0 +1,72 @@
+// Measured on capture t11 (component box at x 118, y 816).
+@layer components {
+  .TextureMainWeapon {
+    position: relative;
+    flex: none;
+    color: var(--ui-text);
+  }
+
+  .TextureMainWeapon-tex {
+    position: absolute;
+    inset: 0;
+    border-image: url('/ui/tex/main-weapon.webp') 0 268 0 228 fill / 0 268px 0 228px stretch;
+    pointer-events: none;
+  }
+
+  .TextureMainWeapon-icon {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  // Centered 245 px from the left edge at native width ("Lanceram" x 297–429 on the capture), then
+  // follows half the widening. Caps 26 px (y 873–899), baseline at 83 px.
+  .TextureMainWeapon-name {
+    position: absolute;
+    top: 57px;
+    left: 150px;
+    right: 182px;
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    font-family: var(--font-label);
+    font-size: 38px;
+    line-height: 1;
+    height: 26px;
+    align-items: flex-end;
+  }
+
+  // "Level" column axis 89 px from the right edge (fixed part).
+  .TextureMainWeapon-level {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% - 89px);
+    width: 0;
+  }
+
+  // Caps 18 px (y 848–866), baseline at 50 px.
+  .TextureMainWeapon-levelLabel {
+    position: absolute;
+    bottom: calc(100% - 50px);
+    left: 0;
+    transform: translateX(-50%);
+    font-family: var(--font-label);
+    font-size: 27px;
+    line-height: 0.75;
+    white-space: nowrap;
+  }
+
+  // 42 px tall (y 878–920), baseline at 104 px.
+  .TextureMainWeapon-levelValue {
+    position: absolute;
+    bottom: calc(100% - 104px);
+    left: -1.5px;
+    transform: translateX(-50%);
+    font-family: var(--font-number);
+    font-size: 60px;
+    line-height: 0.7;
+    color: var(--ui-line-bright);
+  }
+}

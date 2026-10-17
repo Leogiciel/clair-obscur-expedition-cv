@@ -1,0 +1,23 @@
+// Texture 560×216; fixed slices: 40px top (rule + fraying), 62px left (painted blade + vertical
+// rule), 60px right, 40px bottom.
+@layer components {
+  .TextureCard {
+    position: relative;
+    min-width: 122px;
+    min-height: 80px;
+    color: var(--ui-text);
+  }
+
+  .TextureCard-tex {
+    position: absolute;
+    inset: 0;
+    border-image: url('/ui/tex/card-weapon.webp') 40 60 40 62 fill / 40px 60px 40px 62px stretch;
+    pointer-events: none;
+  }
+
+  // Below the top rule, right of the left vertical rule.
+  .TextureCard-content {
+    position: absolute;
+    inset: 24px 10px 12px 50px;
+  }
+}

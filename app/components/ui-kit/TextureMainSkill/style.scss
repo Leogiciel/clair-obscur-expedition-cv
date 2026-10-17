@@ -1,0 +1,101 @@
+// Measured on the 406×80 box: icon diamond centered at (38, 39.5), half-diagonal 33.5 (rule); plate
+// fill between y 11 and 67; name at x 88, baseline y 50; badge (42×43) at (364, 17), blue diamond
+// centered at (385, 39.5), right-anchored; gold dot centered at (352.5, 39).
+@layer components {
+  .TextureMainSkill {
+    position: relative;
+    flex: none;
+    height: 80px;
+    color: var(--ui-text);
+  }
+
+  .TextureMainSkill-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  // Diamond interior: half-diagonal 31, under the painted rule.
+  .TextureMainSkill-icon {
+    position: absolute;
+    left: 7px;
+    top: 8.5px;
+    width: 62px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+
+    > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  // Caps 25 px tall (y 26 → 50), ≈ 37 px font size in EB Garamond; stops before the dot and badge.
+  .TextureMainSkill-name {
+    position: absolute;
+    left: 88px;
+    right: 76px;
+    top: 39px;
+    font-family: var(--font-label);
+    font-size: 37px;
+    line-height: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #ece8dc;
+    transform: translateY(-50%);
+  }
+
+  // Empty row: 15 px dash at x 87, y 41.
+  .TextureMainSkill--empty .TextureMainSkill-name {
+    left: 87px;
+    top: 41px;
+    color: var(--ui-text-dim);
+  }
+
+  // Light added to the plate pixels (difference of two game rows).
+  .TextureMainSkill-dot {
+    position: absolute;
+    top: 20px;
+    right: 34px;
+    width: 38px;
+    height: 38px;
+    background: url('/ui/tex/main-skills-dot.webp') no-repeat;
+    mix-blend-mode: plus-lighter;
+    pointer-events: none;
+  }
+
+  .TextureMainSkill-badge {
+    position: absolute;
+    top: 17px;
+    right: 0;
+    width: 42px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    background: url('/ui/tex/main-skills-badge.webp') no-repeat;
+    pointer-events: none;
+
+    > span {
+      // Game digit: 16 px tall, centered at (21, 22) in the badge texture.
+      margin-top: 1px;
+      font-family: var(--font-label);
+      font-size: 22px;
+      font-weight: 600;
+      line-height: 1;
+      color: #f2f4ff;
+    }
+  }
+
+  .TextureMainSkillGrid {
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    column-gap: 7.5px;
+    row-gap: 2.5px;
+  }
+}

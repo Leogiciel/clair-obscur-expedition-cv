@@ -1,0 +1,70 @@
+@layer components {
+  .TextureTitleSort {
+    position: relative;
+    flex: none;
+    color: var(--ui-text);
+  }
+
+  .TextureTitleSort-rule,
+  .TextureSortSlab-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  // With line-height: 1 the box bottom sits 0.19 em of the initial below the baseline (Cinzel descender).
+  .TextureTitleSort-title {
+    position: absolute;
+    left: var(--title-left);
+    bottom: calc(100% - var(--title-baseline) - 0.19em * 1.42);
+    margin: 0;
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: 35px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--ui-gold-name);
+  }
+
+  .TextureTitleSort-initial {
+    font-size: 1.42em;
+  }
+
+  .TextureTitleSort-sort {
+    position: absolute;
+  }
+
+  .TextureTitleSort-aside {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+
+  .TextureSortSlab {
+    position: relative;
+    flex: none;
+  }
+
+  .TextureSortSlab-key {
+    position: absolute;
+    display: grid;
+    place-items: center;
+  }
+
+  .TextureSortSlab-label {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(-50%);
+    font-family: var(--font-label);
+    font-size: 32px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+}

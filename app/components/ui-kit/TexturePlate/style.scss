@@ -1,0 +1,43 @@
+// Only the middle slice stretches, along the brush strokes, which keeps the stretch invisible.
+@layer components {
+  .TexturePlate {
+    position: relative;
+    flex: none;
+    color: var(--ui-text);
+  }
+
+  .TexturePlate-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  .TexturePlate-slot {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+
+  .TexturePlate-content {
+    position: absolute;
+    top: var(--center);
+    left: calc(var(--tex-left) + 4px);
+    right: var(--tex-right);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateY(-50%);
+  }
+
+  .TexturePlate-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .TexturePlate--selected .TexturePlate-label {
+    color: var(--ui-gold-select);
+  }
+}

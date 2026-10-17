@@ -1,0 +1,20 @@
+@layer components {
+  .Damask {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--ui-line);
+    opacity: var(--ui-damask);
+    pointer-events: none;
+    // Grunge mask so the pattern never looks uniform.
+    mask-image: url('/ui/grunge.webp');
+    mask-size: 380px;
+
+    &--vignette {
+      mask-image: url('/ui/grunge.webp'), radial-gradient(ellipse at 50% 45%, #000 35%, transparent 80%);
+      mask-size: 380px, 100% 100%;
+      mask-composite: intersect;
+    }
+  }
+}

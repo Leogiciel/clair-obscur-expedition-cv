@@ -1,0 +1,46 @@
+@layer components {
+  .TitleRule {
+    position: relative;
+    padding-bottom: 10px;
+
+    .TitleRule-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.25rem;
+      padding-left: 52px;
+    }
+
+    .TitleRule-title {
+      font-family: var(--font-primary);
+      font-weight: 500;
+      font-size: 1.55rem;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--ui-gold-name);
+    }
+
+    .TitleRule-initial {
+      font-size: 1.4em;
+    }
+
+    &--name {
+      padding-bottom: 0;
+
+      .TitleRule-row {
+        justify-content: center;
+        padding-left: 0;
+      }
+
+      .TitleRule-title {
+        font-size: 2.6rem;
+        font-weight: 400;
+        letter-spacing: 0.03em;
+      }
+
+      .TitleRule-initial {
+        font-size: 1.32em;
+      }
+    }
+  }
+}

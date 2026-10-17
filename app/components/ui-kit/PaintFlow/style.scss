@@ -1,0 +1,128 @@
+@layer components {
+  .PaintFlow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  // Right edge tucked 14px under the icon diamond.
+  .PaintFlow-splash {
+    position: absolute;
+    left: calc(var(--splash-x) - 52px + 14px);
+    top: calc(var(--center) - 36px);
+    width: 52px;
+    height: 72px;
+    background: url('/ui/tex/hover-splash.webp') 0 0 / 100% 100% no-repeat;
+    transform-origin: 100% 50%;
+    opacity: 0;
+    transform: scaleX(0.2);
+    transition:
+      opacity 0.18s ease-out,
+      transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1);
+
+    .PaintFlow--active & {
+      opacity: 1;
+      transform: scaleX(1);
+      animation: paint-splash 2.6s ease-in-out 0.22s infinite alternate;
+    }
+  }
+
+  .PaintFlow-fringe {
+    position: absolute;
+    top: var(--fringe-top);
+    left: var(--fringe-left);
+    right: var(--fringe-right);
+    height: 14px;
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+    mask-image: linear-gradient(90deg, #000 0, #000 75%, transparent 100%);
+    transition:
+      opacity 0.2s ease-out,
+      clip-path 0s linear 0.2s;
+
+    .PaintFlow--active & {
+      opacity: 1;
+      clip-path: inset(0 0 0 0);
+      transition:
+        opacity 0.1s ease-out,
+        clip-path 0.3s cubic-bezier(0.2, 0.7, 0.3, 1);
+    }
+  }
+
+  .PaintFlow-layer {
+    position: absolute;
+    inset: 0;
+    background-repeat: repeat-x;
+    background-size: 282px 14px;
+    mix-blend-mode: screen;
+    animation-timing-function: linear, ease-in-out;
+    animation-iteration-count: infinite;
+    animation-play-state: paused;
+
+    .PaintFlow--active & {
+      animation-play-state: running;
+    }
+
+    // Drift speeds measured on the video: 282px in 13s (~22 px/s) and 18s (~16 px/s).
+    &--a {
+      background-image: url('/ui/tex/hover-flow-a.webp');
+      animation-name: paint-drift, paint-flicker;
+      animation-duration: 13s, 1.7s;
+    }
+
+    &--b {
+      top: 2px;
+      background-image: url('/ui/tex/hover-flow-b.webp');
+      opacity: 0.75;
+      animation-name: paint-drift, paint-flicker;
+      animation-duration: 18s, 2.3s;
+      animation-delay: -7s, -0.8s;
+    }
+  }
+
+  @keyframes paint-drift {
+    from {
+      background-position-x: 0;
+    }
+
+    to {
+      background-position-x: -282px;
+    }
+  }
+
+  @keyframes paint-flicker {
+    0%,
+    100% {
+      filter: brightness(1);
+    }
+
+    35% {
+      filter: brightness(1.15);
+    }
+
+    70% {
+      filter: brightness(0.9);
+    }
+  }
+
+  @keyframes paint-splash {
+    0% {
+      transform: scaleX(1) scaleY(1);
+    }
+
+    50% {
+      transform: scaleX(1.06) scaleY(0.97) translateX(-1px);
+    }
+
+    100% {
+      transform: scaleX(0.97) scaleY(1.03);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .PaintFlow-layer,
+    .PaintFlow--active .PaintFlow-splash {
+      animation: none;
+    }
+  }
+}

@@ -1,0 +1,32 @@
+@layer components {
+  .TextureLowerPanel {
+    position: relative;
+    width: 580px;
+    color: var(--ui-text);
+  }
+
+  .TextureLowerPanel-backdrop {
+    position: absolute;
+    inset: 0;
+    background: url('/ui/tex/main-right-backdrop.webp') 0 0 / 580px 390px no-repeat;
+    pointer-events: none;
+  }
+
+  // Texture sits 8px left of the box so the line lands at x ≈ 1860. Vertical slices: 60px top (fading
+  // tip) and 16px bottom (foot) fixed.
+  .TextureLowerPanel-line {
+    position: absolute;
+    left: -8px;
+    top: var(--line-top);
+    bottom: 18px;
+    width: 36px;
+    min-height: 76px;
+    border-image: url('/ui/tex/main-right-line.webp') 60 0 16 0 fill / 60px 0 16px 0 stretch;
+    pointer-events: none;
+  }
+
+  .TextureLowerPanel-content {
+    position: absolute;
+    inset: 0;
+  }
+}

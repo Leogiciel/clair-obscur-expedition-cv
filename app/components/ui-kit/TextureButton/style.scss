@@ -1,0 +1,62 @@
+// Fixed 86px height: the texture includes the fringe above the top rule (y 15) and the drip below
+// the bottom edge (down to y 81).
+@layer components {
+  .TextureButton {
+    position: relative;
+    display: block;
+    flex: none;
+    height: 86px;
+    min-width: 160px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ui-text);
+    cursor: pointer;
+  }
+
+  // 3-slice: 60px fixed (tip + arrow) | stretched middle | 89px fixed (diamond inlay + chevron).
+  .TextureButton-tex {
+    position: absolute;
+    inset: 0;
+    border-image: url('/ui/tex/main-right-wardrobe.webp') 0 89 0 60 fill / 0 89px 0 60px stretch;
+    pointer-events: none;
+  }
+
+  // x 1978–2048, y 791–861 in the capture.
+  .TextureButton-icon {
+    position: absolute;
+    left: 63px;
+    top: 5px;
+    width: 70px;
+    height: 70px;
+    display: grid;
+    place-items: center;
+  }
+
+  // Caps measured at 24px (y 819–843 in the capture) = EB Garamond 36px; midline at y 46. Centered
+  // between icon and dot, as "Wardrobe" is in the capture.
+  .TextureButton-label {
+    position: absolute;
+    top: 46px;
+    left: 135px;
+    right: 51px;
+    display: flex;
+    justify-content: center;
+    font-family: var(--font-label);
+    font-size: 36px;
+    line-height: 1;
+    white-space: nowrap;
+    transform: translateY(-50%);
+  }
+
+  .TextureButton-dot {
+    position: absolute;
+    top: 28px;
+    right: 33px;
+    width: 36px;
+    height: 36px;
+    background: url('/ui/tex/luminas-dot.webp') no-repeat;
+    mix-blend-mode: plus-lighter;
+    pointer-events: none;
+  }
+}

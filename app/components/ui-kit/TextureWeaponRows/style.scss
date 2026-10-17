@@ -1,0 +1,40 @@
+@layer components {
+  .TextureWeaponRows {
+    position: relative;
+    flex: none;
+    color: var(--ui-text);
+  }
+
+  .TextureWeaponRows-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  .TextureWeaponRows-icon {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    pointer-events: none;
+  }
+
+  .TextureWeaponRows-name {
+    position: absolute;
+    top: var(--center);
+    left: var(--name-left);
+    right: var(--name-right);
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+    transform: translateY(-50%);
+  }
+
+  // Anchored to the right edge, which does not stretch.
+  .TextureWeaponRows-aside {
+    position: absolute;
+    top: var(--center);
+    left: calc(100% - var(--aside));
+    transform: translate(-50%, -50%);
+  }
+}

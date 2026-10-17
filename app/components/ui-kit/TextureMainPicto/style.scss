@@ -1,0 +1,64 @@
+// Text sizes measured on the 2510×1380 capture: name caps 24 px (≈ 36 px font size), "Level" caps
+// 18 px (≈ 27 px), digit 31 px tall (≈ 44 px in Bebas Neue).
+@layer components {
+  .TextureMainPicto {
+    position: relative;
+    flex: none;
+    color: var(--ui-text);
+  }
+
+  .TextureMainPicto-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  .TextureMainPicto-icon {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+    pointer-events: none;
+  }
+
+  // Stops before the "Level" column.
+  .TextureMainPicto-name {
+    position: absolute;
+    top: var(--center);
+    left: var(--text);
+    right: calc(var(--aside) + 46px);
+    overflow: hidden;
+    font-family: var(--font-label);
+    font-size: 36px;
+    line-height: 1;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transform: translateY(-50%);
+  }
+
+  // Capture: "Level" from y 29 to 47 (baseline), digit from y 54 to 85.
+  .TextureMainPicto-aside {
+    position: absolute;
+    top: 25px;
+    left: calc(100% - var(--aside));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(-50%);
+  }
+
+  .TextureMainPicto-levelLabel {
+    font-family: var(--font-label);
+    font-size: 27px;
+    line-height: 26px;
+  }
+
+  .TextureMainPicto-level {
+    margin-top: 1px;
+    font-family: var(--font-number);
+    font-size: 44px;
+    line-height: 36px;
+  }
+}

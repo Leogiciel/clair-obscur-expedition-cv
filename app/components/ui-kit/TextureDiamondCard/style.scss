@@ -1,0 +1,46 @@
+// Plate 533×198, 9-slice: 16px top (rule + hook), 72px right (chevron flank), 24px bottom,
+// 106px left (cut corner); only the middle stretches. The 178px diamond never stretches.
+@layer components {
+  .TextureDiamondCard {
+    position: relative;
+    flex: none;
+    min-width: calc(var(--plate-left) + 178px);
+    min-height: var(--diamond);
+    color: var(--ui-text);
+  }
+
+  .TextureDiamondCard-plate {
+    position: absolute;
+    inset: 0 0 0 var(--plate-left);
+    border-image: url('/ui/tex/diamond-card-plate.webp') 16 72 24 106 fill / 16px 72px 24px 106px stretch;
+    pointer-events: none;
+  }
+
+  .TextureDiamondCard-diamond {
+    position: absolute;
+    left: 0;
+    // +1px: in the capture the diamond center is 1px below the plate's middle.
+    top: calc(50% - var(--diamond) / 2 + 1px);
+    width: var(--diamond);
+    height: var(--diamond);
+    background: url('/ui/tex/diamond-card-diamond.webp') no-repeat 0 0 / 100% 100%;
+  }
+
+  .TextureDiamondCard-slot {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+
+  .TextureDiamondCard-content {
+    position: absolute;
+    inset: 12px 36px 10px 165px;
+  }
+
+  .DiamondCardDivider {
+    height: 10px;
+    border-image: url('/ui/tex/diamond-card-divider.webp') 0 8 0 8 fill / 0 8px 0 8px stretch;
+  }
+}

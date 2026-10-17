@@ -1,0 +1,53 @@
+// Texture 570×254; fixed slices: 100px top (whole painted blade + top rule), 120px left (blade +
+// vertical rule), 100px right (top-right step), 44px bottom (worn edge).
+@layer components {
+  .TextureEquippedCard {
+    position: relative;
+    flex: none;
+    width: 570px;
+    height: 254px;
+    min-width: 220px;
+    min-height: 144px;
+    color: var(--ui-text);
+  }
+
+  .TextureEquippedCard-tex {
+    position: absolute;
+    inset: 0;
+    border-image: url('/ui/tex/weapon-screen-card.webp') 100 100 44 120 fill / 100px 100px 44px 120px stretch;
+    pointer-events: none;
+  }
+
+  // Box bottom on the measured baseline (y 100 in the texture).
+  .TextureEquippedCard-title {
+    position: absolute;
+    left: 126px;
+    bottom: calc(100% - 100px);
+    display: flex;
+    align-items: flex-end;
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  // Centered on an axis 56px from the right edge; top of "Level" at y 30.
+  .TextureEquippedCard-aside {
+    position: absolute;
+    top: 26px;
+    left: calc(100% - 56px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  // Labels at y 116; column centers at x 128, 248, 364, 481 in the texture.
+  .TextureEquippedCard-content {
+    position: absolute;
+    inset: 112px 30px 32px 70px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: start;
+    justify-items: center;
+  }
+}
