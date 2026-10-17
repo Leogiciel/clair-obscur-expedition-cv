@@ -9,7 +9,7 @@ B=${BROWSE:-$HOME/.claude/skills/gstack/browse/dist/browse}
 mkdir -p "$OUT"
 "$B" viewport 2510x1380 >/dev/null
 # screen | path | video frame
-for spec in "home|/|t11" "role|/role|t6"; do
+for spec in "home|/|t11" "role|/role|t6" "pictos|/pictos|t15" "skills|/skills|t38"; do
   IFS='|' read -r name path frame <<< "$spec"
   "$B" goto "$BASE$path" >/dev/null
   "$B" js "document.fonts.ready.then(()=>new Promise(r=>setTimeout(r,1500)))" >/dev/null
