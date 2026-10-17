@@ -1,104 +1,128 @@
 import {useLayoutEffect, useRef} from 'react';
+import framing from '~/assets/character/framing.json';
+import overviewClip from '~/assets/character/overview.mp4';
+import roleClip from '~/assets/character/role.mp4';
+import pictosClip from '~/assets/character/pictos.mp4';
+import overviewToRole from '~/assets/character/overview-role.mp4';
+import roleToOverview from '~/assets/character/role-overview.mp4';
+import overviewToPictos from '~/assets/character/overview-pictos.mp4';
+import pictosToOverview from '~/assets/character/pictos-overview.mp4';
+import skillsClip from '~/assets/character/skills.mp4';
+import overviewToSkills from '~/assets/character/overview-skills.mp4';
+import skillsToOverview from '~/assets/character/skills-overview.mp4';
+import './style.scss';
 
-export type Shot = 'overview' | 'role';
+export type Shot = keyof typeof framing;
 
-// The clip is 448 × 880 with the head between y 65 and 270 and the face centred on x 160.
-// Game framings: overview head ≈ 29 % of the stage height with the face at 48 %; weapon head ≈ 22 % with the face at 61 %.
-const FRAMING: Record<Shot, {x: number; y: number; scale: number}> = {
-  overview: {x: 893, y: -3, scale: 1.95},
-  role: {x: 1294, y: 83, scale: 1.48},
+// framing.json places each loop on the stage (also read by scripts/character/canvas.py). Game framings: overview
+// head ≈ 29 % of the stage height with the face at 48 %; weapon head ≈ 22 % with the face at 61 %, kept right of the
+// role card; pictos head ≈ 31 % in profile, nose at 58 %; skills (arms crossed, face kept in frame unlike the
+// game) head ≈ 27 % with the face at 56 %, above the slots.
+const LOOPS: Record<Shot, string> = {overview: overviewClip, role: roleClip, pictos: pictosClip, skills: skillsClip};
+
+// Camera moves rendered on 16:9 canvases covering the stage width (2510 × 1412), ending on the next loop's first frame.
+const TRANSITIONS: Partial<Record<`${Shot}-${Shot}`, string>> = {
+  'overview-role': overviewToRole,
+  'role-overview': roleToOverview,
+  'overview-pictos': overviewToPictos,
+  'pictos-overview': pictosToOverview,
+  'overview-skills': overviewToSkills,
+  'skills-overview': skillsToOverview,
 };
+const CANVAS_SCALE = 2510 / 1920;
+// Cross-fades the transition's last frame into the loop: same position, but the clips differ in exposure (≈ 9 %) and ribbons.
+const HANDOVER_MS = 250;
 
-type Point = [number, number];
-
-// Measured by optical flow on the capture, in stage px relative to the new framing: the cut lands on `from`,
-// a whip at full speed decelerates to `peak` by `whip` s, then a glide settles by `settle` s
-// (`skew` < 1 moves its fastest point earlier).
-const ENTER: Record<Shot, {from: Point; peak: Point; whip: number; settle: number; skew: number}> = {
-  role: {from: [-430, 170], peak: [310, 0], whip: 0.23, settle: 0.75, skew: 0.6},
-  overview: {from: [520, -140], peak: [800, -120], whip: 0.09, settle: 0.6, skew: 0.8},
-};
-
-// 180° shutter at 60 fps.
-const SHUTTER = 1 / 120;
-
-const smoothstep = (u: number) => u * u * (3 - 2 * u);
-
-const offsetAt = (e: (typeof ENTER)[Shot], t: number): Point => {
-  const [fx, fy] = e.from;
-  const [px, py] = e.peak;
-  if (t < e.whip) {
-    // Before the cut the whip keeps its initial speed, so the first frame is already blurred.
-    const k = t < 0 ? (3 * t) / e.whip : 1 - (1 - t / e.whip) ** 3;
-    return [fx + (px - fx) * k, fy + (py - fy) * k];
-  }
-  const g = 1 - smoothstep(Math.min(1, (t - e.whip) / (e.settle - e.whip)) ** e.skew);
-  return [px * g, py * g];
-};
+const SHOTS = Object.keys(framing) as Shot[];
 
 const Character = ({shot}: {shot: Shot}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const blurRef = useRef<SVGFEGaussianBlurElement>(null);
+  const loops = useRef<Partial<Record<Shot, HTMLDivElement | null>>>({});
+  const moves = useRef<Partial<Record<string, HTMLVideoElement | null>>>({});
   const shown = useRef<Shot | null>(null);
 
   useLayoutEffect(() => {
-    const el = ref.current;
-    const blur = blurRef.current;
-    if (!el || !blur) return;
-    const f = FRAMING[shot];
-    const place = ([x, y]: Point) => {
-      el.style.transform = `translate(${f.x + x}px, ${f.y + y}px) scale(${f.scale})`;
+    const show = (s: Shot | null, restart: boolean) => {
+      for (const other of SHOTS) {
+        const box = loops.current[other];
+        const video = box?.querySelector('video');
+        if (!box || !video) continue;
+        box.style.visibility = other === s ? 'visible' : 'hidden';
+        if (other !== s) video.pause();
+        else {
+          if (restart) video.currentTime = 0;
+          void video.play().catch(() => {});
+        }
+      }
     };
-    const smear = (bx: number, by: number) => {
-      // Filters run in the element's own space, before the framing scale.
-      const sx = (0.4 * bx) / f.scale;
-      const sy = (0.4 * by) / f.scale;
-      blur.setAttribute('stdDeviation', `${sx.toFixed(2)} ${sy.toFixed(2)}`);
-      el.style.filter = sx + sy > 0.3 ? 'url(#character-motion)' : '';
+    const hideMoves = () => {
+      for (const video of Object.values(moves.current)) {
+        if (!video) continue;
+        video.pause();
+        video.style.visibility = 'hidden';
+      }
     };
 
     const previous = shown.current;
     shown.current = shot;
-    if (previous === null || previous === shot || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      place([0, 0]);
-      smear(0, 0);
+    const move = previous && previous !== shot ? moves.current[`${previous}-${shot}`] : null;
+    if (!move || move.readyState < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      hideMoves();
+      show(shot, previous !== null && previous !== shot);
       return;
     }
 
-    const e = ENTER[shot];
-    const start = performance.now();
-    let frame = 0;
-    const tick = (now: number) => {
-      const t = (now - start) / 1000;
-      if (t >= e.settle) {
-        place([0, 0]);
-        smear(0, 0);
-        return;
-      }
-      const a = offsetAt(e, t - SHUTTER / 2);
-      const b = offsetAt(e, t + SHUTTER / 2);
-      place(offsetAt(e, t));
-      smear(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1]));
-      frame = requestAnimationFrame(tick);
+    // The cut: the move replaces the old loop in the same frame as the panels swap.
+    hideMoves();
+    show(null, false);
+    move.currentTime = 0;
+    move.style.visibility = 'visible';
+    void move.play().catch(() => {});
+    let handover = 0;
+    const onEnded = () => {
+      show(shot, true);
+      loops.current[shot]?.animate([{opacity: 0}, {opacity: 1}], {duration: HANDOVER_MS});
+      handover = window.setTimeout(hideMoves, HANDOVER_MS);
     };
-    // The first frame is placed before paint so the cut never shows the resting framing.
-    tick(start);
-    return () => cancelAnimationFrame(frame);
+    move.addEventListener('ended', onEnded, {once: true});
+    return () => {
+      move.removeEventListener('ended', onEnded);
+      window.clearTimeout(handover);
+    };
   }, [shot]);
 
-  const f = FRAMING[shot];
   return (
     <>
-      <svg className="absolute size-0" aria-hidden>
-        <filter id="character-motion" x="-25%" y="-10%" width="150%" height="120%" colorInterpolationFilters="sRGB">
-          <feGaussianBlur ref={blurRef} stdDeviation="0 0" edgeMode="none"/>
-        </filter>
-      </svg>
-      <div ref={ref} className="Screen-character" style={{transform: `translate(${f.x}px, ${f.y}px) scale(${f.scale})`}} aria-hidden>
-        <video autoPlay loop muted playsInline>
-          <source src="/background-video.mp4" type="video/mp4"/>
-        </video>
-      </div>
+      {Object.entries(TRANSITIONS).map(([key, src]) => (
+        <video
+          key={key}
+          ref={(el) => {
+            moves.current[key] = el;
+          }}
+          className="Character-move"
+          style={{transform: `scale(${CANVAS_SCALE})`}}
+          src={src}
+          muted
+          playsInline
+          preload="auto"
+          aria-hidden
+        />
+      ))}
+      {SHOTS.map((s) => {
+        const f = framing[s];
+        return (
+          <div
+            key={s}
+            ref={(el) => {
+              loops.current[s] = el;
+            }}
+            className="Character-loop"
+            style={{width: f.width, height: f.height, transform: `translate(${f.x}px, ${f.y}px) scale(${f.scale})`, visibility: s === shot ? 'visible' : 'hidden'}}
+            aria-hidden
+          >
+            <video autoPlay={s === shot} loop muted playsInline preload="auto" src={LOOPS[s]}/>
+          </div>
+        );
+      })}
     </>
   );
 };

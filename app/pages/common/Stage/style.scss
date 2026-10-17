@@ -6,31 +6,6 @@
   background: var(--stage-bg);
   color: var(--ui-text);
 
-  // Clip-sized box placed by Character's transform. The clip's pure black is lifted to the stage background
-  // inside the box, so the faded edges blend into the stage.
-  &-character {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 448px;
-    height: 880px;
-    transform-origin: 0 0;
-    isolation: isolate;
-    background: var(--stage-bg);
-    mask-image:
-      linear-gradient(to right, transparent, #000 14%, #000 84%, transparent),
-      linear-gradient(to bottom, transparent, #000 6%, #000 78%, transparent);
-    mask-composite: intersect;
-    pointer-events: none;
-
-    video {
-      display: block;
-      width: 100%;
-      height: 100%;
-      mix-blend-mode: lighten;
-    }
-  }
-
   &-stage {
     position: absolute;
     top: 50%;
@@ -101,53 +76,6 @@
       border: 0;
       background: none;
       cursor: pointer;
-    }
-  }
-
-  &-label {
-    font-family: var(--font-label);
-    font-weight: 500;
-    line-height: 1.05;
-  }
-
-  &-num {
-    font-family: var(--font-number);
-    line-height: 0.9;
-    color: var(--ui-text);
-  }
-
-  &-grade {
-    font-family: var(--font-primary);
-    font-size: 66px;
-    line-height: 0.9;
-    color: var(--ui-gold);
-  }
-
-  // Measured on the capture: W of « Weapon » is 40px.
-  &-title {
-    margin: 0;
-    font-family: var(--font-primary);
-    font-variant: small-caps;
-    font-weight: 400;
-    font-size: 40px;
-    line-height: 1;
-    letter-spacing: 0.02em;
-    color: #d6d0c2;
-
-    span {
-      font-size: 1.25em;
-    }
-  }
-
-  &-cardTitle {
-    font-family: var(--font-primary);
-    font-variant: small-caps;
-    font-size: 39px;
-    line-height: 1;
-    color: var(--ui-gold-name);
-
-    &::first-letter {
-      font-size: 1.2em;
     }
   }
 }

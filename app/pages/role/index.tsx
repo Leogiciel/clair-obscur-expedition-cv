@@ -7,8 +7,12 @@ import TextureCard from '~/components/ui-kit/TextureCard';
 import TextureEquippedCard from '~/components/ui-kit/TextureEquippedCard';
 import KeyHint from '~/components/ui-kit/KeyHint';
 import PaintFlow from '~/components/ui-kit/PaintFlow';
-import {Grade, Label, Num} from '../common/ui';
-import {ROLES, type Role} from '../home/data';
+import Label from '../common/Label';
+import Num from '../common/Num';
+import CardTitle from '../common/CardTitle';
+import {ROLES} from '../common/data';
+import RoleStats from './RoleStats';
+import LevelBlock from './LevelBlock';
 
 // Measured on the video: selected row at (200, 310), normal at (244, 404); centers 85px apart.
 const FIRST_CENTER = 356;
@@ -17,19 +21,6 @@ const ROW = {
   selected: {x: 200, center: 46, width: 488, height: 92, top: 10},
   normal: {x: 244, center: 37, width: 420, height: 74, top: 6},
 };
-
-const RoleStats = ({role}: {role: Role}) => (
-  <>
-    <span className="flex flex-col items-center gap-1"><Label size={27}>Years</Label><Num size={62}>{role.years}</Num></span>
-    <span className="flex flex-col items-center gap-1"><Label size={27}>Team</Label><Num size={62}>{role.team}</Num></span>
-    <span className="flex flex-col items-center gap-1"><Label size={22}>Leadership</Label><Grade>{role.leadership}</Grade></span>
-    <span className="flex flex-col items-center gap-1"><Label size={22}>Delivery</Label><Grade>{role.delivery}</Grade></span>
-  </>
-);
-
-const LevelBlock = ({level}: {level: number}) => (
-  <span className="flex flex-col items-center"><Label size={26}>Level</Label><Num size={56}>{level}</Num></span>
-);
 
 const RolePage = () => {
   const navigate = useNavigate();
@@ -94,8 +85,8 @@ const RolePage = () => {
       {tooltip && (
         <TextureCard className="absolute left-[740px] top-[296px] h-[216px] w-[560px]">
           <div className="absolute left-[14px] top-[-22px] h-[192px] w-[470px]">
-            <div className="Screen-cardTitle absolute left-[62px] top-[30px]">{role.title}</div>
-            <div className="Screen-label absolute left-[64px] top-[74px]" style={{fontSize: 20, opacity: 0.75}}>{role.company} · {role.period}</div>
+            <CardTitle as="div" className="absolute left-[62px] top-[30px]">{role.title}</CardTitle>
+            <Label as="div" size={20} className="absolute left-[64px] top-[74px]" style={{opacity: 0.75}}>{role.company} · {role.period}</Label>
             <span className="absolute left-[424px] top-[-6px]"><LevelBlock level={role.level}/></span>
             <div className="absolute left-[8px] top-[94px] grid w-[450px] grid-cols-4 text-center"><RoleStats role={role}/></div>
           </div>
@@ -104,7 +95,7 @@ const RolePage = () => {
 
       <TextureEquippedCard
         className="absolute left-[1830px] top-[918px]"
-        title={<span className="Screen-cardTitle" style={{fontSize: 36}}>{current.title}</span>}
+        title={<CardTitle size={36}>{current.title}</CardTitle>}
         aside={<LevelBlock level={current.level}/>}
       >
         <RoleStats role={current}/>

@@ -1,0 +1,59 @@
+// Row 436×71: fixed 92px (diamond) and 50px (chevron).
+@layer components {
+  .TextureLuminasRow {
+    position: relative;
+    height: 71px;
+
+    & + & {
+      margin-top: calc(var(--row-overlap) * -1);
+    }
+  }
+
+  .TextureLuminasRow-tex {
+    position: absolute;
+    inset: 0;
+    border-image: url('/ui/tex/luminas-row.webp') 0 50 0 92 fill / 0 50px 0 92px stretch;
+    pointer-events: none;
+  }
+
+  // Diamond interior: center (47.5, 35.5), usable half-diagonal 24px.
+  .TextureLuminasRow-slot {
+    position: absolute;
+    left: 24px;
+    top: 12px;
+    width: 48px;
+    height: 48px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
+  }
+
+  .TextureLuminasRow-content {
+    position: absolute;
+    top: 36px;
+    left: 88px;
+    right: 39px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translateY(-50%);
+  }
+
+  .TextureLuminasRow-label {
+    flex: 1;
+    min-width: 0;
+  }
+
+  // Additive light extracted as the difference of two captures.
+  .TextureLuminasRow-dot {
+    position: absolute;
+    top: 18px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    background: url('/ui/tex/luminas-dot.webp') no-repeat;
+    mix-blend-mode: plus-lighter;
+    pointer-events: none;
+  }
+}

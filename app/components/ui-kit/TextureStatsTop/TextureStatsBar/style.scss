@@ -1,0 +1,37 @@
+@layer components {
+  .TextureStatsBar {
+    position: relative;
+    flex: none;
+    min-width: calc(var(--tex-left) + var(--tex-right) + 8px);
+  }
+
+  .TextureStatsBar-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    pointer-events: none;
+  }
+
+  // 167×25 texture, 3-slice (left edge 3 px | stretched | right end 4 px).
+  .TextureStatsBar-fill {
+    position: absolute;
+    top: 2px;
+    left: var(--track-left);
+    height: 25px;
+    width: max(7px, calc((100% - var(--track-left) - var(--track-right)) * var(--ratio)));
+    border-image: url('/ui/tex/stats-top-bar-fill.webp') 0 4 0 3 fill / 0 4px 0 3px stretch;
+    pointer-events: none;
+  }
+
+  // Digits 2 px above the rail, aligned with the end of the right arrow.
+  .TextureStatsBar-value {
+    position: absolute;
+    right: 10px;
+    bottom: calc(100% - 3px);
+    font-family: var(--font-label);
+    font-size: 24px;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--ui-text);
+  }
+}

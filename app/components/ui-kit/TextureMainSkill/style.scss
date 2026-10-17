@@ -91,11 +91,4 @@
       color: #f2f4ff;
     }
   }
-
-  .TextureMainSkillGrid {
-    display: grid;
-    grid-template-columns: repeat(2, max-content);
-    column-gap: 7.5px;
-    row-gap: 2.5px;
-  }
 }

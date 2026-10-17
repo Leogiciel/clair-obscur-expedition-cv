@@ -33,13 +33,4 @@ const TextureDiamondCard = ({width = WIDTH, height = HEIGHT, icon, className = '
   );
 };
 
-interface DiamondCardDividerProps {
-  className?: string;
-  style?: React.CSSProperties;
-}
-
-export const DiamondCardDivider = ({className = '', style}: DiamondCardDividerProps) => (
-  <div className={`DiamondCardDivider ${className}`} style={style} aria-hidden/>
-);
-
 export default TextureDiamondCard;

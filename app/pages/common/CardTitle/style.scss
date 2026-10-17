@@ -1,0 +1,11 @@
+.CardTitle {
+  font-family: var(--font-primary);
+  font-variant: small-caps;
+  font-size: 39px;
+  line-height: 1;
+  color: var(--ui-gold-name);
+
+  &::first-letter {
+    font-size: 1.2em;
+  }
+}

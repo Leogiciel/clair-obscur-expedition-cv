@@ -1,9 +1,11 @@
 import {useEffect, useRef} from 'react';
 import {Outlet, useLocation} from 'react-router';
-import Stage from './Stage';
-import Character from './Character';
-import {PartyBar} from './ui';
-import CharacterStats from '../home/CharacterStats';
+import Stage from '../Stage';
+import Character, {type Shot} from '../Character';
+import PartyBar from '../PartyBar';
+import CharacterStats from '../CharacterStats';
+
+const SHOTS: Record<string, Shot> = {'/role': 'role', '/pictos': 'pictos', '/skills': 'skills'};
 
 export interface StageContext {
   from: string;
@@ -21,7 +23,7 @@ const StageLayout = () => {
 
   return (
     <Stage>
-      <Character shot={pathname === '/role' ? 'role' : 'overview'}/>
+      <Character shot={SHOTS[pathname] ?? 'overview'}/>
       <PartyBar/>
       <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]"/>
       <Outlet context={{from} satisfies StageContext}/>

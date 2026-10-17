@@ -1,0 +1,25 @@
+@layer components {
+  .SelectFx-strip {
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: var(--tile) 100%;
+    will-change: transform;
+  }
+
+  // Runs while the parent effect is shown.
+  .SelectFx--active .SelectFx-strip {
+    animation: select-fx-flow linear infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .SelectFx--active .SelectFx-strip {
+      animation: none;
+    }
+  }
+
+  @keyframes select-fx-flow {
+    to {
+      transform: translateX(calc(-1 * var(--tile)));
+    }
+  }
+}

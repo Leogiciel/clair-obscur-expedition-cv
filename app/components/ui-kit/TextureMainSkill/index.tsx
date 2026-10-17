@@ -42,15 +42,4 @@ const TextureMainSkill = ({empty, width = WIDTH, icon, level, marked, className 
   );
 };
 
-interface TextureMainSkillGridProps {
-  className?: string;
-  style?: React.CSSProperties;
-  children?: React.ReactNode;
-}
-
-// Game grid: 2 columns at a 413.5 px pitch, rows at an 82.5 px pitch (406×80 textures).
-export const TextureMainSkillGrid = ({className = '', style, children}: TextureMainSkillGridProps) => (
-  <div className={`TextureMainSkillGrid ${className}`} style={style}>{children}</div>
-);
-
 export default TextureMainSkill;

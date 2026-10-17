@@ -29,20 +29,50 @@ export const ROLES: Role[] = [
   {id: 'fullstack', title: 'Full-stack Developer', company: 'Company', period: '20XX – 20XX', level: 1, years: 4, team: 4, leadership: 'C', delivery: 'B'},
 ];
 
-export const PICTOS: Item[] = [
-  {id: 'curiosity', name: 'Curiosity', level: 5, element: 'cyan'},
-  {id: 'teamwork', name: 'Teamwork', level: 4, element: 'green'},
-  {id: 'autonomy', name: 'Autonomy', level: 4, element: 'neutral'},
+export interface Picto extends Item {
+  stats: [{label: string; value: string}, {label: string; value: string}];
+  description: string;
+  equipped: boolean;
+}
+
+// TODO: placeholder qualities; replace with the real ones.
+export const PICTOS: Picto[] = [
+  {id: 'curiosity', name: 'Curiosity', level: 5, element: 'cyan', equipped: true,
+    stats: [{label: 'Learning', value: '12'}, {label: 'Insight', value: '8%'}], description: 'Picks up a new stack before the first sprint ends.'},
+  {id: 'teamwork', name: 'Teamwork', level: 4, element: 'green', equipped: true,
+    stats: [{label: 'Support', value: '10'}, {label: 'Synergy', value: '6%'}], description: 'Every review leaves the team a little faster.'},
+  {id: 'autonomy', name: 'Autonomy', level: 4, element: 'neutral', equipped: true,
+    stats: [{label: 'Drive', value: '11'}, {label: 'Ownership', value: '7%'}], description: 'Takes a vague need all the way to production.'},
+  {id: 'mentoring', name: 'Mentoring', level: 3, element: 'green', equipped: false,
+    stats: [{label: 'Support', value: '9'}, {label: 'Growth', value: '5%'}], description: 'Juniors gain a level after each pairing session.'},
+  {id: 'pragmatism', name: 'Pragmatism', level: 3, element: 'red', equipped: false,
+    stats: [{label: 'Delivery', value: '10'}, {label: 'Focus', value: '4%'}], description: 'Ships the simplest version that solves the problem.'},
+  {id: 'communication', name: 'Communication', level: 2, element: 'cyan', equipped: false,
+    stats: [{label: 'Clarity', value: '8'}, {label: 'Reach', value: '3%'}], description: 'Turns technical trade-offs into clear decisions.'},
 ];
 
-export const SKILLS: Item[] = [
-  {id: 'react', name: 'React', level: 5, element: 'cyan'},
-  {id: 'typescript', name: 'TypeScript', level: 5, element: 'neutral'},
-  {id: 'css', name: 'Tailwind', level: 4, element: 'green'},
-  {id: 'node', name: 'Node.js', level: 4, element: 'green'},
-  {id: 'vite', name: 'Vite', level: 3, element: 'red'},
-  {id: 'design', name: 'UI Recreation', level: 3, element: 'neutral'},
+export const EQUIPPED = PICTOS.filter((p) => p.equipped);
+export const PICTO_SLOTS = 3;
+
+export interface Skill extends Item {
+  description: string;
+  equipped: boolean;
+}
+
+// TODO: placeholder skills; replace with the real ones. The equipped ones fill the six home slots, in this order.
+export const SKILLS: Skill[] = [
+  {id: 'react', name: 'React', level: 5, element: 'cyan', equipped: true, description: 'Component architecture, hooks, server rendering with React Router.'},
+  {id: 'typescript', name: 'TypeScript', level: 5, element: 'neutral', equipped: true, description: 'Strict types end to end, from API contracts to UI state.'},
+  {id: 'css', name: 'Tailwind', level: 4, element: 'green', equipped: true, description: 'Design systems and pixel-exact layouts, SCSS when it fits better.'},
+  {id: 'node', name: 'Node.js', level: 4, element: 'green', equipped: true, description: 'APIs, workers and build tooling.'},
+  {id: 'vite', name: 'Vite', level: 3, element: 'red', equipped: true, description: 'Fast builds, asset pipelines and dev tooling.'},
+  {id: 'design', name: 'UI Recreation', level: 3, element: 'neutral', equipped: true, description: 'Rebuilds interfaces from video captures, down to the texture.'},
+  {id: 'python', name: 'Python', level: 3, element: 'cyan', equipped: false, description: 'Image and video processing scripts with OpenCV and NumPy.'},
+  {id: 'postgres', name: 'PostgreSQL', level: 3, element: 'green', equipped: false, description: 'Schema design, query tuning and migrations.'},
+  {id: 'docker', name: 'Docker', level: 2, element: 'red', equipped: false, description: 'Containerised dev environments and deployments.'},
 ];
+
+export const EQUIPPED_SKILLS = SKILLS.filter((s) => s.equipped);
 
 export const CHARACTER = {
   name: 'Olivier',

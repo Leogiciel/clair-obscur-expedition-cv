@@ -1,0 +1,15 @@
+// Measured on the capture: W of « Weapon » is 40px.
+.SectionTitle {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-variant: small-caps;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #d6d0c2;
+
+  span {
+    font-size: 1.25em;
+  }
+}

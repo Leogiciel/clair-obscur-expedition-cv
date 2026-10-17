@@ -1,4 +1,5 @@
-import TextureStatsTop, {TextureStatsBar} from '~/components/ui-kit/TextureStatsTop';
+import TextureStatsTop from '~/components/ui-kit/TextureStatsTop';
+import TextureStatsBar from '~/components/ui-kit/TextureStatsTop/TextureStatsBar';
 import TitleRule from '~/components/ui-kit/TitleRule';
 import {CHARACTER} from '../data';
 import CharacterRadarChart from './RadarChart';

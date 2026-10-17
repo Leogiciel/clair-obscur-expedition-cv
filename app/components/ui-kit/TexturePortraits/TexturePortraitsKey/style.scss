@@ -1,0 +1,28 @@
+@layer components {
+  .TexturePortraitsKey {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    flex: none;
+    height: 35px;
+    font-family: var(--font-primary);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ui-gold-name);
+  }
+
+  .TexturePortraitsKey-tex {
+    position: absolute;
+    inset: 0;
+    border-image: var(--tex) 0 16 0 16 fill / 0 16px 0 16px stretch;
+    pointer-events: none;
+  }
+
+  // Key backing spans y 8 → 26 (between the top and bottom rules).
+  .TexturePortraitsKey-label {
+    position: relative;
+    margin-top: -1px;
+    padding: 0 14px;
+  }
+}

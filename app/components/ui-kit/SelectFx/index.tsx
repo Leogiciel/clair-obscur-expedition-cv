@@ -1,4 +1,5 @@
 import measures from './measures.json';
+import Strip from './Strip';
 import './style.scss';
 
 export type SelectFxKind = keyof typeof measures;
@@ -13,19 +14,6 @@ interface SelectFxProps {
 // Captured from the game video by scripts/ui-kit/extract/select-fx.py.
 // The left smear goes under the plate: the parent must isolate its stacking context (Screen-item).
 // Its two copies are offset by half a life and cross-fade, so density stays constant and the motif never repeats.
-
-// Scrolls one tile per cycle so the seamless motif loops without a jump.
-const Strip = ({src, tile, speed, width}: {src: string; tile: number; speed: number; width: number}) => (
-  <div
-    className="SelectFx-strip"
-    style={{
-      width: width + tile,
-      backgroundImage: `url('${src}')`,
-      '--tile': `${tile}px`,
-      animationDuration: `${tile / speed}s`,
-    } as React.CSSProperties}
-  />
-);
 
 const SelectFx = ({kind, active, grow = 1}: SelectFxProps) => {
   const m = measures[kind];

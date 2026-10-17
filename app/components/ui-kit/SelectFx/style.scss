@@ -39,22 +39,7 @@
       mask-repeat: no-repeat;
     }
 
-    &-strip {
-      height: 100%;
-      background-repeat: repeat-x;
-      background-size: var(--tile) 100%;
-      will-change: transform;
-    }
-
-    &--active &-strip {
-      animation: select-fx-flow linear infinite;
-    }
-
     @media (prefers-reduced-motion: reduce) {
-      &--active &-strip {
-        animation: none;
-      }
-
       &--active &-drift:first-child {
         opacity: 1;
         animation: none;
@@ -77,12 +62,6 @@
     100% {
       opacity: 0;
       transform: translateX(calc(-1 * var(--drift)));
-    }
-  }
-
-  @keyframes select-fx-flow {
-    to {
-      transform: translateX(calc(-1 * var(--tile)));
     }
   }
 }
