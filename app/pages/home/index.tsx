@@ -1,5 +1,5 @@
-import {useState} from 'react';
-import {Link} from 'react-router';
+import {useEffect, useRef, useState} from 'react';
+import {Link, useOutletContext} from 'react-router';
 import TextureMainWeapon from '~/components/ui-kit/TextureMainWeapon';
 import TextureMainPicto from '~/components/ui-kit/TextureMainPicto';
 import TextureMainSkill from '~/components/ui-kit/TextureMainSkill';
@@ -8,9 +8,8 @@ import TextureLowerPanel from '~/components/ui-kit/TextureLowerPanel';
 import TextureLuminas, {TextureLuminasRow} from '~/components/ui-kit/TextureLuminas';
 import KeyHint from '~/components/ui-kit/KeyHint';
 import SelectFx from '~/components/ui-kit/SelectFx';
-import Stage from '../common/Stage';
-import {Glyph, Label, Num, PartyBar, SectionTitle} from '../common/ui';
-import CharacterStats from './CharacterStats';
+import type {StageContext} from '../common/StageLayout';
+import {Glyph, Label, Num, SectionTitle} from '../common/ui';
 import {LINKEDIN_URL, LUMINA_SLOTS, PICTOS, ROLES, SKILLS} from './data';
 
 // Picto slot boxes measured on the video (the 2nd is shifted 10px left).
@@ -24,8 +23,15 @@ const SKILL_ORIGIN = {x: 836.5, y: 1106};
 const SKILL_STEP = {x: 413.5, y: 82.5};
 
 const Home = () => {
+  const {from} = useOutletContext<StageContext>();
   const [active, setActive] = useState<string | null>(null);
+  const roleRef = useRef<HTMLAnchorElement>(null);
   const role = ROLES[0];
+
+  // Back from the role list lands on the Role slot, selected, as in the game.
+  useEffect(() => {
+    if (from === '/role') roleRef.current?.focus({preventScroll: true});
+  }, [from]);
 
   // Mouse hover and keyboard focus share one state so the effect follows focus.
   const activeProps = (id: string) => ({
@@ -37,11 +43,9 @@ const Home = () => {
   const itemClass = (id: string) => `Screen-item ${active === id ? 'Screen-item--active' : ''}`;
 
   return (
-    <Stage>
-      <PartyBar/>
-
+    <>
       <SectionTitle x={163} y={760}>Role</SectionTitle>
-      <Link to="/role" className={itemClass('role')} style={{left: 118, top: 816, width: 522, height: 130, '--slide': '0px', '--sel-scale': 1.1} as React.CSSProperties} aria-label={`Role: ${role.title}`} {...activeProps('role')}>
+      <Link ref={roleRef} to="/role" className={itemClass('role')} style={{left: 118, top: 816, width: 522, height: 130, '--slide': '0px', '--sel-scale': 1.1} as React.CSSProperties} aria-label={`Role: ${role.title}`} {...activeProps('role')}>
         <div className="Screen-slide">
           <TextureMainWeapon icon={<Glyph element="neutral"/>} level={role.level}>{role.title}</TextureMainWeapon>
         </div>
@@ -91,7 +95,6 @@ const Home = () => {
         })}
       </ul>
 
-      <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]"/>
       <TextureButton className="absolute left-[1915px] top-[786px]" marked onClick={() => window.open(LINKEDIN_URL, '_blank', 'noopener')}>
         LinkedIn
       </TextureButton>
@@ -113,7 +116,7 @@ const Home = () => {
       <div className="Screen-hints absolute left-[1965px] top-[1299px]">
         <KeyHint keyLabel="A" tone="a" label="Select"/>
       </div>
-    </Stage>
+    </>
   );
 };
 

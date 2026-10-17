@@ -7,9 +7,7 @@ import TextureCard from '~/components/ui-kit/TextureCard';
 import TextureEquippedCard from '~/components/ui-kit/TextureEquippedCard';
 import KeyHint from '~/components/ui-kit/KeyHint';
 import PaintFlow from '~/components/ui-kit/PaintFlow';
-import Stage from '../common/Stage';
-import {Grade, Label, Num, PartyBar} from '../common/ui';
-import CharacterStats from '../home/CharacterStats';
+import {Grade, Label, Num} from '../common/ui';
 import {ROLES, type Role} from '../home/data';
 
 // Measured on the video: selected row at (200, 310), normal at (244, 404); centers 85px apart.
@@ -55,9 +53,7 @@ const RolePage = () => {
   }, [navigate]);
 
   return (
-    <Stage>
-      <PartyBar/>
-
+    <>
       <TextureListPanel className="absolute left-[100px] top-[278px]"/>
       <TextureTitleSort
         title="Role"
@@ -106,8 +102,6 @@ const RolePage = () => {
         </TextureCard>
       )}
 
-      <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]"/>
-
       <TextureEquippedCard
         className="absolute left-[1830px] top-[918px]"
         title={<span className="Screen-cardTitle" style={{fontSize: 36}}>{current.title}</span>}
@@ -124,7 +118,7 @@ const RolePage = () => {
           <KeyHint keyLabel="B" tone="b" label="Back"/>
         </button>
       </div>
-    </Stage>
+    </>
   );
 };
 

@@ -20,9 +20,6 @@ const Stage = ({className = '', children}: {className?: string; children: React.
   const scale = useStageScale();
   return (
     <main className={`Screen ${className}`}>
-      <video className="Screen-video" autoPlay loop muted playsInline aria-hidden>
-        <source src="/background-video.mp4" type="video/mp4"/>
-      </video>
       <div
         className="Screen-stage ui-film"
         style={{width: STAGE_W, height: STAGE_H, transform: `translate(-50%, -50%) scale(${scale ?? 1})`, visibility: scale ? 'visible' : 'hidden'}}
