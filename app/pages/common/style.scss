@@ -1,0 +1,136 @@
+.Screen {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--stage-bg);
+  color: var(--ui-text);
+
+  &-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &-stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: center;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  // Measured on the video: list rows slide 7px left; home slots use --slide: 0 and --sel-scale: 1.1.
+  &-item {
+    position: absolute;
+    // Own stacking context so the selection smear goes under the plate, not under the stage.
+    isolation: isolate;
+    display: block;
+    cursor: pointer;
+    outline: none;
+    color: inherit;
+    text-decoration: none;
+
+    > .Screen-slide {
+      transform-origin: 50% 50%;
+      transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.3, 1);
+    }
+
+    &--active > .Screen-slide {
+      transform: translateX(var(--slide, -7px)) scale(var(--sel-scale, 1));
+    }
+
+    // Darkens only the plate texture (video luminance ≈ 22 → 5): crushes darks (0.086 → 0.02), keeps lights (0.7 → 0.7).
+    :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex) {
+      transition: filter 0.12s ease-out;
+    }
+
+    &--active :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex) {
+      filter: brightness(0.963) contrast(1.15);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--ui-gold-select);
+      outline-offset: 6px;
+    }
+  }
+
+  // Measured on the video: 42px key, 34px label.
+  &-hints {
+    display: flex;
+    align-items: center;
+    gap: 56px;
+
+    .KeyHint {
+      gap: 12px;
+      font-size: 34px;
+    }
+
+    .KeyHint-key {
+      width: 42px;
+      height: 42px;
+      font-size: 22px;
+    }
+
+    button {
+      padding: 0;
+      border: 0;
+      background: none;
+      cursor: pointer;
+    }
+  }
+
+  &-label {
+    font-family: var(--font-label);
+    font-weight: 500;
+    line-height: 1.05;
+  }
+
+  &-num {
+    font-family: var(--font-number);
+    line-height: 0.9;
+    color: var(--ui-text);
+  }
+
+  &-grade {
+    font-family: var(--font-primary);
+    font-size: 66px;
+    line-height: 0.9;
+    color: var(--ui-gold);
+  }
+
+  // Measured on the capture: W of « Weapon » is 40px.
+  &-title {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-variant: small-caps;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: #d6d0c2;
+
+    span {
+      font-size: 1.25em;
+    }
+  }
+
+  &-cardTitle {
+    font-family: var(--font-primary);
+    font-variant: small-caps;
+    font-size: 39px;
+    line-height: 1;
+    color: var(--ui-gold-name);
+
+    &::first-letter {
+      font-size: 1.2em;
+    }
+  }
+}

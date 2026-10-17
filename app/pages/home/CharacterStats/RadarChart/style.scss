@@ -1,0 +1,55 @@
+.CharacterRadarChart {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  &-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+  }
+
+  &-ring {
+    fill: none;
+    stroke: #8e8d87;
+    stroke-width: 1.6;
+  }
+
+  &-dot {
+    fill: #1a1a18;
+    stroke: #8e8d87;
+    stroke-width: 1.4;
+  }
+
+  &-value {
+    fill: #ead6b4;
+    stroke: #f2e4c9;
+    stroke-width: 1;
+  }
+
+  dl {
+    margin: 0;
+  }
+
+  &-label {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateX(-50%);
+
+    dt {
+      font-family: var(--font-label);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    dd {
+      margin: 6px 0 0;
+      font-family: var(--font-number);
+      font-size: 32px;
+      line-height: 0.9;
+    }
+  }
+}
