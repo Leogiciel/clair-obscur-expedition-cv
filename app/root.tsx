@@ -4,6 +4,10 @@ import type { Route } from './+types/root';
 import './app.css';
 
 export const links: Route.LinksFunction = () => [
+  // The gold diamond and its 35 (design/favicon), redrawn bolder for the 16 and 32 px sizes.
+  { rel: 'icon', href: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+  { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+  { rel: 'manifest', href: '/site.webmanifest' },
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
     rel: 'preconnect',
@@ -22,6 +26,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#070707" />
         <Meta />
         <Links />
       </head>
