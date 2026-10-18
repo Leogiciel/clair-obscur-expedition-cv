@@ -21,6 +21,7 @@ import {
   luminaPointsSpent,
   pictoById
 } from '../common/data';
+import enterHotkey from '../common/enterHotkey';
 import useLoadout from '../common/store/useLoadout';
 import useSort, { type SortOption } from '../common/useSort';
 import PictoDetails from '../pictos/PictoDetails';
@@ -88,7 +89,7 @@ const LuminasPage = () => {
     { hotkey: 'ArrowDown', callback: () => move(0, 1) },
     { hotkey: 'ArrowLeft', callback: () => move(-1, 0) },
     { hotkey: 'ArrowRight', callback: () => move(1, 0) },
-    { hotkey: 'Enter', callback: () => shown && toggle(shown.id) },
+    enterHotkey(() => shown && toggle(shown.id)),
     { hotkey: 'A', callback: () => shown && toggle(shown.id) },
     { hotkey: 'Q', callback: () => changeTab(-1) },
     { hotkey: 'E', callback: () => changeTab(1) },

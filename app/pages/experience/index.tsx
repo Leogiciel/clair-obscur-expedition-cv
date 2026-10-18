@@ -15,6 +15,7 @@ import Label from '../common/Label';
 import Num from '../common/Num';
 import SortTitle from '../common/SortTitle';
 import { EXPERIENCES, type Experience, monthsOf, periodOf } from '../common/data';
+import enterHotkey from '../common/enterHotkey';
 import useLoadout from '../common/store/useLoadout';
 import useSort, { type SortOption } from '../common/useSort';
 import ExperienceStats from './ExperienceStats';
@@ -57,7 +58,7 @@ const ExperiencePage = () => {
   useHotkeys([
     { hotkey: 'ArrowDown', callback: () => move(1) },
     { hotkey: 'ArrowUp', callback: () => move(-1) },
-    { hotkey: 'Enter', callback: () => hovered !== null && equip(list[hovered].id) },
+    enterHotkey(() => hovered !== null && equip(list[hovered].id)),
     { hotkey: 'A', callback: () => hovered !== null && equip(list[hovered].id) },
     { hotkey: 'Escape', callback: () => navigate('/') },
     { hotkey: 'B', callback: () => navigate('/') }

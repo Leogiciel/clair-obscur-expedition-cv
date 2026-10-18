@@ -2,6 +2,7 @@ import { useHotkeys } from '@tanstack/react-hotkeys';
 import { useState } from 'react';
 
 import type { PlateGridLayout } from '../PlateGrid';
+import enterHotkey from '../enterHotkey';
 
 export type PickerMode = 'slots' | 'list';
 
@@ -81,7 +82,7 @@ const useSlotPicker = <T>({
     { hotkey: 'ArrowDown', callback: () => move(0, 1) },
     { hotkey: 'ArrowLeft', callback: () => move(-1, 0) },
     { hotkey: 'ArrowRight', callback: () => move(1, 0) },
-    { hotkey: 'Enter', callback: confirm },
+    enterHotkey(confirm),
     { hotkey: 'A', callback: confirm },
     { hotkey: 'Y', callback: () => mode === 'slots' && clear(slot) },
     { hotkey: 'Delete', callback: () => mode === 'slots' && clear(slot) },
