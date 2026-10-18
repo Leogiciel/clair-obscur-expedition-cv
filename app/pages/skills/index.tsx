@@ -65,7 +65,7 @@ const SkillsPage = () => {
     slotItem: (i) => (slots[i] ? skillById(slots[i]) : null),
     equip: (i, s) => equip(i, s.id),
     clear,
-    onBack: () => navigate('/')
+    onBack: () => navigate('/overview')
   });
   const hovered = picker.hovered === null ? null : sorted[picker.hovered];
   const pointedSlot = slots.findIndex((_, i) => picker.slotActive(i) && !picker.slotEditing(i));

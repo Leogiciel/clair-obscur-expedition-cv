@@ -95,8 +95,8 @@ const LuminasPage = () => {
     { hotkey: 'E', callback: () => changeTab(1) },
     { hotkey: 'Y', callback: reset },
     { hotkey: 'C', callback: () => navigate('/pictos') },
-    { hotkey: 'Escape', callback: () => navigate('/') },
-    { hotkey: 'B', callback: () => navigate('/') }
+    { hotkey: 'Escape', callback: () => navigate('/overview') },
+    { hotkey: 'B', callback: () => navigate('/overview') }
   ]);
 
   return (
@@ -179,7 +179,7 @@ const LuminasPage = () => {
             />
           </button>
         )}
-        <button type="button" className="contents" onClick={() => navigate('/')}>
+        <button type="button" className="contents" onClick={() => navigate('/overview')}>
           <KeyHint keyLabel="B" tone="b" label="Back" />
         </button>
       </div>

@@ -43,7 +43,7 @@ const PictosPage = () => {
   const navigate = useNavigate();
   // Opened from the Luminas screen (Edit Pictos), Back returns there, as in the game.
   const { from } = useOutletContext<StageContext>();
-  const [backTo] = useState(from === '/luminas' ? '/luminas' : '/');
+  const [backTo] = useState(from === '/luminas' ? '/luminas' : '/overview');
   const sort = useSort(PICTOS, SORTS);
   const { sorted } = sort;
   const slots = useLoadout((s) => s.pictos);

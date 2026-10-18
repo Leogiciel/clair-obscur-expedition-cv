@@ -1,17 +1,99 @@
 // Measured on the game's title screen scaled to the stage (design/ref/loading/ref-stage.png): the logo is centred,
 // the small line's capitals span y 276–308, its rule sits at 357, "Expedition" spans 724–1790 × 389–508, the number
-// 575–906 (both drawn by ExpeditionLogo) and the prompt 987–1527 × 1130–1175. Cinzel's small capitals give the prompt's look.
-
-// root.tsx flags a visitor who already started this session before the first paint.
-:root[data-started] .StartScreen {
-  display: none;
-}
+// 575–906 (both drawn by ExpeditionLogo) and the prompt 987–1527 × 1130–1175.
 
 // While the screen is up, the menu behind it is not painted (its clips keep loading): drawing both halved the frame
-// rate. root.tsx and StartScreen set data-start while the screen is up: a :has() rule here, re-matched under every
-// animation frame, cost as much. Important: Character sets its loops' visibility inline.
+// rate. StartScreen sets data-start meanwhile; a :has() rule here, re-matched under every animation frame, cost as
+// much. Important: Character sets its loops' visibility inline.
 :root[data-start] .Screen-stage > :not(.StartScreen) {
   visibility: hidden !important;
+}
+
+// Entering (StartScreen sets data-reveal for REVEAL_MS): the overview comes up like the game's menu. The character
+// emerges from the dark and settles, then the panels slide in by columns, the left one from the left, Skills from below,
+// the right one from the right, each a beat after the last; the key hints come last. The individual translate and
+// scale properties compose with the transforms the screens set inline instead of overriding them.
+$reveal-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+@mixin reveal($name, $delay, $duration: 0.7s) {
+  animation: $name $duration $reveal-ease $delay both;
+}
+
+:root[data-reveal] .Screen-stage {
+  > .Character-loop,
+  > .CharacterOcclusion {
+    @include reveal(start-emerge, 0s, 1.4s);
+  }
+
+  > .Petals {
+    @include reveal(start-fade, 0.4s, 1.2s);
+  }
+
+  > .SectionTitle:nth-of-type(1),
+  > .Screen-item {
+    @include reveal(start-from-left, 0.35s);
+  }
+
+  > .SectionTitle:nth-of-type(2),
+  > ul:nth-of-type(1) {
+    @include reveal(start-from-left, 0.45s);
+  }
+
+  > .SectionTitle:nth-of-type(3),
+  > ul:nth-of-type(2) {
+    @include reveal(start-from-below, 0.55s);
+  }
+
+  > .TextureStatsTop {
+    @include reveal(start-from-right, 0.4s);
+  }
+
+  > .IconButton {
+    @include reveal(start-from-right, 0.5s);
+  }
+
+  > .Luminas {
+    @include reveal(start-from-right, 0.6s);
+  }
+
+  > .Screen-hints {
+    @include reveal(start-fade, 0.9s, 0.6s);
+  }
+}
+
+@keyframes start-emerge {
+  from {
+    opacity: 0;
+    filter: brightness(0.2);
+    scale: 1.05;
+  }
+}
+
+@keyframes start-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes start-from-left {
+  from {
+    opacity: 0;
+    translate: -70px 0;
+  }
+}
+
+@keyframes start-from-right {
+  from {
+    opacity: 0;
+    translate: 70px 0;
+  }
+}
+
+@keyframes start-from-below {
+  from {
+    opacity: 0;
+    translate: 0 50px;
+  }
 }
 
 .StartScreen {
@@ -19,7 +101,6 @@
   inset: 0;
   z-index: 100;
   background: #000;
-  transition: opacity 0.7s ease;
 
   // The stage is letterboxed: black reaches the window edges too.
   &::before {
@@ -30,9 +111,34 @@
     background: #000;
   }
 
+  // Leaving (0.8 s, StartScreen's LEAVE_MS): the prompt goes out first, then the logo dissolves forward into the dark
+  // while the smoke and petals fade.
   &--leaving {
-    opacity: 0;
     pointer-events: none;
+
+    .StartScreen-prompt {
+      animation: none;
+      opacity: 0;
+      transition: opacity 0.25s ease-in;
+    }
+
+    .StartScreen-logo {
+      transform-origin: 50% 45%;
+      opacity: 0;
+      transform: scale(1.06);
+      filter: blur(6px);
+      transition:
+        opacity 0.75s ease-in 0.05s,
+        transform 0.8s ease-in,
+        filter 0.75s ease-in 0.05s;
+    }
+
+    .StartScreen-smoke,
+    .TitleParticles,
+    .StartScreen-build {
+      opacity: 0;
+      transition: opacity 0.8s ease-in;
+    }
   }
 
   // The ink plume (scripts/start/ink.py, generated from a text prompt), with its placement, blur, mask and level

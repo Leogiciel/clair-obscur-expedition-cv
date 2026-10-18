@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import ExpeditionLogo from './ExpeditionLogo';
 import TitleParticles from './TitleParticles';
 import './style.scss';
 
-type Phase = 'loading' | 'ready' | 'leaving' | 'gone';
+type Phase = 'loading' | 'ready' | 'leaving';
 
-// Set once the visitor has pressed a button; root.tsx reads it before the first paint so a reload skips the screen.
-export const STARTED_KEY = 'cv-started';
 // Past this, the screen lets the visitor in even if some clips are still loading (they keep loading behind).
 const MAX_WAIT_MS = 25000;
 const POLL_MS = 200;
-const LEAVE_MS = 700;
+// The logo dissolves over LEAVE_MS, then the overview comes up over REVEAL_MS (style.scss).
+const LEAVE_MS = 800;
+const REVEAL_MS = 1600;
 // The game prints its build number in the bottom right corner; this one is the CV's.
 const BUILD = '35.10';
 
@@ -28,22 +29,22 @@ const progress = () => {
   return (videos.filter(loaded).length + fonts) / (videos.length + 1);
 };
 
-// The game's title screen (design/ref/loading): the logo over drifting petals while every clip of the stage behind
-// loads, so camera moves never fall back to a cut; then "Press Any Button" pulses and any key, click or tap enters.
+// The game's title screen (design/ref/loading), the site's root: the logo over drifting petals while every clip of
+// the stage behind loads, so camera moves never fall back to a cut; then "Press Any Button" pulses and any key, click
+// or tap enters the overview. While it is up, data-start keeps the menu behind it from being painted.
 const StartScreen = () => {
+  const navigate = useNavigate();
   const [phase, setPhase] = useState<Phase>('loading');
   const [share, setShare] = useState(0);
 
   useEffect(() => {
-    try {
-      if (sessionStorage.getItem(STARTED_KEY)) {
-        delete document.documentElement.dataset.start;
-        setPhase('gone');
-        return;
-      }
-    } catch {
-      // Storage blocked: the screen simply shows on every visit.
-    }
+    document.documentElement.dataset.start = '';
+    return () => {
+      delete document.documentElement.dataset.start;
+    };
+  }, []);
+
+  useEffect(() => {
     const since = performance.now();
     const timer = window.setInterval(() => {
       const done = progress();
@@ -57,18 +58,17 @@ const StartScreen = () => {
   }, []);
 
   useEffect(() => {
-    if (phase !== 'loading' && phase !== 'ready') return;
+    if (phase === 'leaving') return;
     const enter = () => {
       if (phase !== 'ready') return;
-      try {
-        sessionStorage.setItem(STARTED_KEY, '1');
-      } catch {
-        // Storage blocked: nothing to remember.
-      }
-      // The menu behind shows again as the screen fades out.
-      delete document.documentElement.dataset.start;
       setPhase('leaving');
-      window.setTimeout(() => setPhase('gone'), LEAVE_MS);
+      window.setTimeout(() => {
+        // The overview fades in from black; the flag outlives this screen, which unmounts with the navigation.
+        const root = document.documentElement.dataset;
+        root.reveal = '';
+        navigate('/overview');
+        window.setTimeout(() => delete root.reveal, REVEAL_MS);
+      }, LEAVE_MS);
     };
     // Captured before the screens' shortcuts, so no key reaches the menu behind while this screen is up.
     const onKey = (event: KeyboardEvent) => {
@@ -82,9 +82,7 @@ const StartScreen = () => {
       window.removeEventListener('keydown', onKey, true);
       window.removeEventListener('pointerdown', enter);
     };
-  }, [phase]);
-
-  if (phase === 'gone') return null;
+  }, [phase, navigate]);
 
   return (
     <div
