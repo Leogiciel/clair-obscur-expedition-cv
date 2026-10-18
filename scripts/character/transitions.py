@@ -35,8 +35,12 @@ PAIRS = {
     'luminas-pictos': 'In one smooth continuous move the camera orbits from his front three-quarter view around to behind his shoulder as his head turns into profile toward the left, once, never back.',
     # Not used: the result turned through the back of the head; the page plays luminas-pictos reversed instead.
     'pictos-luminas': 'In one smooth continuous move the camera orbits from behind his shoulder around to his front three-quarter view as his head turns from profile, once, never back.',
-    'skills-skilltree': 'In one smooth continuous move the camera pushes in from a medium shot to a close bust as he '
-                        'uncrosses his arms and lowers them, turning his shoulders slightly to the right.',
+    # The first prompt gave a pause, an awkward arm move and a pull-back: the move is now spelled out as one push-in.
+    'skills-skilltree': 'From the very first frame the camera dollies straight in toward his face in one smooth, '
+                        'continuous, accelerating then easing move, ending on a close bust shot. During the move he '
+                        'uncrosses his arms naturally and lowers them out of frame, and turns his shoulders slightly '
+                        'to the right while keeping his face toward the camera. No pause, no zoom out, no cut.',
+    # Not generated: its source clip is skills-skilltree reversed.
     'skilltree-skills': 'In one smooth continuous move the camera pulls back from a close bust to a medium shot as he '
                         'crosses his arms over his chest, facing the camera.',
     'skills-overview': 'In one smooth continuous move he uncrosses his arms and relaxes into the bust pose while the '
