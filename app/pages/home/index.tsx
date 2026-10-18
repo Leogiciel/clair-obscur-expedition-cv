@@ -3,13 +3,14 @@ import {Link, useOutletContext} from 'react-router';
 import TextureMainWeapon from '~/components/ui-kit/TextureMainWeapon';
 import TextureMainPicto from '~/components/ui-kit/TextureMainPicto';
 import TextureMainSkill from '~/components/ui-kit/TextureMainSkill';
-import TextureButton from '~/components/ui-kit/TextureButton';
 import KeyHint from '~/components/ui-kit/KeyHint';
 import SelectFx from '~/components/ui-kit/SelectFx';
 import type {StageContext} from '../common/StageLayout';
 import Glyph from '../common/Glyph';
 import SectionTitle from '../common/SectionTitle';
 import Luminas from '../common/Luminas';
+import IconButton from '../common/IconButton';
+import LinkedInMark from '../common/LinkedInMark';
 import TechIcon from '../common/TechIcon';
 import CompanyLogo from '../common/CompanyLogo';
 import useLoadout from '../common/store/useLoadout';
@@ -125,9 +126,9 @@ const Home = () => {
         })}
       </ul>
 
-      <TextureButton className="absolute left-[1915px] top-[786px]" buttonProps={{'data-nav': true}} marked onClick={() => window.open(LINKEDIN_URL, '_blank', 'noopener')}>
+      <IconButton icon={<LinkedInMark/>} className="absolute left-[1915px] top-[786px]" width={380} onClick={() => window.open(LINKEDIN_URL, '_blank', 'noopener')}>
         LinkedIn
-      </TextureButton>
+      </IconButton>
       <Luminas/>
 
       <div className="Screen-hints absolute left-[1965px] top-[1299px]">

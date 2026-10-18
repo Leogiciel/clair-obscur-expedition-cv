@@ -1,6 +1,6 @@
 import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
-import {DEFAULT_PICTOS, DEFAULT_SKILLS, EXPERIENCES, PICTO_SLOTS, SKILL_SLOTS, type TechId} from '../data';
+import {DEFAULT_PICTOS, DEFAULT_SKILLS, EXPERIENCES, LUMINA_POINTS, LUMINAS, PICTO_SLOTS, SKILL_SLOTS, luminaCost, luminaPointsSpent, type TechId} from '../data';
 
 type Slots<T> = (T | null)[];
 
@@ -8,6 +8,10 @@ interface Loadout {
   pictos: Slots<string>;
   skills: Slots<TechId>;
   experience: string;
+  // Luminas activated with points (equipped pictos' Luminas are always active and free).
+  luminas: string[];
+  toggleLumina: (id: string) => void;
+  resetLuminas: () => void;
   equipPicto: (slot: number, id: string) => void;
   clearPicto: (slot: number) => void;
   equipSkill: (slot: number, id: TechId) => void;
@@ -39,6 +43,14 @@ const useLoadout = create<Loadout>()(
       pictos: fill(DEFAULT_PICTOS, PICTO_SLOTS),
       skills: fill(DEFAULT_SKILLS, SKILL_SLOTS),
       experience: EXPERIENCES[0].id,
+      luminas: [],
+      toggleLumina: (id) => set((s) => {
+        if (s.pictos.includes(id)) return {};
+        if (s.luminas.includes(id)) return {luminas: s.luminas.filter((l) => l !== id)};
+        const lumina = LUMINAS.find((l) => l.id === id)!;
+        return luminaPointsSpent(s.luminas, s.pictos) + luminaCost(lumina) <= LUMINA_POINTS ? {luminas: [...s.luminas, id]} : {};
+      }),
+      resetLuminas: () => set({luminas: []}),
       equipPicto: (slot, id) => set((s) => ({pictos: equip(s.pictos, slot, id)})),
       clearPicto: (slot) => set((s) => ({pictos: clear(s.pictos, slot)})),
       equipSkill: (slot, id) => set((s) => ({skills: equip(s.skills, slot, id)})),
@@ -47,10 +59,11 @@ const useLoadout = create<Loadout>()(
     }),
     {
       name: 'cv-loadout',
-      version: 1,
+      version: 2,
+      migrate: (state) => ({luminas: [], ...(state as object)}) as unknown as Loadout,
       storage: createJSONStorage(() => localStorage),
       skipHydration: true,
-      partialize: ({pictos, skills, experience}) => ({pictos, skills, experience}),
+      partialize: ({pictos, skills, experience, luminas}) => ({pictos, skills, experience, luminas}),
     },
   ),
 );

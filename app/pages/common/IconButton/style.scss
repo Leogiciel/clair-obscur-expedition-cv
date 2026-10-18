@@ -1,0 +1,29 @@
+.IconButton {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &-key {
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+
+    .KeyHint-key {
+      width: 40px;
+      height: 40px;
+      font-size: 22px;
+    }
+  }
+
+  // Sigil on the plate's left tip and the label right after it, as in the capture.
+  &-button .TextureButton-icon {
+    left: 30px;
+  }
+
+  &-button .TextureButton-label {
+    left: 122px;
+    justify-content: flex-start;
+    color: #f0ece2;
+  }
+}

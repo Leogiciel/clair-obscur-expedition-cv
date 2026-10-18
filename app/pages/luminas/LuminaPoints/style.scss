@@ -1,0 +1,31 @@
+// Texture 420×164; the label is centred at y 48 and the value at y 98. The pale cyan is sampled from the capture.
+.LuminaPoints {
+  --lumina-cyan: #a6efe8;
+
+  position: absolute;
+  left: 1360px;
+  top: 1090px;
+  width: 420px;
+  height: 164px;
+  background: url('/ui/tex/lumina-points.webp') 0 0 / 100% 100% no-repeat;
+
+  &-label {
+    position: absolute;
+    left: 0;
+    right: 40px;
+    top: 36px;
+    text-align: center;
+    color: var(--lumina-cyan);
+  }
+
+  &-value {
+    position: absolute;
+    left: 10px;
+    right: 20px;
+    top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+  }
+}

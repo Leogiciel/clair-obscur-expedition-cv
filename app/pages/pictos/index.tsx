@@ -1,4 +1,6 @@
-import {useNavigate} from 'react-router';
+import {useState} from 'react';
+import {useNavigate, useOutletContext} from 'react-router';
+import type {StageContext} from '../common/StageLayout';
 import KeyHint from '~/components/ui-kit/KeyHint';
 import Glyph from '../common/Glyph';
 import Label from '../common/Label';
@@ -30,6 +32,9 @@ const SORTS: SortOption<Picto>[] = [
 
 const PictosPage = () => {
   const navigate = useNavigate();
+  // Opened from the Luminas screen (Edit Pictos), Back returns there, as in the game.
+  const {from} = useOutletContext<StageContext>();
+  const [backTo] = useState(from === '/luminas' ? '/luminas' : '/');
   const sort = useSort(PICTOS, SORTS);
   const {sorted} = sort;
   const slots = useLoadout((s) => s.pictos);
@@ -44,7 +49,7 @@ const PictosPage = () => {
     slotItem: (s) => (slots[s] ? pictoById(slots[s]) : null),
     equip: (s, p) => equip(s, p.id),
     clear,
-    onBack: () => navigate('/'),
+    onBack: () => navigate(backTo),
   });
   const hovered = picker.hovered === null ? null : sorted[picker.hovered];
   const inSlot = slots[picker.slot];
