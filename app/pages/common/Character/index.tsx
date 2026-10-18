@@ -59,16 +59,31 @@ const HANDOVER_MS = 250;
 
 const SHOTS = Object.keys(framing) as Shot[];
 
+// The phone variant of each clip (scripts/character/encode_mobile.py): 1280 px on the long side, half the decoder
+// memory and a third of the download, for screens too small to show the full resolution.
+const MOBILE = import.meta.glob<string>('../../../assets/character/mobile/*.mp4', {
+  eager: true,
+  query: '?url',
+  import: 'default'
+});
+const mobile = (name: string) => MOBILE[`../../../assets/character/mobile/${name}.mp4`];
+// Landscape phones; tablets and computers are taller.
+const SMALL = '(max-height: 540px)';
+
 // Phones held upright only see RotateScreen (its media query, repeated here): no clip loads until they turn.
 const UPRIGHT = '(orientation: portrait) and (max-width: 1024px)';
 
 // The clips are given their sources on the client only, once the orientation is known: in the server render, a
 // phone held upright downloaded all 16 MB of them behind the screen asking to turn it.
+// Which set of clips to load: none yet, the phone variants or the full ones (decided once, when they are first wanted).
 const useClipsWanted = () => {
-  const [wanted, setWanted] = useState(false);
+  const [wanted, setWanted] = useState<'none' | 'small' | 'full'>('none');
   useEffect(() => {
     const upright = window.matchMedia(UPRIGHT);
-    const update = () => setWanted((was) => was || !upright.matches);
+    const update = () =>
+      setWanted((was) =>
+        was !== 'none' || upright.matches ? was : window.matchMedia(SMALL).matches ? 'small' : 'full'
+      );
     update();
     upright.addEventListener('change', update);
     return () => upright.removeEventListener('change', update);
@@ -169,7 +184,9 @@ const Character = ({ shot }: { shot: Shot }) => {
           }}
           className="Character-move"
           style={{ transform: `scale(${CANVAS_SCALE})` }}
-          src={wanted && needed.moves.has(key) ? src : undefined}
+          src={
+            wanted !== 'none' && needed.moves.has(key) ? (wanted === 'small' ? mobile(key) : src) : undefined
+          }
           muted
           playsInline
           preload="auto"
@@ -199,7 +216,13 @@ const Character = ({ shot }: { shot: Shot }) => {
               muted
               playsInline
               preload="auto"
-              src={wanted && needed.loops.has(s) ? LOOPS[s] : undefined}
+              src={
+                wanted !== 'none' && needed.loops.has(s)
+                  ? wanted === 'small'
+                    ? mobile(s)
+                    : LOOPS[s]
+                  : undefined
+              }
             />
           </div>
         );
