@@ -95,14 +95,14 @@ ref = np.asarray(Image.open(ROOT / 'design/frames/t11.png').convert('RGB')).asty
 tex = np.asarray(Image.open(OUT / 'main-weapon.webp').convert('RGBA')).astype(np.float32)
 comp = tex[..., :3] * tex[..., 3:] / 255
 ZONES = {
-    'bavure gauche': (122, 822, 196, 920),
-    'filet haut': (300, 832, 500, 850),
-    'filet bas': (240, 914, 470, 934),
-    'aplat milieu': (440, 850, 500, 896),
-    'pointe droite': (565, 838, 632, 930),
+    'left smudge': (122, 822, 196, 920),
+    'top rule': (300, 832, 500, 850),
+    'bottom rule': (240, 914, 470, 934),
+    'middle flat': (440, 850, 500, 896),
+    'right tip': (565, 838, 632, 930),
 }
 for k, (a, b, c, d) in ZONES.items():
     e = np.abs(ref[b - Y0:d - Y0, a - X0:c - X0].max(2) - comp[b - Y0:d - Y0, a - X0:c - X0].max(2)).mean()
-    print(f'{k:14s} écart moyen {e:.2f}')
+    print(f'{k:14s} mean error {e:.2f}')
 g = lambda a: (255 * (np.clip(a, 0, 255) / 255) ** (1 / 2.2)).astype(np.uint8)
 Image.fromarray(np.vstack([g(ref), np.full((4, W, 3), [255, 0, 0], np.uint8), g(comp)])).resize((W * 2, (2 * H + 4) * 2), Image.NEAREST).save(DEBUG / 'main-weapon__check.png')

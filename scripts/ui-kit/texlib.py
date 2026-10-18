@@ -129,5 +129,5 @@ def check(name, ref, at, zones):
         d = np.abs(r[y0:y1, x0:x1].max(2) - canvas[y0:y1, x0:x1].max(2)).mean()
         out.append(round(float(d), 2))
     Image.fromarray(np.hstack([r, np.full((r.shape[0], 6, 3), [255, 0, 0], np.float32), canvas]).astype(np.uint8)).save(DEBUG / f'{name}__check.png')
-    print(name, 'écart moyen par zone :', out)
+    print(name, 'mean error per zone:', out)
     return out

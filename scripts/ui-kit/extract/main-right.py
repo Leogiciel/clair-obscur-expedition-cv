@@ -126,27 +126,27 @@ def backdrop():
     warm = cv2.GaussianBlur(cv2.dilate(warm.astype(np.uint8), np.ones((3, 3), np.uint8), iterations=2)
                             .astype(np.float32), (0, 0), 1.5)[..., None]
     img = img * (1 - warm) + L * tint * warm
-    print('backdrop : teinte du treillis', np.round(tint, 3), 'reflet chaud', int((warm > 0.5).sum()), 'px')
+    print('backdrop: lattice tint', np.round(tint, 3), 'warm reflection', int((warm > 0.5).sum()), 'px')
     moving = hand
-    print('backdrop : mouvement hors zone de la main', int(((sd > 6) & ~rect(base.shape, *HAND)).sum()), 'px')
+    print('backdrop: motion outside the hand area', int(((sd > 6) & ~rect(base.shape, *HAND)).sum()), 'px')
     w = cv2.GaussianBlur(moving.astype(np.float32), (0, 0), 1.5)[..., None] * 0.4
     img = img * (1 - w) + cv2.GaussianBlur(img, (0, 0), 0.8) * w
     # Fade out before the key hints.
     h = img.shape[0]
     fade = np.clip((h - np.arange(h)) / BACK_FADE, 0, 1)[:, None, None]
-    print('backdrop : pixels repris', int(moving.sum()), '/ recopiés', int(doubt.sum()))
+    print('backdrop: pixels kept', int(moving.sum()), '/ copied', int(doubt.sum()))
     save(img * fade, 'main-right-backdrop', 28)
     Image.fromarray(np.clip(img * 7, 0, 255).astype(np.uint8)).save(DEBUG / 'main-right-backdrop__x7.png')
     # Check against the main screen (median of t11 +/- 0.5 s).
     main = sub(np.median(stack[42:47], axis=0), BX0, BY0, BX1, BY1)
-    zones = {'droite': (2340, 920, 2440, 1240), 'sous les rangées': (1880, 1130, 2320, 1240),
-             'gauche': (1866, 920, 1880, 1080)}
+    zones = {'right': (2340, 920, 2440, 1240), 'below the rows': (1880, 1130, 2320, 1240),
+             'left': (1866, 920, 1880, 1080)}
     out = {}
     for k, (x0, y0, x1, y1) in zones.items():
         a = main[y0 - BY0:y1 - BY0, x0 - BX0:x1 - BX0].max(2)
         b = img[y0 - BY0:y1 - BY0, x0 - BX0:x1 - BX0].max(2)
         out[k] = round(float(np.abs(a - b).mean()), 2)
-    print('backdrop : écart moyen avec l\'écran principal', out)
+    print('backdrop: mean difference from the main screen', out)
     return img
 
 
@@ -172,7 +172,7 @@ def line(lattice):
     # Subtract the lattice the line partly covers.
     out = np.clip(img - bg * (1 - np.clip(diff / 60, 0, 1))[..., None], 0, 255) * w[..., None]
     ys, xs = np.nonzero(keep)
-    print('line : trait x', LX0 + xs.min(), '..', LX0 + xs.max(), ' y', LY0 + ys.min(), '..', LY0 + ys.max())
+    print('line: stroke x', LX0 + xs.min(), '..', LX0 + xs.max(), ' y', LY0 + ys.min(), '..', LY0 + ys.max())
     save(out, 'main-right-line', 110)
     Image.fromarray(np.clip(out * 3, 0, 255).astype(np.uint8)).save(DEBUG / 'main-right-line__x3.png')
 
@@ -273,19 +273,19 @@ def wardrobe():
     save(img, 'main-right-wardrobe', 18)
     Image.fromarray(np.clip((img / 255) ** (1 / 1.8) * 255, 0, 255).astype(np.uint8)).save(DEBUG / 'main-right-wardrobe__lift.png')
     t = np.asarray(Image.open(OUT / 'main-right-wardrobe.webp').convert('RGBA')).astype(np.float32)
-    zones = {'losange gauche': (1920, 800, 1972, 862), 'filet haut': (2056, 796, 2300, 811),
-             'bord bas': (2056, 849, 2300, 866), 'chevron': (2297, 805, 2318, 858)}
+    zones = {'left diamond': (1920, 800, 1972, 862), 'top rule': (2056, 796, 2300, 811),
+             'bottom edge': (2056, 849, 2300, 866), 'chevron': (2297, 805, 2318, 858)}
     # Also composite over the bare lattice (weapon tooltip frames, 3.5-9 s, no button), as in the page.
     under = sub(np.median(stack[14:36], axis=0), WX0, WY0, WX1, WY1)
     a = t[..., 3:] / 255
     comp_black = (t[..., :3] * a).max(2)
     comp = (under * (1 - a) + t[..., :3] * a).max(2)
     ref = sub(src, WX0, WY0, WX1, WY1).max(2)
-    print('wardrobe : sur noir', {k: round(float(np.abs(comp_black[Y(z[1]):Y(z[3]), X(z[0]):X(z[2])] - ref[Y(z[1]):Y(z[3]), X(z[0]):X(z[2])]).mean()), 2) for k, z in zones.items()})
+    print('wardrobe: over black', {k: round(float(np.abs(comp_black[Y(z[1]):Y(z[3]), X(z[0]):X(z[2])] - ref[Y(z[1]):Y(z[3]), X(z[0]):X(z[2])]).mean()), 2) for k, z in zones.items()})
     out = {}
     for k, (x0, y0, x1, y1) in zones.items():
         out[k] = round(float(np.abs(comp[Y(y0):Y(y1), X(x0):X(x1)] - ref[Y(y0):Y(y1), X(x0):X(x1)]).mean()), 2)
-    print('wardrobe : sur le treillis', out)
+    print('wardrobe: over the lattice', out)
     Image.fromarray(np.clip(np.vstack([ref, comp, np.abs(ref - comp) * 4]) * 2, 0, 255).astype(np.uint8)).save(DEBUG / 'main-right-wardrobe__check.png')
 
 

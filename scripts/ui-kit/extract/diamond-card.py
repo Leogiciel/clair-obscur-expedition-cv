@@ -170,21 +170,21 @@ def compose_check(zones):
     lift = lambda im: 255 * (np.clip(im, 0, 255) / 255) ** 0.5
     sep = np.full((r.shape[0], 6, 3), [255, 0, 0], np.float32)
     Image.fromarray(np.hstack([lift(r), sep, lift(canvas)]).astype(np.uint8)).save(DEBUG / 'diamond-card__check.png')
-    print('diamond-card écart moyen par zone :', out)
+    print('diamond-card mean error per zone:', out)
     return out
 
 
 compose_check({
-    'filet-haut': (200, 3, 590, 14),
-    'filet-bas': (200, 192, 560, 202),
-    'crochet-haut-droit': (588, 4, 612, 26),
-    'flanc-droit-haut': (590, 18, 630, 82),
-    'flanc-droit-bas': (575, 98, 630, 182),
-    'pan-coupe-bas': (556, 176, 600, 202),
-    'coin-haut-gauche': (90, 2, 130, 22),
-    'losange-haut-gauche': (30, 30, 62, 62),
-    'losange-droite': (150, 70, 185, 140),
-    'losange-bas': (60, 150, 135, 200),
-    'filet-separateur': (189, 126, 433, 131),
-    'plaque-vide': (440, 90, 540, 100),
+    'top-rule': (200, 3, 590, 14),
+    'bottom-rule': (200, 192, 560, 202),
+    'top-right-hook': (588, 4, 612, 26),
+    'right-side-top': (590, 18, 630, 82),
+    'right-side-bottom': (575, 98, 630, 182),
+    'bottom-bevel': (556, 176, 600, 202),
+    'top-left-corner': (90, 2, 130, 22),
+    'top-left-diamond': (30, 30, 62, 62),
+    'right-diamond': (150, 70, 185, 140),
+    'bottom-diamond': (60, 150, 135, 200),
+    'separator-rule': (189, 126, 433, 131),
+    'empty-plate': (440, 90, 540, 100),
 })

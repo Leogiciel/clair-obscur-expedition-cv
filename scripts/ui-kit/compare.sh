@@ -4,7 +4,7 @@
 # Usage: scripts/ui-kit/compare.sh <out_dir> [url]
 # Output: <ref>__<zone>.png, reference on the left, recreation on the right.
 set -euo pipefail
-OUT=${1:?dossier de sortie}
+OUT=${1:?output directory}
 URL=${2:-http://localhost:5199/dev/kit}
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 REF=$ROOT/design/ref

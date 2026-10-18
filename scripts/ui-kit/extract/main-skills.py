@@ -181,7 +181,7 @@ def compare(name, at, zones, src_off=(0, 0), additive=None):
     sbs = np.hstack([ref[y:y + h, x:x + w], pad, comp])
     g = 255 * (np.clip(sbs, 0, 255) / 255) ** (1 / 2.2)
     Image.fromarray(g.astype(np.uint8)).resize((sbs.shape[1] * 2, h * 2), Image.NEAREST).save(DEBUG / f'{name}__check.png')
-    print(name, 'écart moyen par zone :', out)
+    print(name, 'mean error per zone:', out)
     return out
 
 
@@ -229,7 +229,7 @@ def check_stack():
     s = np.vstack([ref, np.zeros((4, ref.shape[1], 3)), comp])[:, 300:]
     g = 255 * (np.clip(s, 0, 255) / 255) ** (1 / 2.2)
     Image.fromarray(g.astype(np.uint8)).resize((s.shape[1] * 6, s.shape[0] * 6), Image.NEAREST).save(DEBUG / 'main-skills-stack__check.png')
-    print('pile rangée + point + pastille, écart (point, pastille hors chiffre, extrémité) :', out)
+    print('stacked row + dot + badge, error (dot, badge excluding digit, end):', out)
 
 
 check_stack()

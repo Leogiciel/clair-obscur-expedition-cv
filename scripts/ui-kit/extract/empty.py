@@ -101,5 +101,5 @@ r = np.asarray(Image.open(Path(__file__).resolve().parents[3] / 'design/ref/empt
 sim = np.zeros_like(r)
 sim[Y0:Y1, X0:X1] = check_square(sq)
 errs = [round(float(np.abs(r[y0:y1, x0:x1].max(2) - sim[y0:y1, x0:x1].max(2)).mean()), 2) for x0, y0, x1, y1 in ZONES]
-print('empty-square (rotation simulée) écart moyen par zone :', errs)
+print('empty-square (simulated rotation) mean error per zone:', errs)
 Image.fromarray(np.hstack([r, np.full((200, 6, 3), [255, 0, 0], np.float32), sim]).astype(np.uint8)).save(DEBUG / 'empty-square__check.png')

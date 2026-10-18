@@ -109,10 +109,10 @@ def clone_along_edges(img, damaged, outer, box, edges, bad, mirror=None):
                 best = (sx, sy, k)
                 break
         if best is None:
-            print('  bord', i, ': aucune source saine', sorted(fr)[:3])
+            print('  edge', i, ': no clean source', sorted(fr)[:3])
             continue
         sx, sy, k = best
-        print('  bord', i, ': décalage', k, 'px,', int(part.sum()), 'px clonés')
+        print('  edge', i, ': offset', k, 'px,', int(part.sum()), 'px cloned')
         src = out[np.clip(sy, 0, sh[0] - 1), np.clip(sx, 0, sh[1] - 1)]
         w = cv2.GaussianBlur(grow(part, 2).astype(np.float32), (0, 0), 1.2)
         out = out * (1 - w[..., None] * (1 - weight[..., None])) + src * (w[..., None] * (1 - weight[..., None]))

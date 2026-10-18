@@ -56,7 +56,7 @@ def check_over(name, img, bg, at, zones):
         cov = t[sl][..., 3] > 0
         d = np.abs(img[sl].max(2) - comp[sl].max(2))[cov].mean()
         out.append(round(float(d), 2))
-    print(name, 'écart sur fond estimé :', out)
+    print(name, 'error over estimated background:', out)
     return out
 
 
@@ -132,7 +132,7 @@ def bar_tex(name, x0, y0, x1, y1, inner_rows, stops, tips, yc, half, fill=None):
     k = np.clip(1 - L / np.maximum(Lb, 1), 0, 0.95)
     valid = inner & (Lb > 15)
     prof = np.array([np.median(k[r][valid[r]]) if valid[r].sum() > 20 else 0 for r in range(sh[0])], np.float32)
-    print(name, 'voile k par ligne :', [round(float(v), 2) for v in prof if v > 0])
+    print(name, 'veil k per row:', [round(float(v), 2) for v in prof if v > 0])
     ks = np.where(inner, prof[:, None], 0)
     if fill:
         fa, fb = fill
@@ -196,6 +196,6 @@ if '--diag' in sys.argv:
         t = np.asarray(Image.open(OUT / f'{nm}.webp').convert('RGBA')).astype(np.float32)
         comp = bg_ * (1 - t[..., 3:] / 255) + t[..., :3] * t[..., 3:] / 255
         d = (im_.max(2) - comp.max(2))[:, zx0 - ax:zx1 - ax]
-        print(nm, 'écart moyen signé / absolu par ligne :')
+        print(nm, 'mean error signed / absolute per row:')
         for r in range(d.shape[0]):
             print(ay + r, round(float(d[r].mean()), 1), round(float(np.abs(d[r]).mean()), 1))

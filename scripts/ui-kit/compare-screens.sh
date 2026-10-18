@@ -2,7 +2,7 @@
 # Compares site screens (2510x1380) with game video frames: stacked and 50% overlay.
 # Usage: scripts/ui-kit/compare-screens.sh <out_dir> [base_url]
 set -euo pipefail
-OUT=${1:?dossier de sortie}
+OUT=${1:?output directory}
 BASE=${2:-http://localhost:5199}
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 B=${BROWSE:-$HOME/.claude/skills/gstack/browse/dist/browse}

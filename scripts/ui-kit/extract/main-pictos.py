@@ -58,7 +58,7 @@ def compare(name, src, box, zones, skip=None):
     sep = np.full((ref.shape[0], 4, 3), [255, 0, 0], np.float32)
     Image.fromarray(np.vstack([np.hstack([lift(ref), sep, lift(over)]),
                                np.hstack([ref, sep, over])]).astype(np.uint8)).save(DEBUG / f'{name}__check.png')
-    print(name, 'écart moyen par zone :', out)
+    print(name, 'mean error per zone:', out)
     return out
 
 
