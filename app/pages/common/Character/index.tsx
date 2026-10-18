@@ -15,6 +15,9 @@ import overviewToLuminas from '~/assets/character/overview-luminas.mp4';
 import luminasToOverview from '~/assets/character/luminas-overview.mp4';
 import luminasToPictos from '~/assets/character/luminas-pictos.mp4';
 import pictosToLuminas from '~/assets/character/pictos-luminas.mp4';
+import skilltreeClip from '~/assets/character/skilltree.mp4';
+import skillsToSkilltree from '~/assets/character/skills-skilltree.mp4';
+import skilltreeToSkills from '~/assets/character/skilltree-skills.mp4';
 import './style.scss';
 
 export type Shot = keyof typeof framing;
@@ -23,7 +26,7 @@ export type Shot = keyof typeof framing;
 // head ≈ 29 % of the stage height with the face at 48 %; weapon head ≈ 22 % with the face at 61 %, kept right of the
 // experience card; pictos head ≈ 31 % in profile, nose at 58 %; skills (arms crossed, face kept in frame unlike the
 // game) head ≈ 27 % with the face at 56 %, above the slots.
-const LOOPS: Record<Shot, string> = {overview: overviewClip, experience: experienceClip, pictos: pictosClip, skills: skillsClip, luminas: luminasClip};
+const LOOPS: Record<Shot, string> = {overview: overviewClip, experience: experienceClip, pictos: pictosClip, skills: skillsClip, luminas: luminasClip, skilltree: skilltreeClip};
 
 // Camera moves rendered on 16:9 canvases covering the stage width (2510 × 1412), ending on the next loop's first frame.
 const TRANSITIONS: Partial<Record<`${Shot}-${Shot}`, string>> = {
@@ -38,6 +41,8 @@ const TRANSITIONS: Partial<Record<`${Shot}-${Shot}`, string>> = {
   'luminas-pictos': luminasToPictos,
   // The generated return turned through the back of the head: it is the outward move played backwards.
   'pictos-luminas': pictosToLuminas,
+  'skills-skilltree': skillsToSkilltree,
+  'skilltree-skills': skilltreeToSkills,
 };
 const CANVAS_SCALE = 2510 / 1920;
 // Cross-fades the transition's last frame into the loop: same position, but the clips differ in exposure (≈ 9 %) and ribbons.

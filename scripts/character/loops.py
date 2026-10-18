@@ -33,6 +33,9 @@ SHOTS = {
     'luminas': ((1920, 1080), STILLS / 'luminas.png', (
         'Idle bust in three-quarter view: he breathes slowly and subtly, blinks naturally, keeps looking toward the '
         'left with a calm, thoughtful expression, very slight head sway. ')),
+    'skilltree': ((1920, 1080), STILLS / 'skilltree.png', (
+        'Idle close bust: he breathes slowly and subtly, blinks naturally, focused expression, gaze slightly off camera '
+        'to the left, very slight head sway. ')),
 }
 NEGATIVE = 'camera movement, zoom, morphing face, extra fingers, text, watermark, blur, distortion, low quality'
 
