@@ -9,3 +9,4 @@
 .gstack/
 .idea/
 .env*
+__pycache__/
