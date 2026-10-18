@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 export type TextureStatsBarVariant = 'xp' | 'plain';
@@ -14,8 +16,22 @@ const BARS: Record<
     track: [number, number];
   }
 > = {
-  xp: { src: '/ui/tex/stats-top-bar-xp.webp', width: 392, height: 30, left: 30, right: 22, track: [27, 21] },
-  plain: { src: '/ui/tex/stats-top-bar.webp', width: 442, height: 30, left: 30, right: 22, track: [22, 21] }
+  xp: {
+    src: publicUrl('ui/tex/stats-top-bar-xp.webp'),
+    width: 392,
+    height: 30,
+    left: 30,
+    right: 22,
+    track: [27, 21]
+  },
+  plain: {
+    src: publicUrl('ui/tex/stats-top-bar.webp'),
+    width: 442,
+    height: 30,
+    left: 30,
+    right: 22,
+    track: [22, 21]
+  }
 };
 
 interface TextureStatsBarProps {

@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 export type TexturePlateVariant = 'normal' | 'selected' | 'hover';
@@ -22,7 +24,7 @@ const TEXTURES: Record<
   }
 > = {
   normal: {
-    src: '/ui/tex/plate-normal.webp',
+    src: publicUrl('ui/tex/plate-normal.webp'),
     width: 337,
     height: 66,
     left: 60,
@@ -32,7 +34,7 @@ const TEXTURES: Record<
     tail: 10
   },
   selected: {
-    src: '/ui/tex/plate-selected.webp',
+    src: publicUrl('ui/tex/plate-selected.webp'),
     width: 374,
     height: 75,
     left: 62,
@@ -43,7 +45,7 @@ const TEXTURES: Record<
     tail: 54
   },
   hover: {
-    src: '/ui/tex/plate-hover.webp',
+    src: publicUrl('ui/tex/plate-hover.webp'),
     width: 424,
     height: 72,
     left: 94,

@@ -24,7 +24,8 @@ export interface StageContext {
 // The character and stats column persist across screens; only the outlet is swapped, which gives
 // the game's single-frame UI cut while the character runs its own transition.
 const StageLayout = () => {
-  const { pathname } = useLocation();
+  // Static hosting (GitHub Pages) serves each screen as a folder, so its URL may end in a slash: /skills/ is /skills.
+  const pathname = useLocation().pathname.replace(/(.)\/$/, '$1');
   const previous = useRef(pathname);
   const from = previous.current;
   useEffect(() => {

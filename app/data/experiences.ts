@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import { siSap } from 'simple-icons';
 
 import type { TechId } from './tech';
@@ -26,7 +28,7 @@ const POSITIONS: Experience[] = [
     id: 'podspace',
     title: 'CTO',
     company: 'Podspace',
-    logo: { src: '/ui/logos/podspace.svg' },
+    logo: { src: publicUrl('ui/logos/podspace.svg') },
     start: '2025-11',
     figure: { value: '2,000+', label: 'Sessions' },
     highlights: [
@@ -55,7 +57,7 @@ const POSITIONS: Experience[] = [
     id: 'awesomeapps',
     title: 'Founder & Developer',
     company: 'AwesomeApps',
-    logo: { src: '/ui/logos/awesomeapps.webp' },
+    logo: { src: publicUrl('ui/logos/awesomeapps.webp') },
     start: '2019-09',
     figure: { value: '200', label: 'Customers' },
     highlights: [
@@ -82,7 +84,7 @@ const POSITIONS: Experience[] = [
     id: 'coinhouse',
     title: 'Lead Front-end',
     company: 'Coinhouse',
-    logo: { src: '/ui/logos/coinhouse.png' },
+    logo: { src: publicUrl('ui/logos/coinhouse.png') },
     start: '2022-02',
     end: '2025-08',
     figure: { value: '80%', label: 'Coverage' },
@@ -99,7 +101,7 @@ const POSITIONS: Experience[] = [
     id: 'beewyze',
     title: 'Founding Developer',
     company: 'BeeWyze',
-    logo: { src: '/ui/logos/beewyze.webp' },
+    logo: { src: publicUrl('ui/logos/beewyze.webp') },
     start: '2024-01',
     end: '2025-01',
     freelance: true,
@@ -130,7 +132,7 @@ const POSITIONS: Experience[] = [
     id: 'mobeye',
     title: 'Full Stack Developer',
     company: 'Mobeye',
-    logo: { src: '/ui/logos/mobeye.webp' },
+    logo: { src: publicUrl('ui/logos/mobeye.webp') },
     start: '2015-10',
     end: '2017-10',
     highlights: [

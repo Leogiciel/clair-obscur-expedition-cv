@@ -1,9 +1,17 @@
+import { publicUrl } from '~/publicUrl';
+
 import TextureSortSlab, { SLAB } from './TextureSortSlab';
 import './style.scss';
 
 // Measured by scripts/ui-kit/extract/title-sort.py (px, 1x).
 // Rule: fade-in | vertical tick + knot (fixed) | solid rule (stretched) | fade-out (fixed).
-const RULE = { src: '/ui/tex/title-sort-rule.webp', width: 764, height: 100, left: 170, right: 168 };
+const RULE = {
+  src: publicUrl('ui/tex/title-sort-rule.webp'),
+  width: 764,
+  height: 100,
+  left: 170,
+  right: 168
+};
 // Default placement, from the title-sort.png reference.
 const LAYOUT = { slabLeft: 436, slabTop: 7, titleLeft: 171, titleBaseline: 71, asideGap: 6 };
 

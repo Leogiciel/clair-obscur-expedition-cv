@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 // RB leans the other way from LB, hence two textures.
@@ -18,7 +20,13 @@ const TexturePortraitsKey = ({
 }: TexturePortraitsKeyProps) => (
   <span
     className={`TexturePortraitsKey ${className}`}
-    style={{ width, '--tex': `url('/ui/tex/portraits-key-${side}.webp')`, ...style } as React.CSSProperties}
+    style={
+      {
+        width,
+        '--tex': `url('${publicUrl(`ui/tex/portraits-key-${side}.webp`)}')`,
+        ...style
+      } as React.CSSProperties
+    }
   >
     <span className="TexturePortraitsKey-tex" aria-hidden />
     <span className="TexturePortraitsKey-label">{children}</span>

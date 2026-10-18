@@ -4,6 +4,8 @@
 technologies fill the skill tree, and my level is my age. The character is me, animated: every screen has its own idle
 loop and every move between screens its own camera transition, as in the game.
 
+**[▶ Live demo](https://oliviernguyen.github.io/clair-obscur-expedition-cv/)** · best in a desktop browser, in landscape on a phone.
+
 <!--
   Demo video: record the start screen, the entrance into the overview and a few screens (QuickTime: File > New Screen
   Recording), then drag the .mp4 into this README in GitHub's editor. GitHub uploads it and inserts a link that plays
@@ -34,6 +36,9 @@ loop and every move between screens its own camera transition, as in the game.
 - **One place to edit the CV**: every piece of content lives in [`app/data`](app/data).
 
 ## Run it
+
+The live demo is deployed to GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to `main`
+(`GITHUB_PAGES=true pnpm build` prerenders every screen as static HTML).
 
 Requires Node 22+ and pnpm 11 (`corepack enable` installs the version pinned in `package.json`).
 

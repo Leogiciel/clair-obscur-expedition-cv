@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 export type TexturePortraitsVariant = 'normal' | 'active';
@@ -18,7 +20,7 @@ const TEXTURES: Record<
   }
 > = {
   normal: {
-    src: '/ui/tex/portraits-frame.webp',
+    src: publicUrl('ui/tex/portraits-frame.webp'),
     width: 168,
     height: 114,
     inner: [
@@ -31,7 +33,7 @@ const TEXTURES: Record<
     flag: [106, 22, 38, 38]
   },
   active: {
-    src: '/ui/tex/portraits-frame-active.webp',
+    src: publicUrl('ui/tex/portraits-frame-active.webp'),
     width: 252,
     height: 150,
     inner: [

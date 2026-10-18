@@ -1,23 +1,24 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
 import { FIT_STAGE_SCRIPT } from '~/pages/common/Stage';
+import { publicUrl } from '~/publicUrl';
 
 import type { Route } from './+types/root';
 import './app.css';
 
 export const links: Route.LinksFunction = () => [
   // The gold diamond and its 35 (design/favicon), redrawn bolder for the 16 and 32 px sizes.
-  { rel: 'icon', href: '/favicon.ico', sizes: '16x16 32x32 48x48' },
-  { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-  { rel: 'manifest', href: '/site.webmanifest' },
+  { rel: 'icon', href: publicUrl('favicon.ico'), sizes: '16x16 32x32 48x48' },
+  { rel: 'apple-touch-icon', href: publicUrl('apple-touch-icon.png') },
+  { rel: 'manifest', href: publicUrl('site.webmanifest') },
   // The ink plume is the largest paint of the start screen and of RotateScreen: fetched with the page, not found
   // late in their CSS.
-  { rel: 'preload', href: '/ui/start-ink.webp', as: 'image', fetchPriority: 'high' },
+  { rel: 'preload', href: publicUrl('ui/start-ink.webp'), as: 'image', fetchPriority: 'high' },
   // The fonts of the first screens (start screen, RotateScreen, menu titles), fetched with the page rather than
   // discovered in the CSS; Bebas Neue, for the menus' numbers only, loads when they show.
   ...['cinzel', 'eb-garamond', 'marcellus-sc'].map((font) => ({
     rel: 'preload',
-    href: `/fonts/${font}-latin.woff2`,
+    href: publicUrl(`fonts/${font}-latin.woff2`),
     as: 'font',
     type: 'font/woff2',
     crossOrigin: 'anonymous' as const

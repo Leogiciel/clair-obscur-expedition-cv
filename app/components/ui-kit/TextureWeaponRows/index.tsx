@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 export type TextureWeaponRowsVariant = 'selected' | 'normal';
@@ -20,7 +22,7 @@ const TEXTURES: Record<
   }
 > = {
   selected: {
-    src: '/ui/tex/weapon-rows-selected.webp',
+    src: publicUrl('ui/tex/weapon-rows-selected.webp'),
     width: 488,
     height: 92,
     left: 150,
@@ -31,7 +33,7 @@ const TEXTURES: Record<
     aside: 92
   },
   normal: {
-    src: '/ui/tex/weapon-rows-normal.webp',
+    src: publicUrl('ui/tex/weapon-rows-normal.webp'),
     width: 420,
     height: 74,
     left: 100,

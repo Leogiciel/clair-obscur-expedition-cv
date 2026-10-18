@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import Strip from './Strip';
 import measures from './measures.json';
 import './style.scss';
@@ -90,7 +92,7 @@ const SelectFx = ({ kind, active, grow = 1, fit }: SelectFxProps) => {
           top: m.top,
           width: m.width,
           height: m.height,
-          backgroundImage: `url('/ui/tex/fx-${asset}.webp')`,
+          backgroundImage: `url('${publicUrl(`ui/tex/fx-${asset}.webp`)}')`,
           ...grown(m.left, m.top)
         }}
         aria-hidden
@@ -104,11 +106,11 @@ const SelectFx = ({ kind, active, grow = 1, fit }: SelectFxProps) => {
               top: flow.top,
               width: flow.width,
               height: flow.height,
-              maskImage: `url('/ui/tex/fx-${asset}-mask-${i}.webp')`
+              maskImage: `url('${publicUrl(`ui/tex/fx-${asset}-mask-${i}.webp`)}')`
             }}
           >
             <Strip
-              src={`/ui/tex/fx-${asset}-flow-${i}.webp`}
+              src={publicUrl(`ui/tex/fx-${asset}-flow-${i}.webp`)}
               tile={flow.tile}
               speed={flow.speed}
               width={flow.width}

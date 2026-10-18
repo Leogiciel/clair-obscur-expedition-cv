@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import {
   type SimpleIcon,
   siDjango,
@@ -64,8 +66,8 @@ export const TECH = {
   trpc: { name: 'tRPC', icon: siTrpc },
   tauri: { name: 'Tauri', icon: siTauri },
   shopify: { name: 'Shopify', icon: siShopify },
-  aws: { name: 'AWS', src: '/ui/logos/aws.svg' },
-  openai: { name: 'OpenAI', src: '/ui/logos/openai.svg' },
+  aws: { name: 'AWS', src: publicUrl('ui/logos/aws.svg') },
+  openai: { name: 'OpenAI', src: publicUrl('ui/logos/openai.svg') },
   gemini: { name: 'Gemini', icon: siGooglegemini },
   groq: { name: 'Groq' },
   web3auth: { name: 'Web3Auth' },

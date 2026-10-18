@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 type Layer = 'back' | 'front';
@@ -96,7 +98,7 @@ const Fall = ({ petal, layer, onDone }: { petal: Petal; layer: Layer; onDone: ()
         style={{ animationDuration: `${petal.flutter}s`, animationDelay: `${-petal.phase * petal.flutter}s` }}
       >
         <img
-          src={`/ui/petals/petal-${petal.tint}-${layer}.webp`}
+          src={publicUrl(`ui/petals/petal-${petal.tint}-${layer}.webp`)}
           alt=""
           width={petal.size}
           height={petal.size}

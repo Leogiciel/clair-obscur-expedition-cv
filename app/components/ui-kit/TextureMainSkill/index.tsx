@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 // 3-slice: 296 px fixed left (diamond / chevron + name area), 64 px fixed right (chevron tip);
@@ -29,7 +31,7 @@ const TextureMainSkill = ({
 }: TextureMainSkillProps) => {
   const vars = {
     width: Math.max(width, SLICE_LEFT + SLICE_RIGHT),
-    '--tex': `url('/ui/tex/main-skills-${empty ? 'empty' : 'row'}.webp')`,
+    '--tex': `url('${publicUrl(`ui/tex/main-skills-${empty ? 'empty' : 'row'}.webp`)}')`,
     '--slice-left': SLICE_LEFT,
     '--slice-right': SLICE_RIGHT,
     '--tex-left': `${SLICE_LEFT}px`,

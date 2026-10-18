@@ -1,4 +1,5 @@
 import framing from '~/assets/character/framing.json';
+import { publicUrl } from '~/publicUrl';
 
 import type { Shot } from '../Character';
 import './style.scss';
@@ -16,7 +17,7 @@ const CharacterOcclusion = ({ shot }: { shot: Shot }) => {
         top: f.y,
         width: f.width * f.scale,
         height: f.height * f.scale,
-        maskImage: `url('/ui/character/${shot}-matte.webp')`
+        maskImage: `url('${publicUrl(`ui/character/${shot}-matte.webp`)}')`
       }}
       aria-hidden
     />

@@ -1,3 +1,5 @@
+import { publicUrl } from '~/publicUrl';
+
 import './style.scss';
 
 export type TextureMainPictoVariant = 'filled' | 'empty';
@@ -19,7 +21,7 @@ const TEXTURES: Record<
   }
 > = {
   filled: {
-    src: '/ui/tex/main-pictos-filled.webp',
+    src: publicUrl('ui/tex/main-pictos-filled.webp'),
     width: 512,
     height: 113,
     left: 182,
@@ -29,7 +31,7 @@ const TEXTURES: Record<
     aside: 89
   },
   empty: {
-    src: '/ui/tex/main-pictos-empty.webp',
+    src: publicUrl('ui/tex/main-pictos-empty.webp'),
     width: 568,
     height: 119,
     left: 158,
