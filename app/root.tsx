@@ -12,16 +12,23 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@100..900&family=EB+Garamond:wght@400..700&family=IM+Fell+Double+Pica:ital@0;1&display=swap'
+    href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@100..900&family=EB+Garamond:wght@400..700&family=IM+Fell+Double+Pica:ital@0;1&family=Marcellus+SC&display=swap'
   }
 ];
 
+// Runs before the first paint: a visitor who already passed the start screen this session doesn't see it again
+// (data-started); otherwise data-start marks it as up, which hides the menu behind it (the key is StartScreen's
+// STARTED_KEY).
+const SKIP_START_SCREEN =
+  "var d=document.documentElement.dataset;try{sessionStorage.getItem('cv-started')?d.started='':d.start=''}catch(e){d.start=''}";
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script dangerouslySetInnerHTML={{ __html: SKIP_START_SCREEN }} />
         <Meta />
         <Links />
       </head>

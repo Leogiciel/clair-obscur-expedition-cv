@@ -6,6 +6,7 @@ import CharacterOcclusion from '../CharacterOcclusion';
 import CharacterStats from '../CharacterStats';
 import Petals from '../Petals';
 import Stage from '../Stage';
+import StartScreen from '../StartScreen';
 import useLoadout from '../store/useLoadout';
 
 const SHOTS: Record<string, Shot> = {
@@ -44,6 +45,7 @@ const StageLayout = () => {
       <Petals layer="front" />
       <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]" />
       <Outlet context={{ from } satisfies StageContext} />
+      <StartScreen />
     </Stage>
   );
 };

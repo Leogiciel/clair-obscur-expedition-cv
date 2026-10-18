@@ -1,0 +1,206 @@
+// Measured on the game's title screen scaled to the stage (design/ref/loading/ref-stage.png): the logo is centred,
+// the small line's capitals span y 276–308, its rule sits at 357, "Expedition" spans 724–1790 × 389–508, the number
+// 575–906 (both drawn by ExpeditionLogo) and the prompt 987–1527 × 1130–1175. Cinzel's small capitals give the prompt's look.
+
+// root.tsx flags a visitor who already started this session before the first paint.
+:root[data-started] .StartScreen {
+  display: none;
+}
+
+// While the screen is up, the menu behind it is not painted (its clips keep loading): drawing both halved the frame
+// rate. root.tsx and StartScreen set data-start while the screen is up: a :has() rule here, re-matched under every
+// animation frame, cost as much. Important: Character sets its loops' visibility inline.
+:root[data-start] .Screen-stage > :not(.StartScreen) {
+  visibility: hidden !important;
+}
+
+.StartScreen {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: #000;
+  transition: opacity 0.7s ease;
+
+  // The stage is letterboxed: black reaches the window edges too.
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -2000px;
+    z-index: -1;
+    background: #000;
+  }
+
+  &--leaving {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  // The ink plume (scripts/start/ink.py, generated from a text prompt), with its placement, blur, mask and level
+  // baked in from the game's smoke: brightest behind the title's left half and down past the left of the number.
+  &-smoke {
+    position: absolute;
+    inset: 0;
+    background: url('/ui/start-ink.webp') 0 0 / 2510px 1380px no-repeat;
+  }
+
+  .TitleParticles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &-logo {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    font-family: var(--font-primary);
+    font-weight: 400;
+    text-align: center;
+    pointer-events: none;
+
+    > span {
+      position: absolute;
+      left: 0;
+      right: 0;
+      display: block;
+    }
+  }
+
+  // The game's small line and prompt are set in a flared, Optima-like face: Marcellus SC is the nearest web font.
+  &-house {
+    top: 268px;
+    font-family: 'Marcellus SC', var(--font-primary);
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #bdb6a8;
+  }
+
+  // One hairline, fading out at both ends.
+  &-logo > &-rule {
+    top: 356px;
+    width: 820px;
+    height: 2px;
+    margin: 0 auto;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(205 197 182 / 0.5) 18%,
+      rgb(205 197 182 / 0.5) 82%,
+      transparent
+    );
+  }
+
+  // Fine wear from the grunge texture; the second mask layer keeps at least 88 % of the gold.
+  .ExpeditionLogo {
+    position: absolute;
+    inset: 0;
+    will-change: transform;
+    mask-image: url('/ui/grunge.webp'), linear-gradient(rgb(0 0 0 / 0.88), rgb(0 0 0 / 0.88));
+    mask-size:
+      160px,
+      100% 100%;
+  }
+
+  // The game has no bar here; this one is drawn like the logo's rule, gold filling a faint track.
+  &-loading {
+    position: absolute;
+    left: 50%;
+    top: 1112px;
+    width: 640px;
+    margin-left: -320px;
+    text-align: center;
+    transition: opacity 0.5s ease;
+
+    &--done {
+      opacity: 0;
+    }
+  }
+
+  &-loadingLabel {
+    display: block;
+    font-family: var(--font-primary);
+    font-size: 34px;
+    font-variant: small-caps;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    color: #a39b8d;
+  }
+
+  &-loadingValue {
+    font-family: var(--font-number);
+    letter-spacing: 0.04em;
+  }
+
+  &-loadingTrack {
+    position: relative;
+    display: block;
+    height: 2px;
+    margin-top: 22px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgb(205 197 182 / 0.22) 12%,
+      rgb(205 197 182 / 0.22) 88%,
+      transparent
+    );
+  }
+
+  &-loadingFill {
+    position: absolute;
+    inset: 0;
+    transform-origin: left;
+    background: linear-gradient(90deg, rgb(220 198 156 / 0), #dcc69c 30%, #f3e9d0);
+    box-shadow: 0 0 10px rgb(243 233 208 / 0.55);
+    transition: transform 0.3s ease-out;
+  }
+
+  &-prompt {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 1110px;
+    margin: 0;
+    font-family: 'Marcellus SC', var(--font-primary);
+    font-size: 74px;
+    font-variant: small-caps;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-align: center;
+    color: #b3a891;
+    opacity: 0;
+
+    &--shown {
+      animation: start-pulse 2s ease-in-out infinite;
+    }
+  }
+
+  &-build {
+    position: absolute;
+    right: 120px;
+    bottom: 48px;
+    font-family: var(--font-label);
+    font-size: 18px;
+    color: rgb(210 203 189 / 0.45);
+  }
+
+  @keyframes start-pulse {
+    0%,
+    100% {
+      opacity: 0.95;
+    }
+
+    50% {
+      opacity: 0.18;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &-prompt--shown {
+      animation: none;
+      opacity: 0.95;
+    }
+  }
+}
