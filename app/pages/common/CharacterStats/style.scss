@@ -1,5 +1,6 @@
 .CharacterStats {
   font-family: var(--font-label);
+  font-weight: var(--font-label-weight);
 
   &-level {
     display: flex;
@@ -26,6 +27,7 @@
 
   &-title {
     font-family: var(--font-primary);
+    font-weight: 400;
     font-variant: small-caps;
     font-size: 33px;
     line-height: 1;

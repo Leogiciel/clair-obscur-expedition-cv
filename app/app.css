@@ -17,6 +17,10 @@
   --font-secondary: "IM Fell Double Pica", serif;
   --font-number: "Bebas Neue", sans-serif;
   --font-label: "EB Garamond", "IM Fell Double Pica", serif;
+  /* Measured against the capture: small labels are a medium Garamond, the names on the main slots (Weapon, Pictos,
+     Skills) a regular one, lightly spaced. */
+  --font-label-weight: 500;
+  --font-slot-weight: 400;
 
   /* Single source of the UI colors. */
   --stage-bg: #070707;

@@ -31,6 +31,8 @@
     justify-content: center;
     white-space: nowrap;
     font-family: var(--font-label);
+    font-weight: var(--font-slot-weight);
+    letter-spacing: 0.015em;
     font-size: 38px;
     line-height: 1;
     height: 26px;
@@ -53,6 +55,7 @@
     left: 0;
     transform: translateX(-50%);
     font-family: var(--font-label);
+    font-weight: var(--font-label-weight);
     font-size: 27px;
     line-height: 0.75;
     white-space: nowrap;
