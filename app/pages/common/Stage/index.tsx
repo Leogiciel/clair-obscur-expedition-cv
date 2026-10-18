@@ -27,7 +27,9 @@ const Stage = ({ className = '', children }: { className?: string; children: Rea
           width: STAGE_W,
           height: STAGE_H,
           transform: `translate(-50%, -50%) scale(${scale ?? 1})`,
-          visibility: scale ? 'visible' : 'hidden'
+          // Hidden until scaled. Opacity, not visibility: the current loop sets its own visibility inline, which
+          // escaped a hidden parent and flashed the overview's character before the start screen on reload.
+          opacity: scale ? 1 : 0
         }}
       >
         {children}
