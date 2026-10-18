@@ -14,12 +14,12 @@ import CompanyLogo from '../common/CompanyLogo';
 import Label from '../common/Label';
 import Num from '../common/Num';
 import SortTitle from '../common/SortTitle';
-import { EXPERIENCES, type Experience, levelOf, periodOf } from '../common/data';
+import { EXPERIENCES, type Experience, monthsOf, periodOf } from '../common/data';
 import useLoadout from '../common/store/useLoadout';
 import useSort, { type SortOption } from '../common/useSort';
 import ExperienceStats from './ExperienceStats';
 import Highlights from './Highlights';
-import LevelBlock from './LevelBlock';
+import MonthsBlock from './MonthsBlock';
 import StackIcons from './StackIcons';
 
 // Measured on the video: selected row at (200, 310), normal at (244, 404); centers 85px apart. Hovered rows get the
@@ -38,7 +38,7 @@ const SORTS: SortOption<Experience>[] = [
     compare: (a, b) => (a.end ?? '9999').localeCompare(b.end ?? '9999') || a.start.localeCompare(b.start),
     descending: true
   },
-  { label: 'Level', compare: (a, b) => levelOf(a) - levelOf(b), descending: true },
+  { label: 'Duration', compare: (a, b) => monthsOf(a) - monthsOf(b), descending: true },
   { label: 'Alphabetical', compare: (a, b) => a.company.localeCompare(b.company), descending: false }
 ];
 
@@ -101,8 +101,8 @@ const ExperiencePage = () => {
                     icon={<CompanyLogo experience={e} />}
                     aside={
                       <span className="flex flex-col items-center">
-                        <Label size={22}>Level</Label>
-                        <Num size={40}>{levelOf(e)}</Num>
+                        <Label size={22}>Months</Label>
+                        <Num size={40}>{monthsOf(e)}</Num>
                       </span>
                     }
                   >
@@ -130,7 +130,7 @@ const ExperiencePage = () => {
             {shown.freelance ? ' (freelance)' : ''} · {periodOf(shown)}
           </Label>
           <span className="absolute left-[420px] top-[24px]">
-            <LevelBlock level={levelOf(shown)} />
+            <MonthsBlock months={monthsOf(shown)} />
           </span>
           <div className="absolute left-[40px] top-[136px] grid w-[430px] grid-flow-col text-center">
             <ExperienceStats experience={shown} />
@@ -144,7 +144,7 @@ const ExperiencePage = () => {
       <TextureEquippedCard
         className="absolute left-[1830px] top-[918px]"
         title={<CardTitle size={36}>{current.title}</CardTitle>}
-        aside={<LevelBlock level={levelOf(current)} />}
+        aside={<MonthsBlock months={monthsOf(current)} />}
       >
         <ExperienceStats experience={current} />
       </TextureEquippedCard>

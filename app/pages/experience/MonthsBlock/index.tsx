@@ -1,11 +1,11 @@
 import Label from '../../common/Label';
 import Num from '../../common/Num';
 
-const LevelBlock = ({ level }: { level: number }) => (
+const MonthsBlock = ({ months }: { months: number }) => (
   <span className="flex flex-col items-center">
-    <Label size={26}>Level</Label>
-    <Num size={56}>{level}</Num>
+    <Label size={26}>Months</Label>
+    <Num size={56}>{months}</Num>
   </span>
 );
 
-export default LevelBlock;
+export default MonthsBlock;

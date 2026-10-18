@@ -169,16 +169,6 @@ export const yearsOf = (months: number) => Math.max(1, Math.round(months / 12));
 
 export const periodOf = (e: Experience) => `${label(e.start)} – ${e.end ? label(e.end) : 'today'}`;
 
-export const levelOf = (e: Experience) => yearsOf(monthsOf(e));
-
 export const yearsSince = (start: string) => yearsOf(index(today) - index(start));
-
-// Under a year the duration reads in months, otherwise in years to the half.
-export const durationOf = (e: Experience) => {
-  const months = monthsOf(e);
-  return months < 12
-    ? { value: String(months), label: 'Months' }
-    : { value: String(Math.round(months / 6) / 2), label: 'Years' };
-};
 
 export const EXPERIENCES = POSITIONS;

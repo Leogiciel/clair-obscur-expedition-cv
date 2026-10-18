@@ -1,11 +1,10 @@
 import Label from '../../common/Label';
 import Num from '../../common/Num';
-import { type Experience, durationOf } from '../../common/data';
+import type { Experience } from '../../common/data';
 
 const ExperienceStats = ({ experience }: { experience: Experience }) => {
-  const duration = durationOf(experience);
+  // The duration sits in the card's corner (MonthsBlock), so the stats hold what it doesn't say.
   const stats = [
-    duration,
     ...(experience.figure ? [experience.figure] : []),
     { value: String(experience.stack.length), label: 'Stack' }
   ];

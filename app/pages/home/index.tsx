@@ -15,7 +15,7 @@ import Luminas from '../common/Luminas';
 import SectionTitle from '../common/SectionTitle';
 import type { StageContext } from '../common/StageLayout';
 import TechIcon from '../common/TechIcon';
-import { EXPERIENCES, LINKEDIN_URL, levelOf, pictoById, skillById } from '../common/data';
+import { EXPERIENCES, LINKEDIN_URL, monthsOf, pictoById, skillById } from '../common/data';
 import useLoadout from '../common/store/useLoadout';
 import useArrowNav from '../common/useArrowNav';
 
@@ -82,7 +82,11 @@ const Home = () => {
         {...activeProps('experience')}
       >
         <div className="Screen-slide">
-          <TextureMainWeapon icon={<CompanyLogo experience={current} />} level={levelOf(current)}>
+          <TextureMainWeapon
+            icon={<CompanyLogo experience={current} />}
+            level={monthsOf(current)}
+            levelLabel="Months"
+          >
             {current.title}
           </TextureMainWeapon>
         </div>
