@@ -3,7 +3,7 @@ import './style.scss';
 interface KeyHintProps {
   keyLabel: string;
   label?: string;
-  shape?: 'round' | 'pill';
+  shape?: 'round' | 'pill' | 'square';
   tone?: 'default' | 'x' | 'b' | 'y' | 'a';
   className?: string;
 }
