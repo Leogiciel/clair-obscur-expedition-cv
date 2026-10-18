@@ -24,7 +24,8 @@ const loaded = (video: HTMLVideoElement) =>
     video.buffered.end(video.buffered.length - 1) >= video.duration - 0.05);
 
 const progress = () => {
-  const videos = [...document.querySelectorAll<HTMLVideoElement>('.Screen video')];
+  // Only the clips the overview can play next are loaded (Character); the others load as the visitor moves on.
+  const videos = [...document.querySelectorAll<HTMLVideoElement>('.Screen video[src]')];
   const fonts = document.fonts.status === 'loaded' ? 1 : 0;
   return (videos.filter(loaded).length + fonts) / (videos.length + 1);
 };

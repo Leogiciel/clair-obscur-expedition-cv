@@ -76,11 +76,25 @@ const useClipsWanted = () => {
   return wanted;
 };
 
+// iOS keeps a decoder per loaded clip and kills the tab past its memory cap ("A problem repeatedly occurred"): only the
+// clips a screen can play next stay loaded, its loop, the moves out of it and the loops they land on; the others are
+// unloaded. While a move plays, the screen it leaves keeps its clips too.
+const clipsOf = (shots: Set<Shot>) => {
+  const moves = Object.keys(TRANSITIONS).filter((key) => shots.has(key.split('-')[0] as Shot));
+  return {
+    moves: new Set(moves),
+    loops: new Set<Shot>([...shots, ...moves.map((key) => key.split('-')[1] as Shot)])
+  };
+};
+
 const Character = ({ shot }: { shot: Shot }) => {
   const loops = useRef<Partial<Record<Shot, HTMLDivElement | null>>>({});
   const moves = useRef<Partial<Record<string, HTMLVideoElement | null>>>({});
   const shown = useRef<Shot | null>(null);
   const wanted = useClipsWanted();
+  // The screen whose clips stay loaded once the move into the current one has ended.
+  const [settled, setSettled] = useState(shot);
+  const needed = clipsOf(new Set([shot, settled, ...(shown.current ? [shown.current] : [])]));
 
   useLayoutEffect(() => {
     const show = (s: Shot | null, restart: boolean) => {
@@ -110,6 +124,7 @@ const Character = ({ shot }: { shot: Shot }) => {
     if (!move || move.readyState < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       hideMoves();
       show(shot, previous !== null && previous !== shot);
+      setSettled(shot);
       return;
     }
 
@@ -123,7 +138,10 @@ const Character = ({ shot }: { shot: Shot }) => {
     const onEnded = () => {
       show(shot, true);
       loops.current[shot]?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: HANDOVER_MS });
-      handover = window.setTimeout(hideMoves, HANDOVER_MS);
+      handover = window.setTimeout(() => {
+        hideMoves();
+        setSettled(shot);
+      }, HANDOVER_MS);
     };
     move.addEventListener('ended', onEnded, { once: true });
     return () => {
@@ -131,6 +149,15 @@ const Character = ({ shot }: { shot: Shot }) => {
       window.clearTimeout(handover);
     };
   }, [shot, wanted]);
+
+  // A video keeps its decoder after losing its src attribute until it is reloaded empty.
+  useEffect(() => {
+    const all = [
+      ...Object.values(moves.current),
+      ...SHOTS.map((s) => loops.current[s]?.querySelector('video'))
+    ];
+    for (const video of all) if (video && !video.getAttribute('src') && video.currentSrc) video.load();
+  });
 
   return (
     <>
@@ -142,7 +169,7 @@ const Character = ({ shot }: { shot: Shot }) => {
           }}
           className="Character-move"
           style={{ transform: `scale(${CANVAS_SCALE})` }}
-          src={wanted ? src : undefined}
+          src={wanted && needed.moves.has(key) ? src : undefined}
           muted
           playsInline
           preload="auto"
@@ -172,7 +199,7 @@ const Character = ({ shot }: { shot: Shot }) => {
               muted
               playsInline
               preload="auto"
-              src={wanted ? LOOPS[s] : undefined}
+              src={wanted && needed.loops.has(s) ? LOOPS[s] : undefined}
             />
           </div>
         );
