@@ -20,6 +20,11 @@
       mask-repeat: no-repeat;
     }
 
+    // The slot card's flare is near white in the capture (14.1 s), much brighter than the Pictos rows' smear it reuses.
+    &-smear--card &-drift {
+      filter: brightness(2.4) contrast(1.1);
+    }
+
     &-drift {
       position: absolute;
       inset: 0;

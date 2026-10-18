@@ -27,7 +27,7 @@ const TEXTURES: Record<TexturePlateVariant, {
 // in every state.
 export const plateBox = (variant: TexturePlateVariant, length: number) => {
   const t = TEXTURES[variant];
-  return {left: -t.anchor[0], top: -t.anchor[1], width: length + t.anchor[0] + t.tail};
+  return {left: -t.anchor[0], top: -t.anchor[1], width: length + t.anchor[0] + t.tail, height: t.height};
 };
 
 interface TexturePlateProps {

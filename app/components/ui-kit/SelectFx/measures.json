@@ -34,6 +34,10 @@
     "origin": [
       256,
       56
+    ],
+    "size": [
+      512,
+      113
     ]
   },
   "weapon": {
@@ -71,6 +75,51 @@
     "origin": [
       261,
       65
+    ],
+    "size": [
+      522,
+      130
+    ]
+  },
+  "card": {
+    "asset": "card",
+    "width": 780,
+    "height": 360,
+    "left": -85,
+    "top": -67,
+    "flows": [
+      {
+        "left": 190,
+        "top": 40,
+        "width": 530,
+        "height": 34,
+        "tile": 490,
+        "speed": 23
+      },
+      {
+        "left": 170,
+        "top": 268,
+        "width": 480,
+        "height": 32,
+        "tile": 440,
+        "speed": 8
+      }
+    ],
+    "smear": {
+      "left": -171.1,
+      "top": -27.6,
+      "width": 268.5,
+      "height": 226.9,
+      "drift": 56.7,
+      "life": 3
+    },
+    "origin": [
+      349,
+      94
+    ],
+    "size": [
+      623,
+      198
     ]
   },
   "skill": {
@@ -108,6 +157,10 @@
     "origin": [
       203,
       39.5
+    ],
+    "size": [
+      406,
+      80
     ]
   }
 }

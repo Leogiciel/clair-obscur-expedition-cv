@@ -4,7 +4,7 @@ export type TextureWeaponRowsVariant = 'selected' | 'normal';
 
 // Measured by scripts/ui-kit/extract/weapon-rows.py (px, 1x). left/right: fixed 3-slice parts.
 // icon: [x, y, width, height] where the weapon was painted. name: [left, right] margins of the name
-// area. aside: distance from the right edge to the "Level" column center.
+// area, starting 14px past the icon box so a wide logo never touches the name. aside: distance from the right edge to the "Level" column center.
 const TEXTURES: Record<TextureWeaponRowsVariant, {
   src: string;
   width: number;
@@ -18,11 +18,11 @@ const TEXTURES: Record<TextureWeaponRowsVariant, {
 }> = {
   selected: {
     src: '/ui/tex/weapon-rows-selected.webp', width: 488, height: 92, left: 150, right: 88,
-    center: 46, icon: [60, 8, 72, 72], name: [140, 158], aside: 92,
+    center: 46, icon: [60, 8, 72, 72], name: [146, 158], aside: 92,
   },
   normal: {
     src: '/ui/tex/weapon-rows-normal.webp', width: 420, height: 74, left: 100, right: 135,
-    center: 37, icon: [34, 4, 64, 64], name: [96, 144], aside: 81,
+    center: 37, icon: [34, 4, 64, 64], name: [112, 144], aside: 81,
   },
 };
 

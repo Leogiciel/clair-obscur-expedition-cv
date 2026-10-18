@@ -30,6 +30,12 @@ ELEMENTS = {
                'content': (140, 53, 660, 126), 'diamond': None,
                'drop': [(0, 0, 660, 30), (470, 126, 660, 170), (290, 128, 360, 170)],
                'flows': [(140, 28, 640, 74, 26), (240, 128, 500, 156, 9)], 'head': (140, 91), 'plate': 130, 'size': (522, 130)},
+    # Pictos screen slot card under the cursor (13.98-14.3 s): grows 1.102 around (1374, 551) in 0.1 s, measured by ECC.
+    'card': {'scale': 1.102, 'center': (1374, 551), 'crop': (940, 390, 780, 360), 'selected': (14.083, 14.3), 'idle': (12.0, 13.6),
+             'box': (1025, 457), 'content': (175, 70, 706, 262), 'diamond': (174, 167, 89),
+             # The character moves behind the card's right half: only the left and top-left paint is kept.
+             'drop': [(0, 0, 780, 8), (0, 330, 780, 360), (712, 0, 780, 360), (520, 0, 780, 52), (360, 268, 780, 360)],
+             'flows': [(190, 40, 720, 74, 23), (170, 268, 650, 300, 8)], 'head': (148, 168), 'plate': 235, 'size': (623, 198)},
     'skill': {'scale': 1.1, 'center': (1453, 1228), 'crop': (1180, 1170, 500, 110), 'box': (1250, 1188.5),
               'head': (89.3, 58), 'plate': 88, 'size': (406, 80), 'borrow': 'picto'},
 }
@@ -185,6 +191,8 @@ for name, e in ELEMENTS.items():
     }
     # Zoom origin relative to the box.
     measures[name]['origin'] = [e['center'][0] - e['box'][0], e['center'][1] - e['box'][1]]
+    # Box the effect was measured on; SelectFx stretches the effect to other boxes (list rows).
+    measures[name]['size'] = list(e['size'])
     print(name, measures[name])
 
 (ROOT / 'app/components/ui-kit/SelectFx/measures.json').write_text(json.dumps(measures, indent=2) + '\n')
