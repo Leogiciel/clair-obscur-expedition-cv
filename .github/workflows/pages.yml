@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Daily: the level's XP bar counts the days since the last birthday, so the prerendered pages go stale overnight.
+  schedule:
+    - cron: '0 3 * * *'
 
 permissions:
   contents: read
