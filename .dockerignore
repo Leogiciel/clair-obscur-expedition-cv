@@ -2,3 +2,9 @@
 build
 node_modules
 README.md
+# Never in an image: the fal.ai key, the private inputs (photos, gameplay footage), history and asset tooling.
+.env*
+design
+.git
+scripts
+docs
