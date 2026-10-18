@@ -11,29 +11,29 @@
     "format": "prettier --write ."
   },
   "dependencies": {
-    "@react-router/node": "^7.7.1",
-    "@react-router/serve": "^7.7.1",
+    "@react-router/node": "^7.18.4",
+    "@react-router/serve": "^7.18.4",
     "@tanstack/react-hotkeys": "0.13.0",
     "isbot": "^5.1.27",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.7.1",
+    "react-router": "^7.18.4",
     "simple-icons": "16.33.0",
     "zustand": "5.0.15"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.7.1",
-    "@tailwindcss/vite": "^4.1.4",
+    "@react-router/dev": "^7.18.4",
+    "@tailwindcss/vite": "^4.3.3",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "prettier": "3.9.9",
-    "sass": "^1.92.1",
-    "sharp": "0.34.4",
-    "tailwindcss": "^4.1.4",
+    "sass": "^1.105.2",
+    "sharp": "0.35.5",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.8.3",
-    "vite": "^6.3.3",
+    "vite": "^6.4.4",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "packageManager": "pnpm@11.11.0"
