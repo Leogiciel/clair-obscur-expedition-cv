@@ -28,6 +28,13 @@ PAIRS = {
                        'to front view exactly once, never past it and never back.',
     'overview-skills': 'In one smooth continuous move the camera pulls back a little while he squares his shoulders '
                        'to face the camera and crosses his arms over his chest.',
+    'overview-luminas': 'In one smooth continuous move the camera pushes in to a closer bust shot while he turns his '
+                        'head and shoulders a quarter turn toward the left of the image, ending in three-quarter view.',
+    'luminas-overview': 'In one smooth continuous move the camera pulls back to a bust shot while he turns from a '
+                        'three-quarter view back to face the camera.',
+    'luminas-pictos': 'In one smooth continuous move the camera orbits from his front three-quarter view around to behind his shoulder as his head turns into profile toward the left, once, never back.',
+    # Not used: the result turned through the back of the head; the page plays luminas-pictos reversed instead.
+    'pictos-luminas': 'In one smooth continuous move the camera orbits from behind his shoulder around to his front three-quarter view as his head turns from profile, once, never back.',
     'skills-overview': 'In one smooth continuous move he uncrosses his arms and relaxes into the bust pose while the '
                        'camera pushes in a little.',
 }
