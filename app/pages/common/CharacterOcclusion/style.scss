@@ -1,0 +1,7 @@
+.CharacterOcclusion {
+  position: absolute;
+  background: var(--stage-bg);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  pointer-events: none;
+}

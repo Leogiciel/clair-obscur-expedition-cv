@@ -2,6 +2,8 @@ import {useEffect, useRef} from 'react';
 import {Outlet, useLocation} from 'react-router';
 import Stage from '../Stage';
 import Character, {type Shot} from '../Character';
+import Petals from '../Petals';
+import CharacterOcclusion from '../CharacterOcclusion';
 import CharacterStats from '../CharacterStats';
 import useLoadout from '../store/useLoadout';
 
@@ -25,9 +27,14 @@ const StageLayout = () => {
     void useLoadout.persist.rehydrate();
   }, []);
 
+  const shot = SHOTS[pathname] ?? 'overview';
+
   return (
     <Stage>
-      <Character shot={SHOTS[pathname] ?? 'overview'}/>
+      <Petals layer="back"/>
+      <CharacterOcclusion shot={shot}/>
+      <Character shot={shot}/>
+      <Petals layer="front"/>
       <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]"/>
       <Outlet context={{from} satisfies StageContext}/>
     </Stage>

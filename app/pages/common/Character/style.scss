@@ -1,13 +1,12 @@
 .Character {
-  // Clip-sized box placed by the component's transform. The clip's pure black is lifted to the stage background
-  // inside the box, so the faded edges blend into the stage.
+  // Clip-sized box placed by the component's transform. It is lightened onto the stage, so the clip's near-black
+  // backdrop lets the stage and the petals behind the character show through, and the faded edges blend in.
   &-loop {
     position: absolute;
     top: 0;
     left: 0;
     transform-origin: 0 0;
-    isolation: isolate;
-    background: var(--stage-bg);
+    mix-blend-mode: lighten;
     mask-image:
       linear-gradient(to right, transparent, #000 14%, #000 84%, transparent),
       linear-gradient(to bottom, transparent, #000 6%, #000 78%, transparent);
@@ -18,7 +17,6 @@
       display: block;
       width: 100%;
       height: 100%;
-      mix-blend-mode: lighten;
     }
   }
 
@@ -31,6 +29,7 @@
     height: 1080px;
     transform-origin: 0 0;
     visibility: hidden;
+    mix-blend-mode: lighten;
     pointer-events: none;
   }
 }

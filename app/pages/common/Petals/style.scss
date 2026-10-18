@@ -1,0 +1,43 @@
+// Each petal's slanted, wind-bent path is a Web Animation on the outer span (Petals/index.tsx); the inner span
+// flutters, tilting in 3D.
+.Petals {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  // The grade (and the back layer's blur) is baked into the sprites by scripts/character/petals.py; behind the
+  // character, his silhouette (CharacterOcclusion) is drawn over the back layer.
+  // In front: sharper, lit by the warm key light from the left, shadow cast down to the right.
+  &--front .Petals-petal {
+    filter: drop-shadow(14px 20px 7px rgb(0 0 0 / 0.65));
+  }
+
+  &-petal {
+    display: block;
+    object-fit: contain;
+  }
+
+  &-fall {
+    position: absolute;
+    top: -90px;
+    will-change: transform;
+  }
+
+  &-sway {
+    display: block;
+    animation: petals-flutter ease-in-out infinite;
+    will-change: transform;
+  }
+
+  @keyframes petals-flutter {
+    0%,
+    100% {
+      transform: rotate(-20deg) rotateX(0deg) rotateY(10deg);
+    }
+
+    50% {
+      transform: rotate(25deg) rotateX(50deg) rotateY(-25deg);
+    }
+  }
+}

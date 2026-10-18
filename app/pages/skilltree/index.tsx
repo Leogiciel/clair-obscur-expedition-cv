@@ -7,7 +7,6 @@ import {TREE, careerYears, treeLinks} from '../common/data';
 import TreeNode from './TreeNode';
 import SkillPoints from './SkillPoints';
 import NodeTooltip from './NodeTooltip';
-import Embers from './Embers';
 
 // Measured on the game screenshot (design/skill-tree-screen.png) and scaled to the stage: columns 179px apart from
 // x 517, rows 145px apart from y 655.
@@ -26,7 +25,16 @@ const SkillTreePage = () => {
 
   return (
     <>
-      <Embers/>
+      <svg className="absolute size-0" aria-hidden>
+        <filter id="tree-paint" x="-10%" y="-10%" width="120%" height="120%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.35" numOctaves="2" seed="4" result="noise"/>
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+          <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="2" seed="9" result="patches"/>
+          <feColorMatrix in="patches" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 2.4 -0.5" result="mask"/>
+          <feComposite in="rough" in2="mask" operator="in" result="worn"/>
+          <feGaussianBlur in="worn" stdDeviation="0.5"/>
+        </filter>
+      </svg>
       <svg className="pointer-events-none absolute left-0 top-0" width={2510} height={1380} aria-hidden>
         {treeLinks().map(([a, b]) => {
           const p = at(a.col, a.row);
