@@ -5,6 +5,7 @@ import Character, { type Shot } from '../Character';
 import CharacterOcclusion from '../CharacterOcclusion';
 import CharacterStats from '../CharacterStats';
 import Petals from '../Petals';
+import RotateScreen from '../RotateScreen';
 import Stage from '../Stage';
 import useLoadout from '../store/useLoadout';
 
@@ -37,14 +38,17 @@ const StageLayout = () => {
   const shot = SHOTS[pathname] ?? 'overview';
 
   return (
-    <Stage>
-      <Petals layer="back" />
-      <CharacterOcclusion shot={shot} />
-      <Character shot={shot} />
-      <Petals layer="front" />
-      <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]" />
-      <Outlet context={{ from } satisfies StageContext} />
-    </Stage>
+    <>
+      <Stage>
+        <Petals layer="back" />
+        <CharacterOcclusion shot={shot} />
+        <Character shot={shot} />
+        <Petals layer="front" />
+        <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]" />
+        <Outlet context={{ from } satisfies StageContext} />
+      </Stage>
+      <RotateScreen />
+    </>
   );
 };
 
