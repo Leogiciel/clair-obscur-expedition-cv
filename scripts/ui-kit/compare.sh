@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Compares each UI kit recreation with its reference (design/ref/), side by side and zoomed.
-# Requires: server with DEV_KIT=true (yarn dev --port 5199), gstack browse, ffmpeg.
+# Requires: server with DEV_KIT=true (pnpm dev --port 5199), gstack browse, ffmpeg.
 # Usage: scripts/ui-kit/compare.sh <out_dir> [url]
 # Output: <ref>__<zone>.png, reference on the left, recreation on the right.
 set -euo pipefail
