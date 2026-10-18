@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 
 import { BUILD, CHARACTER, EXPEDITION } from '~/data';
 
+import { clipsProgress } from '../Character/clips';
 import ExpeditionLogo from './ExpeditionLogo';
 import TitleParticles from './TitleParticles';
 import './style.scss';
@@ -16,19 +17,13 @@ const POLL_MS = 200;
 const LEAVE_MS = 800;
 const REVEAL_MS = 1600;
 
-// A clip counts as loaded once it is buffered to its end: a camera move only plays if it can run without stalling.
-const loaded = (video: HTMLVideoElement) =>
-  video.readyState === 4 ||
-  (video.duration > 0 &&
-    video.buffered.length > 0 &&
-    video.buffered.end(video.buffered.length - 1) >= video.duration - 0.05);
-
+// Every clip in memory (Character/clips), so no move between screens ever has to wait on the network.
 const progress = () => {
-  // Only the clips the overview can play next are loaded (Character); the others load as the visitor moves on.
-  const videos = [...document.querySelectorAll<HTMLVideoElement>('.Screen video[src]')];
   const fonts = document.fonts.status === 'loaded' ? 1 : 0;
-  return (videos.filter(loaded).length + fonts) / (videos.length + 1);
+  return (clipsProgress() * CLIP_WEIGHT + fonts) / (CLIP_WEIGHT + 1);
 };
+// The fonts are a sliver of the download next to the clips.
+const CLIP_WEIGHT = 18;
 
 // The game's title screen (design/ref/loading), the site's root: the logo over drifting petals while every clip of
 // the stage behind loads, so camera moves never fall back to a cut; then "Press Any Button" pulses and any key, click

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import experienceToOverview from '~/assets/character/experience-overview.mp4';
 import experienceClip from '~/assets/character/experience.mp4';
@@ -20,6 +20,7 @@ import skillsClip from '~/assets/character/skills.mp4';
 import skilltreeToSkills from '~/assets/character/skilltree-skills.mp4';
 import skilltreeClip from '~/assets/character/skilltree.mp4';
 
+import { clipUrl, clipsVersion, preloadClips, subscribeClips } from './clips';
 import './style.scss';
 
 export type Shot = keyof typeof framing;
@@ -56,6 +57,8 @@ const TRANSITIONS: Partial<Record<`${Shot}-${Shot}`, string>> = {
 const CANVAS_SCALE = 2510 / 1920;
 // Cross-fades the transition's last frame into the loop: same position, but the clips differ in exposure (≈ 9 %) and ribbons.
 const HANDOVER_MS = 250;
+// How long a move that is not decoded yet is waited for before the screen cuts to the new loop instead.
+const MOVE_WAIT_MS = 500;
 
 const SHOTS = Object.keys(framing) as Shot[];
 
@@ -110,6 +113,20 @@ const Character = ({ shot }: { shot: Shot }) => {
   // The screen whose clips stay loaded once the move into the current one has ended.
   const [settled, setSettled] = useState(shot);
   const needed = clipsOf(new Set([shot, settled, ...(shown.current ? [shown.current] : [])]));
+  useSyncExternalStore(subscribeClips, clipsVersion, () => 0);
+  const fileOf = (name: string, full: string) => (wanted === 'small' ? mobile(name) : full);
+  // A clip is given to its <video> once in memory, and only while the current screen may play it.
+  const srcOf = (name: string, full: string, isNeeded: boolean) =>
+    wanted !== 'none' && isNeeded ? clipUrl(fileOf(name, full)) : undefined;
+
+  useEffect(() => {
+    if (wanted === 'none') return;
+    const loops = SHOTS.map((s) => fileOf(s, LOOPS[s]));
+    const moves = Object.entries(TRANSITIONS).map(([key, src]) => fileOf(key, src as string));
+    const now = [...needed.loops].map((s) => fileOf(s, LOOPS[s]));
+    preloadClips([...now, ...loops, ...moves]);
+    // Started once, when the set to load is known; the order only matters for the first screen.
+  }, [wanted]);
 
   useLayoutEffect(() => {
     const show = (s: Shot | null, restart: boolean) => {
@@ -136,20 +153,36 @@ const Character = ({ shot }: { shot: Shot }) => {
     const previous = shown.current;
     shown.current = shot;
     const move = previous && previous !== shot ? moves.current[`${previous}-${shot}`] : null;
-    if (!move || move.readyState < 2 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const cut = () => {
       hideMoves();
       show(shot, previous !== null && previous !== shot);
       setSettled(shot);
+    };
+    if (!move || !move.getAttribute('src') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      cut();
       return;
     }
 
-    // The cut: the move replaces the old loop in the same frame as the panels swap.
-    hideMoves();
-    show(null, false);
-    move.currentTime = 0;
-    move.style.visibility = 'visible';
-    void move.play().catch(() => {});
+    // The move replaces the old loop as the panels swap; one not decoded yet is waited for a moment, the old loop
+    // still showing, rather than dropped for a cut.
     let handover = 0;
+    let waited = 0;
+    const start = () => {
+      window.clearTimeout(waited);
+      hideMoves();
+      show(null, false);
+      move.currentTime = 0;
+      move.style.visibility = 'visible';
+      void move.play().catch(() => {});
+    };
+    if (move.readyState >= 2) start();
+    else {
+      move.addEventListener('loadeddata', start, { once: true });
+      waited = window.setTimeout(() => {
+        move.removeEventListener('loadeddata', start);
+        cut();
+      }, MOVE_WAIT_MS);
+    }
     const onEnded = () => {
       show(shot, true);
       loops.current[shot]?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: HANDOVER_MS });
@@ -160,18 +193,26 @@ const Character = ({ shot }: { shot: Shot }) => {
     };
     move.addEventListener('ended', onEnded, { once: true });
     return () => {
+      move.removeEventListener('loadeddata', start);
       move.removeEventListener('ended', onEnded);
       window.clearTimeout(handover);
+      window.clearTimeout(waited);
     };
   }, [shot, wanted]);
 
-  // A video keeps its decoder after losing its src attribute until it is reloaded empty.
+  // A video keeps its decoder after losing its src attribute until it is reloaded empty; and Safari does not load a
+  // video again when its src comes back (nor honour preload on iOS), so a clip given back its source is loaded here.
   useEffect(() => {
     const all = [
       ...Object.values(moves.current),
       ...SHOTS.map((s) => loops.current[s]?.querySelector('video'))
     ];
-    for (const video of all) if (video && !video.getAttribute('src') && video.currentSrc) video.load();
+    for (const video of all) {
+      if (!video) continue;
+      const src = video.getAttribute('src');
+      if (src ? video.currentSrc !== src || video.networkState === video.NETWORK_EMPTY : video.currentSrc)
+        video.load();
+    }
   });
 
   return (
@@ -184,9 +225,7 @@ const Character = ({ shot }: { shot: Shot }) => {
           }}
           className="Character-move"
           style={{ transform: `scale(${CANVAS_SCALE})` }}
-          src={
-            wanted !== 'none' && needed.moves.has(key) ? (wanted === 'small' ? mobile(key) : src) : undefined
-          }
+          src={srcOf(key, src as string, needed.moves.has(key))}
           muted
           playsInline
           preload="auto"
@@ -216,13 +255,7 @@ const Character = ({ shot }: { shot: Shot }) => {
               muted
               playsInline
               preload="auto"
-              src={
-                wanted !== 'none' && needed.loops.has(s)
-                  ? wanted === 'small'
-                    ? mobile(s)
-                    : LOOPS[s]
-                  : undefined
-              }
+              src={srcOf(s, LOOPS[s], needed.loops.has(s))}
             />
           </div>
         );
