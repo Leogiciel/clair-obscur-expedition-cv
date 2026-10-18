@@ -79,9 +79,9 @@ const Home = () => {
             '--sel-scale': 1.1
           } as React.CSSProperties
         }
-        aria-label={`Experience: ${current.title}, ${current.company}`}
         {...activeProps('experience')}
       >
+        <span className="sr-only">Experience: </span>
         <div className="Screen-slide">
           <TextureMainWeapon
             icon={<CompanyLogo experience={current} />}
@@ -118,9 +118,9 @@ const Home = () => {
                     '--sel-scale': 1.1
                   } as React.CSSProperties
                 }
-                aria-label={picto ? `Pictos: ${picto.name}` : 'Pictos: empty slot'}
                 {...activeProps(id)}
               >
+                <span className="sr-only">{picto ? 'Picto: ' : 'Empty picto slot'}</span>
                 <div className="Screen-slide">
                   {picto ? (
                     <TextureMainPicto
@@ -167,9 +167,9 @@ const Home = () => {
                     '--sel-scale': 1.1
                   } as React.CSSProperties
                 }
-                aria-label={skill ? `Skills: ${skill.name}` : 'Skills: empty slot'}
                 {...activeProps(id)}
               >
+                <span className="sr-only">{skill ? 'Skill: ' : 'Empty skill slot'}</span>
                 <div className="Screen-slide">
                   {skill ? (
                     <TextureMainSkill icon={<TechIcon id={skill.id} />} level={skill.level}>
@@ -189,7 +189,7 @@ const Home = () => {
       <IconButton
         icon={<LinkedInMark />}
         compact
-        className="absolute left-[1846px] top-[786px]"
+        className="absolute left-[1836px] top-[786px]"
         width={300}
         onClick={() => window.open(LINKEDIN_URL, '_blank', 'noopener')}
       >
@@ -198,7 +198,7 @@ const Home = () => {
       <IconButton
         icon={<GitHubMark />}
         compact
-        className="absolute left-[2150px] top-[786px]"
+        className="absolute left-[2156px] top-[786px]"
         width={300}
         onClick={() => window.open(GITHUB_URL, '_blank', 'noopener')}
       >

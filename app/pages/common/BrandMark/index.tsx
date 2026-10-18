@@ -17,11 +17,20 @@ interface BrandMarkProps {
   text?: string;
   title: string;
   muted?: boolean;
+  // Hidden from assistive tech, when the name is written next to the mark anyway.
+  decorative?: boolean;
 }
 
 // Simple Icons marks are not all centred in their 24 × 24 box: once mounted, the view box is fitted to the drawn
 // shape (a square around its centre), so every logo sits in the middle of its slot.
-const BrandMark = ({ path, hex = 'e8e2d0', text, title, muted = false }: BrandMarkProps) => {
+const BrandMark = ({
+  path,
+  hex = 'e8e2d0',
+  text,
+  title,
+  muted = false,
+  decorative = false
+}: BrandMarkProps) => {
   const shape = useRef<SVGPathElement>(null);
   const [viewBox, setViewBox] = useState('0 0 24 24');
   useLayoutEffect(() => {
@@ -36,8 +45,7 @@ const BrandMark = ({ path, hex = 'e8e2d0', text, title, muted = false }: BrandMa
       viewBox={path ? viewBox : '0 0 24 24'}
       width="55%"
       height="55%"
-      role="img"
-      aria-label={title}
+      {...(decorative ? { 'aria-hidden': true } : { role: 'img', 'aria-label': title })}
       opacity={muted ? 0.8 : 1}
     >
       {path ? (
