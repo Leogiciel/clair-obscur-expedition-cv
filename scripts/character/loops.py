@@ -20,7 +20,7 @@ SHOTS = {
     'overview': ((1080, 1920), STILLS / 'overview.png', (
         'Idle portrait: he stands still and breathes slowly and subtly, blinks naturally twice, his gaze lowers '
         'briefly then comes back to the camera, very slight head sway. ')),
-    'role': ((1920, 1080), STILLS / 'role.png', (
+    'experience': ((1920, 1080), STILLS / 'experience.png', (
         'Idle: he breathes slowly and blinks naturally, keeping his open hand low in front of his waist. The rapier '
         'keeps levitating diagonally across his chest above that palm, bobbing gently and keeping its shape; the thin '
         'cyan glowing ribbons slowly swirl around the blade and a few faint cyan particles drift upward. ')),

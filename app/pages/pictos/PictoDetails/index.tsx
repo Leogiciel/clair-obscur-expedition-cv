@@ -16,7 +16,7 @@ const PictoDetails = ({picto}: {picto: Picto}) => (
     ))}
     <span className="absolute left-[337px] top-[43px] flex w-[100px] flex-col items-center"><Label size={22}>Level</Label><Num size={40}>{picto.level}</Num></span>
     <DiamondCardDivider className="absolute left-[16px] top-[107px] w-[250px]"/>
-    <Label as="p" size={26} className="absolute left-[27px] top-[116px] w-[345px]" style={{lineHeight: 1.1}}>{picto.description}</Label>
+    <Label as="p" size={22} className="absolute left-[27px] top-[114px] w-[380px]" style={{lineHeight: 1.08}}>{picto.description}</Label>
   </>
 );
 

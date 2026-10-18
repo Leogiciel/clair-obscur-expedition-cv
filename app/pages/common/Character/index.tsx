@@ -1,10 +1,10 @@
 import {useLayoutEffect, useRef} from 'react';
 import framing from '~/assets/character/framing.json';
 import overviewClip from '~/assets/character/overview.mp4';
-import roleClip from '~/assets/character/role.mp4';
+import experienceClip from '~/assets/character/experience.mp4';
 import pictosClip from '~/assets/character/pictos.mp4';
-import overviewToRole from '~/assets/character/overview-role.mp4';
-import roleToOverview from '~/assets/character/role-overview.mp4';
+import overviewToExperience from '~/assets/character/overview-experience.mp4';
+import experienceToOverview from '~/assets/character/experience-overview.mp4';
 import overviewToPictos from '~/assets/character/overview-pictos.mp4';
 import pictosToOverview from '~/assets/character/pictos-overview.mp4';
 import skillsClip from '~/assets/character/skills.mp4';
@@ -16,14 +16,14 @@ export type Shot = keyof typeof framing;
 
 // framing.json places each loop on the stage (also read by scripts/character/canvas.py). Game framings: overview
 // head ≈ 29 % of the stage height with the face at 48 %; weapon head ≈ 22 % with the face at 61 %, kept right of the
-// role card; pictos head ≈ 31 % in profile, nose at 58 %; skills (arms crossed, face kept in frame unlike the
+// experience card; pictos head ≈ 31 % in profile, nose at 58 %; skills (arms crossed, face kept in frame unlike the
 // game) head ≈ 27 % with the face at 56 %, above the slots.
-const LOOPS: Record<Shot, string> = {overview: overviewClip, role: roleClip, pictos: pictosClip, skills: skillsClip};
+const LOOPS: Record<Shot, string> = {overview: overviewClip, experience: experienceClip, pictos: pictosClip, skills: skillsClip};
 
 // Camera moves rendered on 16:9 canvases covering the stage width (2510 × 1412), ending on the next loop's first frame.
 const TRANSITIONS: Partial<Record<`${Shot}-${Shot}`, string>> = {
-  'overview-role': overviewToRole,
-  'role-overview': roleToOverview,
+  'overview-experience': overviewToExperience,
+  'experience-overview': experienceToOverview,
   'overview-pictos': overviewToPictos,
   'pictos-overview': pictosToOverview,
   'overview-skills': overviewToSkills,

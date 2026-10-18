@@ -1,89 +1,139 @@
-import {useCallback, useState} from 'react';
 import {useNavigate} from 'react-router';
-import TextureTitleSort from '~/components/ui-kit/TextureTitleSort';
-import TextureMainSkill from '~/components/ui-kit/TextureMainSkill';
 import TextureButton from '~/components/ui-kit/TextureButton';
 import KeyHint from '~/components/ui-kit/KeyHint';
-import Glyph from '../common/Glyph';
+import TechIcon from '../common/TechIcon';
 import Label from '../common/Label';
 import Num from '../common/Num';
 import CardTitle from '../common/CardTitle';
+import Portrait from '../common/Portrait';
 import PlateGrid, {type PlateGridLayout} from '../common/PlateGrid';
-import useGridKeys from '../common/PlateGrid/useGridKeys';
 import Tooltip from '../common/Tooltip';
-import {EQUIPPED_SKILLS, LINKEDIN_URL, SKILLS} from '../common/data';
+import useSlotPicker from '../common/useSlotPicker';
+import useSort, {type SortOption} from '../common/useSort';
+import SortTitle from '../common/SortTitle';
+import useLoadout from '../common/store/useLoadout';
+import {LINKEDIN_URL, SKILL_SLOTS, SKILLS, skillById, skillSummary, type Skill} from '../common/data';
+import SkillSlot from './SkillSlot';
 
-// Measured on the capture (t38): same 69-70px rows as the Pictos list, shifted left; plates run ≈ 306px.
-const LIST: PlateGridLayout = {columns: [{x: 138, length: 307}, {x: 454, length: 305}], firstRow: 326, pitch: 69, rows: 5};
+// Measured on the capture (t38): same 69-70px rows as the Pictos list, shifted left; plates run ≈ 306px. Columns are
+// 366px apart like the Pictos list, so an equipped row's portrait clears the next column. Eight rows hold the CV's 16
+// skills and still end above the tooltip.
+const LIST: PlateGridLayout = {columns: [{x: 138, length: 307}, {x: 504, length: 305}], firstRow: 326, pitch: 69, rows: 8};
 // Equipped slots: the home Skills grid, at the same place on both screens.
 const SLOT_ORIGIN = {x: 836.5, y: 1106};
 const SLOT_STEP = {x: 413.5, y: 82.5};
-// Tooltip just above the slots. Key hints are smaller than on the other screens so they clear the slots, as in the game.
-const TOOLTIP = {left: 1224, top: 853, width: 500, height: 220};
+// Measured on the capture (23 s and 38 s): a slot's tooltip sits on top of its own column, just above the slots; a
+// list row's sits right of the list, level with the row. Key hints are smaller than on the other screens so they
+// clear the slots, as in the game.
+const TOOLTIP = {width: 500, height: 220};
+const SLOT_TOOLTIP = {dx: -26, top: SLOT_ORIGIN.y - TOOLTIP.height - 26};
+const LIST_TOOLTIP_X = 900;
 
-const sorted = [...SKILLS].sort((a, b) => a.name.localeCompare(b.name));
+const SORTS: SortOption<Skill>[] = [
+  {label: 'Alphabetical', compare: (a, b) => a.name.localeCompare(b.name), descending: false},
+  {label: 'Level', compare: (a, b) => a.level - b.level, descending: true},
+];
 
 const SkillsPage = () => {
   const navigate = useNavigate();
-  const [cursor, setCursor] = useState(0);
-  const back = useCallback(() => navigate('/'), [navigate]);
-  useGridKeys(sorted.length, LIST, cursor, setCursor, back);
-  const skill = sorted[cursor];
+  const sort = useSort(SKILLS, SORTS);
+  const {sorted} = sort;
+  const slots = useLoadout((s) => s.skills);
+  const equip = useLoadout((s) => s.equipSkill);
+  const clear = useLoadout((s) => s.clearSkill);
+  const equipped = (s: Skill) => slots.includes(s.id);
+  const picker = useSlotPicker<Skill>({
+    items: sorted,
+    layout: LIST,
+    slotCount: SKILL_SLOTS,
+    slotColumns: 2,
+    slotItem: (i) => (slots[i] ? skillById(slots[i]) : null),
+    equip: (i, s) => equip(i, s.id),
+    clear,
+    onBack: () => navigate('/'),
+  });
+  const hovered = picker.hovered === null ? null : sorted[picker.hovered];
+  const pointedSlot = slots.findIndex((_, i) => picker.slotActive(i));
+  const slotSkill = pointedSlot >= 0 && slots[pointedSlot] ? skillById(slots[pointedSlot]!) : null;
+  const tip = hovered && picker.hovered !== null
+    ? {skill: hovered, left: LIST_TOOLTIP_X, top: LIST.firstRow + (picker.hovered % LIST.rows) * LIST.pitch}
+    : slotSkill
+      ? {skill: slotSkill, left: SLOT_ORIGIN.x + (pointedSlot % 2) * SLOT_STEP.x + SLOT_TOOLTIP.dx, top: SLOT_TOOLTIP.top}
+      : null;
+  const inSlot = slots[picker.slot];
 
   return (
     <>
-      <TextureTitleSort
-        title="Skills"
-        className="absolute left-[4px] top-[193px]"
-        sortKey={<KeyHint keyLabel="X" tone="x" className="[&_.KeyHint-key]:size-[40px] [&_.KeyHint-key]:text-[20px]"/>}
-        sort="Alphabetical"
-        aside={<KeyHint keyLabel="R" label="Descending" className="[&_.KeyHint-label]:text-[30px]"/>}
-      />
+      <SortTitle title="Skills" sort={sort}/>
 
       <PlateGrid
         label="Skills"
         items={sorted}
         layout={LIST}
-        cursor={cursor}
-        onCursor={setCursor}
-        variant={(s, i) => (i === cursor ? 'hover' : s.equipped ? 'selected' : 'normal')}
-        itemLabel={(s) => `${s.name}, level ${s.level}${s.equipped ? ', equipped' : ''}`}
-        icon={(s) => <Glyph element={s.element}/>}
+        hovered={picker.hovered}
+        onHover={picker.setHovered}
+        onPick={picker.pick}
+        variant={(s) => (equipped(s) ? 'selected' : 'normal')}
+        itemLabel={(s) => `${s.name}, level ${s.level}${equipped(s) ? ', equipped' : ''}`}
+        icon={(s) => <TechIcon id={s.id}/>}
+        portrait={(s) => (equipped(s) ? <Portrait/> : undefined)}
         aside={(s) => <span className="flex w-[44px] flex-col items-center"><Label size={19}>Level</Label><Num size={36}>{s.level}</Num></span>}
       >
         {(s) => <Label size={s.name.length > 12 ? 23 : 26} className="block">{s.name}</Label>}
       </PlateGrid>
 
-      <Tooltip {...TOOLTIP}>
-        <div className="absolute left-[-31px] top-[1px] w-[450px]">
-          <span className="absolute left-[2px] top-0 size-[40px]"><Glyph element={skill.element}/></span>
-          <CardTitle size={32} className="absolute left-[48px] top-[4px]" style={{letterSpacing: '0.03em'}}>{skill.name}</CardTitle>
-          <span className="absolute left-[380px] top-[-6px] flex w-[60px] flex-col items-center"><Label size={20}>Level</Label><Num size={36}>{skill.level}</Num></span>
-          <Label as="p" size={26} className="absolute left-[2px] top-[58px] w-[430px]" style={{lineHeight: 1.15}}>{skill.description}</Label>
-        </div>
-      </Tooltip>
+      {tip && (
+        <Tooltip {...TOOLTIP} left={tip.left} top={tip.top}>
+          <div className="absolute left-[4px] top-[1px] w-[420px]">
+            <span className="absolute left-[2px] top-[-2px] grid size-[44px] place-items-center"><TechIcon id={tip.skill.id}/></span>
+            <CardTitle size={32} className="absolute left-[48px] top-[4px]" style={{letterSpacing: '0.03em'}}>{tip.skill.name}</CardTitle>
+            <span className="absolute left-[352px] top-[-6px] flex w-[60px] flex-col items-center"><Label size={20}>Level</Label><Num size={36}>{tip.skill.level}</Num></span>
+            <Label as="p" size={20} className="absolute left-[2px] top-[52px] w-[400px]" style={{opacity: 0.75}}>{tip.skill.category}</Label>
+            <Label as="p" size={26} className="absolute left-[2px] top-[84px] w-[400px]" style={{lineHeight: 1.15}}>{skillSummary(tip.skill)}</Label>
+          </div>
+        </Tooltip>
+      )}
 
-      <ul aria-label="Equipped skills">
-        {EQUIPPED_SKILLS.map((s, i) => (
-          <li
-            key={s.id}
-            className="absolute"
-            style={{left: SLOT_ORIGIN.x + (i % 2) * SLOT_STEP.x, top: SLOT_ORIGIN.y + Math.floor(i / 2) * SLOT_STEP.y}}
-            onMouseEnter={() => setCursor(sorted.indexOf(s))}
-          >
-            <TextureMainSkill icon={<Glyph element={s.element}/>} level={s.level}>{s.name}</TextureMainSkill>
-          </li>
+      <section aria-label="Equipped skills">
+        {slots.map((id, i) => (
+          <SkillSlot
+            key={i}
+            index={i}
+            skill={id ? skillById(id) : null}
+            focused={picker.slotActive(i)}
+            left={SLOT_ORIGIN.x + (i % 2) * SLOT_STEP.x}
+            top={SLOT_ORIGIN.y + Math.floor(i / 2) * SLOT_STEP.y}
+            onFocus={() => picker.pointSlot(i)}
+            onLeave={picker.leaveSlot}
+            onOpen={() => picker.open(i)}
+          />
         ))}
-      </ul>
+      </section>
 
       <TextureButton className="absolute left-[1915px] top-[786px]" onClick={() => window.open(`${LINKEDIN_URL}details/skills/`, '_blank', 'noopener')}>
         Skill Tree
       </TextureButton>
 
       <div className="Screen-hints absolute left-[1700px] top-[1300px] gap-[36px] [&_.KeyHint]:text-[26px] [&_.KeyHint-key]:size-[34px]">
-        <KeyHint keyLabel="Y" tone="y" label="Clear Skill Slot"/>
-        <KeyHint keyLabel="A" tone="a" label="Select Skill Slot"/>
-        <button type="button" className="contents" onClick={back}>
+        {picker.mode === 'slots' ? (
+          <>
+            {inSlot && (
+              <button type="button" className="contents" onClick={() => clear(picker.slot)}>
+                <KeyHint keyLabel="Y" tone="y" label="Clear Skill Slot"/>
+              </button>
+            )}
+            <button type="button" className="contents" onClick={() => picker.open(picker.slot)}>
+              <KeyHint keyLabel="A" tone="a" label="Select Skill Slot"/>
+            </button>
+          </>
+        ) : (
+          hovered && (
+            <button type="button" className="contents" onClick={() => picker.hovered !== null && picker.pick(picker.hovered)}>
+              <KeyHint keyLabel="A" tone="a" label={inSlot === hovered.id ? 'Unequip Skill' : 'Equip Skill'}/>
+            </button>
+          )
+        )}
+        <button type="button" className="contents" onClick={picker.cancel}>
           <KeyHint keyLabel="B" tone="b" label="Back"/>
         </button>
       </div>

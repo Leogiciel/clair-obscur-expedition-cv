@@ -1,6 +1,6 @@
 {
   "overview": {"width": 1080, "height": 1920, "x": 734, "y": -69, "scale": 1.096},
-  "role": {"width": 1920, "height": 1080, "x": 132, "y": 95, "scale": 1.2},
+  "experience": {"width": 1920, "height": 1080, "x": 132, "y": 95, "scale": 1.2},
   "pictos": {"width": 1920, "height": 1080, "x": 101, "y": 0, "scale": 1.278},
   "skills": {"width": 1920, "height": 1080, "x": -249, "y": 0, "scale": 1.278}
 }

@@ -25,9 +25,14 @@
     // Own stacking context so the selection smear goes under the plate, not under the stage.
     isolation: isolate;
     display: block;
+    padding: 0;
+    border: 0;
+    background: none;
     cursor: pointer;
     outline: none;
     color: inherit;
+    font: inherit;
+    text-align: left;
     text-decoration: none;
 
     > .Screen-slide {
@@ -40,11 +45,11 @@
     }
 
     // Darkens only the plate texture (video luminance ≈ 22 → 5): crushes darks (0.086 → 0.02), keeps lights (0.7 → 0.7).
-    :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex) {
+    :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex, .TexturePlate-tex, .TextureWeaponRows-tex) {
       transition: filter 0.12s ease-out;
     }
 
-    &--active :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex) {
+    &--active :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex, .TexturePlate-tex, .TextureWeaponRows-tex) {
       filter: brightness(0.963) contrast(1.15);
     }
 

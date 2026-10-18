@@ -11,10 +11,13 @@
   "dependencies": {
     "@react-router/node": "^7.7.1",
     "@react-router/serve": "^7.7.1",
+    "@tanstack/react-hotkeys": "0.13.0",
     "isbot": "^5.1.27",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router": "^7.7.1"
+    "react-router": "^7.7.1",
+    "simple-icons": "16.33.0",
+    "zustand": "5.0.15"
   },
   "devDependencies": {
     "@react-router/dev": "^7.7.1",

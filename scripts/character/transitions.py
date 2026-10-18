@@ -14,10 +14,10 @@ OUT = ROOT / 'design/character/transitions'
 STYLE = ('One continuous fast cinematic camera move, no cut, natural motion blur, same man, same face, same outfit, '
          'same lighting and near-black background throughout; the move settles exactly on the last image.')
 PAIRS = {
-    'overview-role': 'The camera swings around to his left as he turns into a three-quarter view and lowers his open '
+    'overview-experience': 'The camera swings around to his left as he turns into a three-quarter view and lowers his open '
                      'hand in front of his waist; a rapier materialises above his palm in a swirl of thin cyan glowing '
                      'ribbons and floats diagonally across his chest.',
-    'role-overview': 'The rapier dissolves into cyan sparks as he turns to face the camera; the camera swings back '
+    'experience-overview': 'The rapier dissolves into cyan sparks as he turns to face the camera; the camera swings back '
                      'in front of him and settles on a frontal bust shot.',
     # A first prompt let the head turn past the profile and come back to three-quarter: only the camera moves now.
     'overview-pictos': 'He stays still; only the camera moves, in one smooth continuous orbit in a single direction '

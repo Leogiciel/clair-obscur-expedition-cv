@@ -18,7 +18,7 @@ import TextureWeaponRows from '~/components/ui-kit/TextureWeaponRows';
 import Glyph from './Glyph';
 import Num from './Num';
 import Label from './Label';
-import PortraitStub from '../common/PortraitStub';
+import Portrait from '../common/Portrait';
 import TexRow from './TexRow';
 import Section, {type Mode} from './Section';
 
@@ -144,13 +144,13 @@ const DevKitPage = () => {
         <TexturePortraitsKey side="left" className="absolute left-[8px] top-[45px]">LB</TexturePortraitsKey>
         <TexturePortraits
           className="absolute left-[78px] top-[10px]"
-          portrait={<PortraitStub/>}
+          portrait={<Portrait/>}
           flag={<svg viewBox="0 0 17 17" width="100%" height="100%" aria-hidden><line x1="1" y1="0" x2="1" y2="17" stroke="var(--ui-gold)" strokeWidth="1"/><path d="M1.6 0.8c5 1.6 8.5-1.6 15 0.8-1.6 2.4-1.6 4.8 0 7.2-6.5-2.4-10 0.8-15-0.8z" fill="var(--ui-gold-name)"/></svg>}
         />
         <TexturePortraits
           variant="active"
           className="absolute left-[210px] top-[-6px]"
-          portrait={<PortraitStub/>}
+          portrait={<Portrait/>}
           flag={<svg viewBox="0 0 17 17" width="100%" height="100%" aria-hidden><line x1="1" y1="0" x2="1" y2="17" stroke="var(--ui-gold)" strokeWidth="1"/><path d="M1.6 0.8c5 1.6 8.5-1.6 15 0.8-1.6 2.4-1.6 4.8 0 7.2-6.5-2.4-10 0.8-15-0.8z" fill="var(--ui-gold-name)"/></svg>}
         />
         <TexturePortraitsKey side="right" className="absolute left-[448px] top-[45px]">RB</TexturePortraitsKey>

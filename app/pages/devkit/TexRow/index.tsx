@@ -1,5 +1,5 @@
 import TexturePlate, {type TexturePlateVariant} from '~/components/ui-kit/TexturePlate';
-import PortraitStub from '../../common/PortraitStub';
+import Portrait from '../../common/Portrait';
 import Glyph from '../Glyph';
 import Num from '../Num';
 import Label from '../Label';
@@ -11,7 +11,7 @@ const TexRow = ({name, level, color, variant = 'normal', twoLines, x, y, w}: {na
     className="absolute"
     style={{left: x, top: y}}
     icon={<Glyph color={color}/>}
-    portrait={<PortraitStub/>}
+    portrait={<Portrait/>}
     aside={
       <span className="flex w-[44px] flex-col items-center">
         <Label size={19}>Level</Label>
