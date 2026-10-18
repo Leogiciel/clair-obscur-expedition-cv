@@ -13,7 +13,6 @@ interface TextureButtonProps {
   className?: string;
   style?: React.CSSProperties;
   children?: React.ReactNode;
-  // Extra attributes for the button element (data-*, aria-*).
   buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement> & Record<`data-${string}`, unknown>;
 }
 

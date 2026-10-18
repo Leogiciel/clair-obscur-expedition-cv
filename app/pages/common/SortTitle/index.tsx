@@ -6,7 +6,6 @@ interface SortTitleProps {
   sort: {label: string; descending: boolean; next: () => void; flip: () => void};
 }
 
-// Section title with the sort slab: X (or a click) changes the sort key, R the direction.
 const SortTitle = ({title, sort}: SortTitleProps) => (
   <TextureTitleSort
     title={title}

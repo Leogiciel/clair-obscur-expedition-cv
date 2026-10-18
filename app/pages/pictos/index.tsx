@@ -19,7 +19,6 @@ import PictoSlot from './PictoSlot';
 
 // Measured on the capture (t15): 70px rows in two columns; plates run 310px (left) and 318px (right).
 const LIST: PlateGridLayout = {columns: [{x: 172, length: 310}, {x: 538, length: 318}], firstRow: 329, pitch: 70, rows: 3};
-// Equipped slots: diamond cards 278px apart.
 const SLOT = {x: 1025, y: 457, pitch: 278};
 // Hovered-row tooltip: top on the row's top rule, title 25px and text 19px inside its left edge (same type sizes
 // as the cards).

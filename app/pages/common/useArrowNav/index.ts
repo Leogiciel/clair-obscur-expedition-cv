@@ -5,8 +5,8 @@ type Direction = 'up' | 'down' | 'left' | 'right';
 const VECTORS: Record<Direction, [number, number]> = {up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0]};
 
 // Spatial navigation between the focusable elements matched by `selector`: an arrow moves focus to the nearest
-// element whose centre lies within 45° of that direction (any element further that way when none is), favouring the best aligned. With nothing focused yet,
-// any arrow focuses the first element.
+// element whose centre lies within 45° of that direction (any element further that way when none is), favouring the
+// best aligned. With nothing focused yet, any arrow focuses the first element.
 const useArrowNav = (selector: string) => {
   const move = (direction: Direction) => {
     const items = [...document.querySelectorAll<HTMLElement>(selector)];

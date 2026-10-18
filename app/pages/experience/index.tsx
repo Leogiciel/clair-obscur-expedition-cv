@@ -42,7 +42,6 @@ const ExperiencePage = () => {
   const list = sort.sorted;
   const equippedId = useLoadout((s) => s.experience);
   const equip = useLoadout((s) => s.equipExperience);
-  // The row under the pointer or the keyboard cursor; the tooltip shows it, and falls back to the equipped one.
   const [hovered, setHovered] = useState<number | null>(null);
   const current = EXPERIENCES.find((e) => e.id === equippedId) ?? EXPERIENCES[0];
   const shown = hovered === null ? current : list[hovered];

@@ -16,7 +16,6 @@
     }
   }
 
-  // Sigil on the plate's left tip and the label right after it, as in the capture.
   &-button .TextureButton-icon {
     left: 30px;
   }
@@ -27,7 +26,7 @@
     color: #f0ece2;
   }
 
-  // Hover or keyboard focus: the plate lights up and the diamond grows, like the selected slots; no focus ring.
+  // No focus ring: keyboard focus gets the hover highlight, like the selected slots.
   &-button {
     outline: none;
     transition: filter 0.12s ease-out;

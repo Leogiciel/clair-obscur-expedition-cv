@@ -13,8 +13,7 @@ import useLoadout from '../store/useLoadout';
 import {LUMINA_POINTS, luminaCost, luminaPointsSpent, pictoById} from '../data';
 
 // As in the game: points spent over the budget, then the active Luminas with their cost; the gold dot marks the ones
-// an equipped picto provides for free. The panel opens the Luminas screen; pointed at or focused, it gets the home
-// slots' selection (slight grow, paint along the header).
+// an equipped picto provides for free.
 const HEADER = {width: 470, height: 84};
 const ROWS = 3;
 

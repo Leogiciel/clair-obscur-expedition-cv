@@ -19,7 +19,7 @@ PAIRS = {
                      'ribbons and floats diagonally across his chest.',
     'experience-overview': 'The rapier dissolves into cyan sparks as he turns to face the camera; the camera swings back '
                      'in front of him and settles on a frontal bust shot.',
-    # A first prompt let the head turn past the profile and come back to three-quarter: only the camera moves now.
+    # Only the camera moves: a looser prompt let the head turn past the profile and back to three-quarter.
     'overview-pictos': 'He stays still; only the camera moves, in one smooth continuous orbit in a single direction '
                        'from in front of him around to behind his shoulder, so his face turns gradually from front '
                        'view to profile exactly once, never past the profile and never back.',

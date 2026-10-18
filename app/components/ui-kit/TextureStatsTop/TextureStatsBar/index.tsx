@@ -17,7 +17,6 @@ const BARS: Record<TextureStatsBarVariant, {
 
 interface TextureStatsBarProps {
   variant?: TextureStatsBarVariant;
-  // Fill colour: the gold XP fill, or red for Health (game Luminas screen).
   tone?: 'gold' | 'health';
   value: number;
   maxValue: number;

@@ -8,7 +8,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from texlib import *  # noqa: E402,F403
 
-FR, OX, OY = REFS['diamond-card']  # t15, 1020, 730
+FR, OX, OY = REFS['diamond-card']
 SS = 8  # supersampling factor for anti-aliased shapes
 EDGE_BLUR = 0.8
 

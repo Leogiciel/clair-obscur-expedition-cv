@@ -16,7 +16,6 @@ interface BrandMarkProps {
   hex?: string;
   text?: string;
   title: string;
-  // Grey, for items that are not equipped.
   muted?: boolean;
 }
 

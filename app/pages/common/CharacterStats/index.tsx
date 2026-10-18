@@ -10,7 +10,6 @@ import Num from '../Num';
 import CharacterRadarChart from './RadarChart';
 import './style.scss';
 
-// A hovered or focused combat stat explains its figure in a game tooltip, left of the column.
 const CharacterStats = ({className = ''}: {className?: string}) => {
   const [hint, setHint] = useState<number | null>(null);
   const stat = hint === null ? null : CHARACTER.combat[hint];

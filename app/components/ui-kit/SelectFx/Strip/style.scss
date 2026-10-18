@@ -6,7 +6,6 @@
     will-change: transform;
   }
 
-  // Runs while the parent effect is shown.
   .SelectFx--active .SelectFx-strip {
     animation: select-fx-flow linear infinite;
   }

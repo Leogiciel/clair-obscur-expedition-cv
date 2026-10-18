@@ -41,7 +41,7 @@
     place-items: center;
   }
 
-  // Selected node: lifted, brighter rim and a soft halo, as the game's cursor.
+  // Reproduces the game's cursor.
   &--active {
     z-index: 1;
     transform: scale(1.1);

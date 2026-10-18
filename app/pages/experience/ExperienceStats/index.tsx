@@ -2,7 +2,6 @@ import Label from '../../common/Label';
 import Num from '../../common/Num';
 import {durationOf, type Experience} from '../../common/data';
 
-// Duration, the CV's key figure when it gives one, and the size of the stack.
 const ExperienceStats = ({experience}: {experience: Experience}) => {
   const duration = durationOf(experience);
   const stats = [duration, ...(experience.figure ? [experience.figure] : []), {value: String(experience.stack.length), label: 'Stack'}];

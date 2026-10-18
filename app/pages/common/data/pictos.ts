@@ -9,7 +9,6 @@ export interface Picto {
   // Years of practice, from the CV dates.
   level: number;
   element: Element;
-  // Lumina tab, as in the game's Luminas screen.
   category: LuminaCategory;
   stats: [{label: string; value: string}, {label: string; value: string}];
   description: string;
