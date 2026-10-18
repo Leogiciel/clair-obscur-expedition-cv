@@ -46,4 +46,15 @@
     row-gap: 3px;
     font-size: 23px;
   }
+
+  // A stat under the pointer or focused lights up, as its tooltip opens.
+  &-stat {
+    cursor: help;
+    outline: none;
+    transition: color 0.12s ease-out;
+
+    &:is(:hover, :focus-visible) {
+      color: var(--ui-gold-name);
+    }
+  }
 }

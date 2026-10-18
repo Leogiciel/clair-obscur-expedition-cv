@@ -76,7 +76,7 @@ const SkillsPage = () => {
         onPick={picker.pick}
         variant={(s) => (equipped(s) ? 'selected' : 'normal')}
         itemLabel={(s) => `${s.name}, level ${s.level}${equipped(s) ? ', equipped' : ''}`}
-        icon={(s) => <TechIcon id={s.id}/>}
+        icon={(s) => <TechIcon id={s.id} muted={!equipped(s)}/>}
         portrait={(s) => (equipped(s) ? <Portrait/> : undefined)}
         aside={(s) => <span className="flex w-[44px] flex-col items-center"><Label size={19}>Level</Label><Num size={36}>{s.level}</Num></span>}
       >

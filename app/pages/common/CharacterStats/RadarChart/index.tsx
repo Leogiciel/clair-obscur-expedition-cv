@@ -11,11 +11,11 @@ interface Attribute {
 
 // Vertex order: top, then clockwise.
 const ATTRIBUTES: Attribute[] = [
-  {label: 'Vitality', value: 8, at: [245, 397]},
-  {label: 'Might', value: 7, at: [372, 497]},
-  {label: 'Agility', value: 9, at: [330, 637]},
-  {label: 'Defense', value: 6, at: [157, 637]},
-  {label: 'Luck', value: 8, at: [105, 499]},
+  {label: 'Vitality', value: 28, at: [245, 397]},
+  {label: 'Might', value: 24, at: [372, 497]},
+  {label: 'Agility', value: 31, at: [330, 637]},
+  {label: 'Defense', value: 22, at: [157, 637]},
+  {label: 'Luck', value: 26, at: [105, 499]},
 ];
 
 const CENTER: [number, number] = [242, 552];

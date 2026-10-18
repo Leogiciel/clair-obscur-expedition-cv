@@ -18,7 +18,7 @@ const TEXTURES: Record<TexturePlateVariant, {
   // Distance from the chevron tip to the texture's right edge (portrait and frays included).
   tail: number;
 }> = {
-  normal: {src: '/ui/tex/plate-normal.webp', width: 337, height: 66, left: 60, right: 37, icon: [27, 32, 17], anchor: [9, 4], tail: 10},
+  normal: {src: '/ui/tex/plate-normal.webp', width: 337, height: 66, left: 60, right: 37, icon: [30, 32, 17], anchor: [9, 4], tail: 10},
   selected: {src: '/ui/tex/plate-selected.webp', width: 374, height: 75, left: 62, right: 67, icon: [32, 41, 17], portrait: [340, 42, 22], anchor: [6, 12], tail: 54},
   hover: {src: '/ui/tex/plate-hover.webp', width: 424, height: 72, left: 94, right: 62, icon: [62, 37, 18], portrait: [393, 37, 22], anchor: [37, 10], tail: 55},
 };

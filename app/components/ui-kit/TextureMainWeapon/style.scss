@@ -20,23 +20,24 @@
     pointer-events: none;
   }
 
-  // Centered 245 px from the left edge at native width ("Lanceram" x 297–429 on the capture), then
-  // follows half the widening. Caps 26 px (y 873–899), baseline at 83 px.
+  // The area starts 16px after the icon slot and stops before the Level column; longer names shrink (--name-size)
+  // to stay on one line, centred on the icon's horizontal axis.
   .TextureMainWeapon-name {
     position: absolute;
-    top: 57px;
-    left: 150px;
-    right: 182px;
+    top: 64px;
+    left: 172px;
+    right: 132px;
     display: flex;
     justify-content: center;
     white-space: nowrap;
     font-family: var(--font-label);
     font-weight: var(--font-slot-weight);
     letter-spacing: 0.015em;
-    font-size: 38px;
+    font-size: var(--name-size, 38px);
+    // Cap-height centring: the box's middle is put on the icon's middle (y 64), shifted by the descender share so
+    // the capitals, not the line box, sit on that axis whatever the size.
     line-height: 1;
-    height: 26px;
-    align-items: flex-end;
+    transform: translateY(-58%);
   }
 
   // "Level" column axis 89 px from the right edge (fixed part).

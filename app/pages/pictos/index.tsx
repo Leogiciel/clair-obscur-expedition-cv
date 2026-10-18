@@ -67,7 +67,7 @@ const PictosPage = () => {
         onPick={picker.pick}
         variant={(p) => (equipped(p) ? 'selected' : 'normal')}
         itemLabel={(p) => `${p.name}, level ${p.level}${equipped(p) ? ', equipped' : ''}`}
-        icon={(p) => <Glyph element={p.element}/>}
+        icon={(p) => <Glyph element={p.element} muted={!equipped(p)}/>}
         portrait={(p) => (equipped(p) ? <Portrait/> : undefined)}
         aside={(p) => <span className="flex w-[44px] flex-col items-center"><Label size={19}>Level</Label><Num size={36}>{p.level}</Num></span>}
       >

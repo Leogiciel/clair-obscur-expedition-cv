@@ -17,6 +17,8 @@ const BARS: Record<TextureStatsBarVariant, {
 
 interface TextureStatsBarProps {
   variant?: TextureStatsBarVariant;
+  // Fill colour: the gold XP fill, or red for Health (game Luminas screen).
+  tone?: 'gold' | 'health';
   value: number;
   maxValue: number;
   width?: number;
@@ -26,7 +28,7 @@ interface TextureStatsBarProps {
   style?: React.CSSProperties;
 }
 
-const TextureStatsBar = ({variant = 'xp', value, maxValue, width, showValue = true, label, className = '', style}: TextureStatsBarProps) => {
+const TextureStatsBar = ({variant = 'xp', tone = 'gold', value, maxValue, width, showValue = true, label, className = '', style}: TextureStatsBarProps) => {
   const b = BARS[variant];
   const w = width ?? b.width;
   const ratio = maxValue > 0 ? Math.max(0, Math.min(1, value / maxValue)) : 0;
@@ -44,7 +46,7 @@ const TextureStatsBar = ({variant = 'xp', value, maxValue, width, showValue = tr
     ...style,
   } as React.CSSProperties;
   return (
-    <div className={`TextureStatsBar TextureStatsBar--${variant} ${className}`} style={vars}>
+    <div className={`TextureStatsBar TextureStatsBar--${variant} TextureStatsBar--${tone} ${className}`} style={vars}>
       {showValue && <div className="TextureStatsBar-value">{label ?? `${value} / ${maxValue}`}</div>}
       <div className="TextureStatsBar-tex" aria-hidden/>
       {ratio > 0 && <div className="TextureStatsBar-fill" aria-hidden/>}

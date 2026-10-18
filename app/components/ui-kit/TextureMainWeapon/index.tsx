@@ -12,6 +12,12 @@ const RIGHT = 268;
 // Where the spear was painted (shaft from (63, 16) to (63+87, 113)): [x, y, width, height].
 const ICON: [number, number, number, number] = [60, 12, 96, 104];
 
+// Names longer than the 38px capture size allows shrink to stay on one line in the 220px name area.
+const nameSize = (name: React.ReactNode) => {
+  const n = typeof name === 'string' ? name.length : 0;
+  return n <= 10 ? 38 : n <= 14 ? 32 : n <= 17 ? 27 : 24;
+};
+
 interface TextureMainWeaponProps {
   width?: number;
   icon?: React.ReactNode;
@@ -32,7 +38,7 @@ const TextureMainWeapon = ({width, icon, level, levelLabel = 'Level', className 
       {icon && (
         <div className="TextureMainWeapon-icon" style={{left: ix, top: iy, width: iw, height: ih}}>{icon}</div>
       )}
-      <div className="TextureMainWeapon-name">{children}</div>
+      <div className="TextureMainWeapon-name" style={{'--name-size': `${nameSize(children)}px`} as React.CSSProperties}>{children}</div>
       {level !== undefined && (
         <div className="TextureMainWeapon-level">
           <span className="TextureMainWeapon-levelLabel">{levelLabel}</span>

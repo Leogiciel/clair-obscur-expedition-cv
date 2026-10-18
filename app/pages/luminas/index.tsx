@@ -47,6 +47,11 @@ const LuminasPage = () => {
   const isFree = (p: Picto) => pictos.includes(p.id);
   const isActive = (p: Picto) => isFree(p) || active.includes(p.id);
   const available = LUMINA_POINTS - luminaPointsSpent(active, pictos);
+  // As in the game: inactive Luminas the remaining points can still pay for keep a muted cyan cost; the ones that are
+  // out of budget are greyed out entirely.
+  const affordable = (p: Picto) => isActive(p) || luminaCost(p) <= available;
+  const costColor = (p: Picto) => (isActive(p) ? 'var(--el-cyan)' : affordable(p) ? 'color-mix(in srgb, var(--el-cyan) 55%, #5d6b6a)' : '#5c5a55');
+  const nameStyle = (p: Picto) => (isActive(p) ? {} : affordable(p) ? {opacity: 0.8} : {opacity: 0.4});
   const shown = hovered === null ? null : items[hovered];
 
   const changeTab = (d: number) => {
@@ -88,11 +93,11 @@ const LuminasPage = () => {
         onPick={(i) => toggle(items[i].id)}
         variant={(p) => (isActive(p) ? 'selected' : 'normal')}
         itemLabel={(p) => `${p.name}, cost ${luminaCost(p)}${isFree(p) ? ', from an equipped picto' : isActive(p) ? ', active' : ''}`}
-        icon={(p) => <Glyph element={p.element}/>}
+        icon={(p) => <Glyph element={p.element} muted={!affordable(p)}/>}
         portrait={(p) => (isActive(p) ? <Portrait/> : undefined)}
-        aside={(p) => <Num size={34} style={{color: isActive(p) ? 'var(--el-cyan)' : undefined, opacity: isActive(p) ? 1 : 0.6}}>{luminaCost(p)}</Num>}
+        aside={(p) => <Num size={34} style={{color: costColor(p)}}>{luminaCost(p)}</Num>}
       >
-        {(p) => <Label size={p.name.length > 12 ? 23 : 26} className="block" style={{opacity: isActive(p) ? 1 : 0.7}}>{p.name}</Label>}
+        {(p) => <Label size={p.name.length > 12 ? 23 : 26} className="block" style={nameStyle(p)}>{p.name}</Label>}
       </PlateGrid>
 
       {shown && hovered !== null && (

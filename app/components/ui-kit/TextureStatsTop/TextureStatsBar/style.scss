@@ -23,6 +23,11 @@
     pointer-events: none;
   }
 
+  // The gold texture recoloured to the game's health red (Luminas screen capture).
+  .TextureStatsBar--health .TextureStatsBar-fill {
+    filter: sepia(1) saturate(6) hue-rotate(-50deg) brightness(0.5) contrast(1.2);
+  }
+
   // Digits 2 px above the rail, aligned with the end of the right arrow.
   .TextureStatsBar-value {
     position: absolute;
