@@ -1,0 +1,40 @@
+// Blurred red petals rising slowly over the whole stage, behind the tree.
+.Embers {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  &-petal {
+    position: absolute;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    background: radial-gradient(ellipse at 40% 40%, #e2343a 0%, #8f0f16 60%, transparent 75%);
+    filter: blur(1.5px);
+    opacity: 0;
+    animation: embers-rise linear infinite;
+  }
+
+  @keyframes embers-rise {
+    0% {
+      opacity: 0;
+      transform: translate(0, 0) rotate(0deg);
+    }
+
+    15%,
+    80% {
+      opacity: 0.75;
+    }
+
+    100% {
+      opacity: 0;
+      transform: translate(var(--drift), -900px) rotate(220deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &-petal {
+      animation: none;
+      opacity: 0.5;
+    }
+  }
+}

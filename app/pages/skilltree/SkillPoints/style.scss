@@ -1,0 +1,37 @@
+// Texture 840×508 shown at 540×327: title centred at y 40, number at y 112, line at y 196.
+.SkillPoints {
+  position: absolute;
+  left: 1330px;
+  top: 64px;
+  width: 540px;
+  height: 327px;
+  background: url('/ui/tex/skill-points.webp') 0 0 / 100% 100% no-repeat;
+
+  &-title {
+    position: absolute;
+    inset: 18px 0 auto;
+    text-align: center;
+    font-family: var(--font-primary);
+    font-variant: small-caps;
+    font-size: 40px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--ui-gold-name);
+  }
+
+  &-value {
+    position: absolute;
+    inset: 78px 0 auto;
+    text-align: center;
+    color: var(--ui-gold-name);
+  }
+
+  &-line {
+    position: absolute;
+    inset: 168px 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 16px;
+  }
+}

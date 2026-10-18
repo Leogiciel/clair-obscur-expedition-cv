@@ -7,6 +7,7 @@ export default [
     route("pictos", "routes/pictos.tsx"),
     route("skills", "routes/skills.tsx"),
     route("luminas", "routes/luminas.tsx"),
+    route("skill-tree", "routes/skilltree.tsx"),
   ]),
   // UI kit bench: mounted only with DEV_KIT=true, never in the public build.
   ...(process.env.DEV_KIT === "true" ? [route("dev/kit", "routes/dev.kit.tsx")] : []),

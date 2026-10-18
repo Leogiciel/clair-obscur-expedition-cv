@@ -5,7 +5,7 @@ import Character, {type Shot} from '../Character';
 import CharacterStats from '../CharacterStats';
 import useLoadout from '../store/useLoadout';
 
-const SHOTS: Record<string, Shot> = {'/experience': 'experience', '/pictos': 'pictos', '/skills': 'skills', '/luminas': 'luminas'};
+const SHOTS: Record<string, Shot> = {'/experience': 'experience', '/pictos': 'pictos', '/skills': 'skills', '/luminas': 'luminas', '/skill-tree': 'skilltree'};
 
 export interface StageContext {
   from: string;

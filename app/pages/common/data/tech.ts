@@ -1,6 +1,6 @@
 import {
-  siDjango, siGooglegemini, siGraphql, siJavascript, siJest, siMeteor, siMongodb, siMysql, siNextdotjs, siNodedotjs,
-  siPostgresql, siPython, siReact, siRedux, siRemix, siRust, siSass, siShopify, siSvelte, siTauri, siTestinglibrary,
+  siDjango, siGo, siGooglegemini, siGraphql, siJavascript, siJest, siMeteor, siMongodb, siMysql, siNextdotjs, siNodedotjs,
+  siPostgresql, siPython, siReact, siRedux, siRemix, siRuby, siRust, siSass, siShopify, siSpring, siSvelte, siTauri, siTestinglibrary,
   siTrpc, siTypescript, type SimpleIcon,
 } from 'simple-icons';
 
@@ -45,6 +45,9 @@ export const TECH = {
   gemini: {name: 'Gemini', icon: siGooglegemini},
   groq: {name: 'Groq'},
   web3auth: {name: 'Web3Auth'},
+  go: {name: 'Go', icon: siGo},
+  spring: {name: 'Java Spring', icon: siSpring},
+  ruby: {name: 'Ruby', icon: siRuby},
 } satisfies Record<string, Tech>;
 
 export type TechId = keyof typeof TECH;

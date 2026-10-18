@@ -12,7 +12,7 @@ import useSlotPicker from '../common/useSlotPicker';
 import useSort, {type SortOption} from '../common/useSort';
 import SortTitle from '../common/SortTitle';
 import useLoadout from '../common/store/useLoadout';
-import {LINKEDIN_URL, SKILL_SLOTS, SKILLS, skillById, skillSummary, type Skill} from '../common/data';
+import {SKILL_SLOTS, SKILLS, skillById, skillSummary, type Skill} from '../common/data';
 import SkillSlot from './SkillSlot';
 
 // Measured on the capture (t38): same 69-70px rows as the Pictos list, shifted left; plates run ≈ 306px. Columns are
@@ -110,7 +110,7 @@ const SkillsPage = () => {
         ))}
       </section>
 
-      <TextureButton className="absolute left-[1915px] top-[786px]" onClick={() => window.open(`${LINKEDIN_URL}details/skills/`, '_blank', 'noopener')}>
+      <TextureButton className="absolute left-[1915px] top-[786px]" onClick={() => navigate('/skill-tree')}>
         Skill Tree
       </TextureButton>
 

@@ -1,0 +1,48 @@
+// Measured on the game screenshot (design/skill-tree-screen.png, scaled to the stage): 130px diamonds with a white
+// rim; locked ones are filled white with a black padlock.
+.TreeNode {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  margin: -65px 0 0 -65px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.3, 1);
+
+  &-diamond {
+    position: absolute;
+    inset: 19px;
+    display: block;
+    transform: rotate(45deg);
+    border: 4px solid #e9e6de;
+    background: #0e0e0d;
+    box-shadow: 0 0 0 3px #050505;
+    transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out;
+  }
+
+  &-content {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    transform: rotate(-45deg);
+  }
+
+  &--locked &-diamond {
+    background: #f2f0ea;
+  }
+
+  // Selected node: lifted and haloed, as the game's cursor.
+  &--active {
+    z-index: 1;
+    transform: scale(1.1);
+  }
+
+  &--active &-diamond {
+    border-color: #fff;
+    box-shadow: 0 0 0 3px #050505, 0 0 18px 4px rgb(255 255 255 / 0.35);
+  }
+}

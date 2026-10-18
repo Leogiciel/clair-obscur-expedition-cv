@@ -31,7 +31,7 @@ const POSITIONS: Experience[] = [
       'Built an AI video pipeline: GPU processing, FFmpeg, ONNX face tracking, auto-clipping, subtitles, brand templates editor.',
       'Shipped a cross-platform desktop app (Tauri) and the automation suite: Stripe billing, scheduling, calendar sync, Terraform.',
     ],
-    stack: ['react', 'typescript', 'node', 'postgres', 'aws', 'openai', 'gemini', 'groq', 'nextjs', 'trpc', 'tauri'],
+    stack: ['react', 'typescript', 'node', 'postgres', 'aws', 'openai', 'gemini', 'groq', 'nextjs', 'trpc', 'tauri', 'rust'],
   },
   {
     id: 'awesomeapps', title: 'Founder & Developer', company: 'AwesomeApps', logo: {src: '/ui/logos/awesomeapps.webp'}, start: '2019-09',
