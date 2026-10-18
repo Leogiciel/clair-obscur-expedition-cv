@@ -38,3 +38,4 @@ export const CHARACTER = {
 };
 
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/olivier-nguyen-98b642150/';
+export const GITHUB_URL = 'https://github.com/OlivierNguyen';

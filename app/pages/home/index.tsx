@@ -8,6 +8,7 @@ import TextureMainSkill from '~/components/ui-kit/TextureMainSkill';
 import TextureMainWeapon from '~/components/ui-kit/TextureMainWeapon';
 
 import CompanyLogo from '../common/CompanyLogo';
+import GitHubMark from '../common/GitHubMark';
 import Glyph from '../common/Glyph';
 import IconButton from '../common/IconButton';
 import LinkedInMark from '../common/LinkedInMark';
@@ -15,7 +16,7 @@ import Luminas from '../common/Luminas';
 import SectionTitle from '../common/SectionTitle';
 import type { StageContext } from '../common/StageLayout';
 import TechIcon from '../common/TechIcon';
-import { EXPERIENCES, LINKEDIN_URL, monthsOf, pictoById, skillById } from '../common/data';
+import { EXPERIENCES, GITHUB_URL, LINKEDIN_URL, monthsOf, pictoById, skillById } from '../common/data';
 import useLoadout from '../common/store/useLoadout';
 import useArrowNav from '../common/useArrowNav';
 
@@ -187,11 +188,21 @@ const Home = () => {
 
       <IconButton
         icon={<LinkedInMark />}
-        className="absolute left-[1915px] top-[786px]"
-        width={380}
+        compact
+        className="absolute left-[1846px] top-[786px]"
+        width={300}
         onClick={() => window.open(LINKEDIN_URL, '_blank', 'noopener')}
       >
         LinkedIn
+      </IconButton>
+      <IconButton
+        icon={<GitHubMark />}
+        compact
+        className="absolute left-[2150px] top-[786px]"
+        width={300}
+        onClick={() => window.open(GITHUB_URL, '_blank', 'noopener')}
+      >
+        GitHub
       </IconButton>
       <Luminas />
 

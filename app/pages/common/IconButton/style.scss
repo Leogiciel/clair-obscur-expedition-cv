@@ -26,6 +26,13 @@
     color: #f0ece2;
   }
 
+  // Two side by side (LinkedIn and GitHub on the main screen): a smaller label still clears the gold dot.
+  &--compact &-button .TextureButton-label {
+    left: 116px;
+    right: 64px;
+    font-size: 30px;
+  }
+
   // No focus ring: keyboard focus gets the hover highlight, like the selected slots.
   &-button {
     outline: none;
