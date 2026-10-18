@@ -12,8 +12,8 @@ const NodeTooltip = ({ node }: { node: TreeNode }) => {
     ? 'Locked: not used in a position yet.'
     : [node.note, positions.length ? `Used at ${positions.join(', ')}.` : ''].filter(Boolean).join(' ');
   return (
-    <Tooltip left={1840} top={850} width={560} height={230}>
-      <div className="absolute left-[-14px] top-[1px] w-[470px]">
+    <Tooltip left={1840} top={850} width={560}>
+      <div className="relative left-[-14px] top-[1px] w-[470px]">
         <span className="absolute left-[2px] top-[-4px] grid size-[48px] place-items-center">
           <NodeIcon icon={node.icon} />
         </span>
@@ -25,17 +25,12 @@ const NodeTooltip = ({ node }: { node: TreeNode }) => {
           {node.name}
         </CardTitle>
         {!node.locked && (
-          <span className="absolute left-[400px] top-[-8px] flex w-[60px] flex-col items-center">
+          <span className="absolute left-[420px] top-0 flex w-[60px] flex-col items-center">
             <Label size={20}>Years</Label>
             <Num size={36}>{nodeYears(node)}</Num>
           </span>
         )}
-        <Label
-          as="p"
-          size={24}
-          className="absolute left-[2px] top-[60px] w-[460px]"
-          style={{ lineHeight: 1.2 }}
-        >
+        <Label as="p" size={24} className="ml-[2px] w-[460px] pt-[60px]" style={{ lineHeight: 1.2 }}>
           {text}
         </Label>
       </div>

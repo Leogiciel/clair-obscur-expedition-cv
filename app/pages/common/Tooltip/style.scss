@@ -1,0 +1,8 @@
+@layer components {
+  // TextureCard places its content absolutely; here the content sizes the card instead, with the same insets.
+  .Tooltip-card > .TextureCard-content {
+    position: relative;
+    inset: auto;
+    padding: 24px 10px 39px 50px;
+  }
+}

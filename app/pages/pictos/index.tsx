@@ -109,13 +109,8 @@ const PictosPage = () => {
       </section>
 
       {hovered && picker.hovered !== null && (
-        <Tooltip
-          left={TOOLTIP_X}
-          top={LIST.firstRow + (picker.hovered % LIST.rows) * LIST.pitch}
-          width={500}
-          height={225}
-        >
-          <div className="absolute left-[-14px] top-[1px] h-[190px] w-[440px]">
+        <Tooltip left={TOOLTIP_X} top={LIST.firstRow + (picker.hovered % LIST.rows) * LIST.pitch} width={500}>
+          <div className="relative left-[-14px] top-[1px] w-[440px]">
             <PictoDetails picto={hovered} />
           </div>
         </Tooltip>

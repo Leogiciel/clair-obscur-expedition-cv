@@ -10,6 +10,7 @@ import Num from '../common/Num';
 import PlateGrid, { type PlateGridLayout } from '../common/PlateGrid';
 import Portrait from '../common/Portrait';
 import SortTitle from '../common/SortTitle';
+import { STAGE_H } from '../common/Stage';
 import TechIcon from '../common/TechIcon';
 import Tooltip from '../common/Tooltip';
 import { SKILLS, SKILL_SLOTS, type Skill, skillById, skillSummary } from '../common/data';
@@ -37,8 +38,9 @@ const SLOT_STEP = { x: 413.5, y: 82.5 };
 // Measured on the capture (23 s and 38 s): a slot's tooltip sits on top of its own column, just above the slots; a
 // list row's sits right of the list, level with the row. Key hints are smaller than on the other screens so they
 // clear the slots, as in the game.
-const TOOLTIP = { width: 500, height: 220 };
-const SLOT_TOOLTIP = { dx: -26, top: SLOT_ORIGIN.y - TOOLTIP.height - 26 };
+const TOOLTIP_WIDTH = 500;
+// The tooltip grows with its text, so a slot's one is anchored by its bottom, just above the slots.
+const SLOT_TOOLTIP = { dx: -26, bottom: STAGE_H - SLOT_ORIGIN.y + 26 };
 const LIST_TOOLTIP_X = 900;
 
 const SORTS: SortOption<Skill>[] = [
@@ -73,13 +75,15 @@ const SkillsPage = () => {
       ? {
           skill: hovered,
           left: LIST_TOOLTIP_X,
-          top: LIST.firstRow + (picker.hovered % LIST.rows) * LIST.pitch
+          top: LIST.firstRow + (picker.hovered % LIST.rows) * LIST.pitch,
+          bottom: undefined
         }
       : slotSkill
         ? {
             skill: slotSkill,
             left: SLOT_ORIGIN.x + (pointedSlot % 2) * SLOT_STEP.x + SLOT_TOOLTIP.dx,
-            top: SLOT_TOOLTIP.top
+            top: undefined,
+            bottom: SLOT_TOOLTIP.bottom
           }
         : null;
   const inSlot = slots[picker.slot];
@@ -114,8 +118,8 @@ const SkillsPage = () => {
       </PlateGrid>
 
       {tip && (
-        <Tooltip {...TOOLTIP} left={tip.left} top={tip.top}>
-          <div className="absolute left-[-14px] top-[1px] w-[420px]">
+        <Tooltip width={TOOLTIP_WIDTH} left={tip.left} top={tip.top} bottom={tip.bottom}>
+          <div className="relative left-[-14px] top-[1px] w-[420px]">
             <span className="absolute left-[2px] top-[-2px] grid size-[44px] place-items-center">
               <TechIcon id={tip.skill.id} />
             </span>
@@ -126,7 +130,7 @@ const SkillsPage = () => {
             >
               {tip.skill.name}
             </CardTitle>
-            <span className="absolute left-[352px] top-[-6px] flex w-[60px] flex-col items-center">
+            <span className="absolute left-[359px] top-0 flex w-[60px] flex-col items-center">
               <Label size={20}>Level</Label>
               <Num size={36}>{tip.skill.level}</Num>
             </span>
@@ -138,12 +142,7 @@ const SkillsPage = () => {
             >
               {tip.skill.category}
             </Label>
-            <Label
-              as="p"
-              size={26}
-              className="absolute left-[2px] top-[84px] w-[400px]"
-              style={{ lineHeight: 1.15 }}
-            >
+            <Label as="p" size={26} className="ml-[2px] w-[400px] pt-[84px]" style={{ lineHeight: 1.15 }}>
               {skillSummary(tip.skill)}
             </Label>
           </div>

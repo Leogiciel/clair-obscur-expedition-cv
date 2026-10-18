@@ -40,8 +40,7 @@ export const PICTOS: Picto[] = [
       { label: 'Customers', value: '200' },
       { label: 'Products', value: '3' }
     ],
-    description:
-      'Founded AwesomeApps: Shopify apps with 200 paying customers, then car rental and nutrition apps.'
+    description: 'Founded AwesomeApps: Shopify apps for 200 paying customers, car rental, nutrition.'
   },
   {
     id: 'delivery',
@@ -53,7 +52,7 @@ export const PICTOS: Picto[] = [
       { label: 'Sessions', value: '2,000+' },
       { label: 'Hours', value: '3,000' }
     ],
-    description: 'Shipped Podspace end to end: 2,000+ sessions and ~3,000 hours of video processed.'
+    description: 'Shipped Podspace end to end: 2,000+ sessions, ~3,000 hours of video.'
   },
   {
     id: 'quality',
@@ -65,8 +64,7 @@ export const PICTOS: Picto[] = [
       { label: 'Coverage', value: '80%' },
       { label: 'Handbooks', value: '2' }
     ],
-    description:
-      'Tests at 80% coverage on all new code; onboarding and best-practice docs at Coinhouse and SAP.'
+    description: '80% coverage on new code; onboarding and best-practice docs at Coinhouse, SAP.'
   },
   {
     id: 'music',
