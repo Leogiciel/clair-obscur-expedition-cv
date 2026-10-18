@@ -1,3 +1,4 @@
+import { useHotkeys } from '@tanstack/react-hotkeys';
 import { useNavigate } from 'react-router';
 
 import KeyHint from '~/components/ui-kit/KeyHint';
@@ -53,6 +54,7 @@ const SkillsPage = () => {
   const equip = useLoadout((s) => s.equipSkill);
   const clear = useLoadout((s) => s.clearSkill);
   const equipped = (s: Skill) => slots.includes(s.id);
+  useHotkeys([{ hotkey: 'C', callback: () => navigate('/skill-tree') }]);
   const picker = useSlotPicker<Skill>({
     items: sorted,
     layout: LIST,
@@ -166,8 +168,8 @@ const SkillsPage = () => {
 
       <IconButton
         icon={<SkillTreeSigil />}
-        className="absolute left-[1915px] top-[786px]"
-        width={380}
+        keyLabel="C"
+        className="absolute left-[1866px] top-[786px]"
         onClick={() => navigate('/skill-tree')}
       >
         Skill Tree
