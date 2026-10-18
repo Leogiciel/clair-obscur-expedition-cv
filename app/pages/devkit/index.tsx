@@ -31,20 +31,20 @@ const DevKitPage = () => {
   return (
     <main className="min-h-screen bg-[var(--ui-bg)] p-10 text-[var(--ui-text)]">
       <div className="mb-10 flex items-center gap-4">
-        <h1 className="font-mono text-sm">Kit UI · banc d'essai</h1>
+        <h1 className="font-mono text-sm">UI kit · test bench</h1>
         {(['stack', 'overlay'] as Mode[]).map((m) => (
           <button
             key={m}
             onClick={() => setMode(m)}
             className={`border px-3 py-1 font-mono text-xs ${mode === m ? 'border-white' : 'border-neutral-700 text-neutral-500'}`}
           >
-            {m === 'stack' ? 'Référence / reconstruction' : 'Superposition 50 %'}
+            {m === 'stack' ? 'Reference / recreation' : 'Overlay 50%'}
           </button>
         ))}
       </div>
 
       <Section
-        title="Rangées Pictos (TexturePlate, textures extraites)"
+        title="Pictos rows (TexturePlate, extracted textures)"
         refSrc="rows.png"
         w={760}
         h={210}
@@ -58,13 +58,7 @@ const DevKitPage = () => {
         <TexRow name="Empowering Attack" level={1} color="#cfcfcf" twoLines x={372} y={145} />
       </Section>
 
-      <Section
-        title="Rangées d'arme (TextureWeaponRows)"
-        refSrc="weapon-rows.png"
-        w={480}
-        h={170}
-        mode={mode}
-      >
+      <Section title="Weapon rows (TextureWeaponRows)" refSrc="weapon-rows.png" w={480} h={170} mode={mode}>
         <Damask tile={112} />
         <TextureWeaponRows
           variant="selected"
@@ -93,7 +87,7 @@ const DevKitPage = () => {
       </Section>
 
       <Section
-        title="Titre de section + tri (TextureTitleSort)"
+        title="Section title and sort (TextureTitleSort)"
         refSrc="title-sort.png"
         w={840}
         h={90}
@@ -114,7 +108,7 @@ const DevKitPage = () => {
         />
       </Section>
 
-      <Section title="Colonne stats (TextureStatsTop)" refSrc="stats-top.png" w={490} h={380} mode={mode}>
+      <Section title="Stats column (TextureStatsTop)" refSrc="stats-top.png" w={490} h={380} mode={mode}>
         <TextureStatsTop className="absolute inset-0">
           <div className="absolute inset-x-0 top-0 pl-4 pr-[34px] pt-[9px]">
             <TitleRule
@@ -181,7 +175,7 @@ const DevKitPage = () => {
       </Section>
 
       <Section
-        title="Losange + infobulle (TextureDiamondCard)"
+        title="Diamond and tooltip (TextureDiamondCard)"
         refSrc="diamond-card.png"
         w={620}
         h={210}
@@ -225,7 +219,7 @@ const DevKitPage = () => {
       </Section>
 
       <Section
-        title="Carte d'arme (TextureCard, texture extraite)"
+        title="Weapon card (TextureCard, extracted texture)"
         refSrc="card-weapon.png"
         w={510}
         h={210}
@@ -290,7 +284,7 @@ const DevKitPage = () => {
       </Section>
 
       <Section
-        title="Luminas (TextureLuminas, textures extraites)"
+        title="Luminas (TextureLuminas, extracted textures)"
         refSrc="luminas.png"
         w={490}
         h={240}
@@ -353,7 +347,7 @@ const DevKitPage = () => {
       </Section>
 
       <Section
-        title="Barre d'équipe (TexturePortraits, textures extraites)"
+        title="Party bar (TexturePortraits, extracted textures)"
         refSrc="portraits.png"
         w={510}
         h={140}
@@ -394,7 +388,7 @@ const DevKitPage = () => {
         </TexturePortraitsKey>
       </Section>
 
-      <Section title="Aides boutons (KeyHint)" refSrc="keyhints.png" w={620} h={60} mode={mode}>
+      <Section title="Button hints (KeyHint)" refSrc="keyhints.png" w={620} h={60} mode={mode}>
         <div className="absolute left-[50px] top-[16px] flex items-center gap-8 [&_.KeyHint]:text-[22px]">
           <KeyHint keyLabel="Y" tone="y" label="Add to Favourites" />
           <KeyHint keyLabel="A" tone="a" label="Equip Pictos" />
@@ -402,7 +396,7 @@ const DevKitPage = () => {
         </div>
       </Section>
 
-      <Section title="Slot vide (TextureEmpty)" refSrc="empty.png" w={200} h={200} mode={mode}>
+      <Section title="Empty slot (TextureEmpty)" refSrc="empty.png" w={200} h={200} mode={mode}>
         <TextureEmpty className="absolute left-[2px] top-[3px]">
           <span style={{ fontSize: 30 }}>Empty</span>
         </TextureEmpty>

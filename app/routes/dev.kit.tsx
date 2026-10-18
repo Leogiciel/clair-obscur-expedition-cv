@@ -1,7 +1,7 @@
 import DevKitPage from '~/pages/devkit';
 
 export function meta() {
-  return [{ title: 'Kit UI' }, { name: 'robots', content: 'noindex' }];
+  return [{ title: 'UI kit' }, { name: 'robots', content: 'noindex' }];
 }
 
 export default function DevKit() {
