@@ -1,10 +1,14 @@
 import Label from '../../common/Label';
 import Num from '../../common/Num';
-import {durationOf, type Experience} from '../../common/data';
+import { type Experience, durationOf } from '../../common/data';
 
-const ExperienceStats = ({experience}: {experience: Experience}) => {
+const ExperienceStats = ({ experience }: { experience: Experience }) => {
   const duration = durationOf(experience);
-  const stats = [duration, ...(experience.figure ? [experience.figure] : []), {value: String(experience.stack.length), label: 'Stack'}];
+  const stats = [
+    duration,
+    ...(experience.figure ? [experience.figure] : []),
+    { value: String(experience.stack.length), label: 'Stack' }
+  ];
   return (
     <>
       {stats.map((s) => (

@@ -10,7 +10,8 @@
   .TextureMainPicto-tex {
     position: absolute;
     inset: 0;
-    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0 var(--tex-left) stretch;
+    border-image: var(--tex) 0 var(--slice-right) 0 var(--slice-left) fill / 0 var(--tex-right) 0
+      var(--tex-left) stretch;
     pointer-events: none;
   }
 

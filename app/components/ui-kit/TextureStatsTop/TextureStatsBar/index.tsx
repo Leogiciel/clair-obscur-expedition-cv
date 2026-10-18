@@ -3,16 +3,19 @@ import './style.scss';
 export type TextureStatsBarVariant = 'xp' | 'plain';
 
 // left/right: fixed caps (arrow + stop). track: margins of the inner rail the fill may occupy.
-const BARS: Record<TextureStatsBarVariant, {
-  src: string;
-  width: number;
-  height: number;
-  left: number;
-  right: number;
-  track: [number, number];
-}> = {
-  xp: {src: '/ui/tex/stats-top-bar-xp.webp', width: 392, height: 30, left: 30, right: 22, track: [27, 21]},
-  plain: {src: '/ui/tex/stats-top-bar.webp', width: 442, height: 30, left: 30, right: 22, track: [22, 21]},
+const BARS: Record<
+  TextureStatsBarVariant,
+  {
+    src: string;
+    width: number;
+    height: number;
+    left: number;
+    right: number;
+    track: [number, number];
+  }
+> = {
+  xp: { src: '/ui/tex/stats-top-bar-xp.webp', width: 392, height: 30, left: 30, right: 22, track: [27, 21] },
+  plain: { src: '/ui/tex/stats-top-bar.webp', width: 442, height: 30, left: 30, right: 22, track: [22, 21] }
 };
 
 interface TextureStatsBarProps {
@@ -27,7 +30,17 @@ interface TextureStatsBarProps {
   style?: React.CSSProperties;
 }
 
-const TextureStatsBar = ({variant = 'xp', tone = 'gold', value, maxValue, width, showValue = true, label, className = '', style}: TextureStatsBarProps) => {
+const TextureStatsBar = ({
+  variant = 'xp',
+  tone = 'gold',
+  value,
+  maxValue,
+  width,
+  showValue = true,
+  label,
+  className = '',
+  style
+}: TextureStatsBarProps) => {
   const b = BARS[variant];
   const w = width ?? b.width;
   const ratio = maxValue > 0 ? Math.max(0, Math.min(1, value / maxValue)) : 0;
@@ -42,13 +55,16 @@ const TextureStatsBar = ({variant = 'xp', tone = 'gold', value, maxValue, width,
     '--track-left': `${b.track[0]}px`,
     '--track-right': `${b.track[1]}px`,
     '--ratio': ratio,
-    ...style,
+    ...style
   } as React.CSSProperties;
   return (
-    <div className={`TextureStatsBar TextureStatsBar--${variant} TextureStatsBar--${tone} ${className}`} style={vars}>
+    <div
+      className={`TextureStatsBar TextureStatsBar--${variant} TextureStatsBar--${tone} ${className}`}
+      style={vars}
+    >
       {showValue && <div className="TextureStatsBar-value">{label ?? `${value} / ${maxValue}`}</div>}
-      <div className="TextureStatsBar-tex" aria-hidden/>
-      {ratio > 0 && <div className="TextureStatsBar-fill" aria-hidden/>}
+      <div className="TextureStatsBar-tex" aria-hidden />
+      {ratio > 0 && <div className="TextureStatsBar-fill" aria-hidden />}
     </div>
   );
 };

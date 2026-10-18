@@ -9,12 +9,18 @@ interface TexturePortraitsKeyProps {
   children?: React.ReactNode;
 }
 
-const TexturePortraitsKey = ({side = 'left', width = 52, className = '', style, children}: TexturePortraitsKeyProps) => (
+const TexturePortraitsKey = ({
+  side = 'left',
+  width = 52,
+  className = '',
+  style,
+  children
+}: TexturePortraitsKeyProps) => (
   <span
     className={`TexturePortraitsKey ${className}`}
-    style={{width, '--tex': `url('/ui/tex/portraits-key-${side}.webp')`, ...style} as React.CSSProperties}
+    style={{ width, '--tex': `url('/ui/tex/portraits-key-${side}.webp')`, ...style } as React.CSSProperties}
   >
-    <span className="TexturePortraitsKey-tex" aria-hidden/>
+    <span className="TexturePortraitsKey-tex" aria-hidden />
     <span className="TexturePortraitsKey-label">{children}</span>
   </span>
 );

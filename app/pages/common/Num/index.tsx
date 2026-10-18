@@ -8,8 +8,10 @@ interface NumProps {
   children: React.ReactNode;
 }
 
-const Num = ({size, as: Tag = 'span', className = '', style, children}: NumProps) => (
-  <Tag className={`Num ${className}`} style={{fontSize: size, ...style}}>{children}</Tag>
+const Num = ({ size, as: Tag = 'span', className = '', style, children }: NumProps) => (
+  <Tag className={`Num ${className}`} style={{ fontSize: size, ...style }}>
+    {children}
+  </Tag>
 );
 
 export default Num;

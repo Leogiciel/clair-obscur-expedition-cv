@@ -15,10 +15,21 @@ interface TextureLowerPanelProps {
   children?: React.ReactNode;
 }
 
-const TextureLowerPanel = ({height = 390, backdrop = true, line = true, lineTop = 180, className = '', style, children}: TextureLowerPanelProps) => (
-  <div className={`TextureLowerPanel ${className}`} style={{height, '--line-top': `${lineTop}px`, ...style} as React.CSSProperties}>
-    {backdrop && <div className="TextureLowerPanel-backdrop" aria-hidden/>}
-    {line && <div className="TextureLowerPanel-line" aria-hidden/>}
+const TextureLowerPanel = ({
+  height = 390,
+  backdrop = true,
+  line = true,
+  lineTop = 180,
+  className = '',
+  style,
+  children
+}: TextureLowerPanelProps) => (
+  <div
+    className={`TextureLowerPanel ${className}`}
+    style={{ height, '--line-top': `${lineTop}px`, ...style } as React.CSSProperties}
+  >
+    {backdrop && <div className="TextureLowerPanel-backdrop" aria-hidden />}
+    {line && <div className="TextureLowerPanel-line" aria-hidden />}
     <div className="TextureLowerPanel-content">{children}</div>
   </div>
 );

@@ -12,7 +12,7 @@ interface TextureEmptyProps {
   children?: React.ReactNode;
 }
 
-const TextureEmpty = ({size = NATIVE, className = '', style, children}: TextureEmptyProps) => {
+const TextureEmpty = ({ size = NATIVE, className = '', style, children }: TextureEmptyProps) => {
   const native = size === NATIVE;
   // Rotated square must cover the same box: side = diagonal / √2, kept odd (like the texture) so the
   // center stays on a pixel.
@@ -23,11 +23,14 @@ const TextureEmpty = ({size = NATIVE, className = '', style, children}: TextureE
     '--side': `${side}px`,
     '--slice': SLICE,
     '--slice-px': `${SLICE}px`,
-    ...style,
+    ...style
   } as React.CSSProperties;
   return (
-    <div className={`TextureEmpty ${native ? 'TextureEmpty--native' : 'TextureEmpty--scaled'} ${className}`} style={vars}>
-      <div className="TextureEmpty-tex" aria-hidden/>
+    <div
+      className={`TextureEmpty ${native ? 'TextureEmpty--native' : 'TextureEmpty--scaled'} ${className}`}
+      style={vars}
+    >
+      <div className="TextureEmpty-tex" aria-hidden />
       <div className="TextureEmpty-content">{children}</div>
     </div>
   );

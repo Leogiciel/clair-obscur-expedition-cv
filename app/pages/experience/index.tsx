@@ -1,39 +1,45 @@
-import {useState} from 'react';
-import {useHotkeys} from '@tanstack/react-hotkeys';
-import {useNavigate} from 'react-router';
-import TextureListPanel from '~/components/ui-kit/TextureListPanel';
-import TextureWeaponRows from '~/components/ui-kit/TextureWeaponRows';
-import TextureCard from '~/components/ui-kit/TextureCard';
-import TextureEquippedCard from '~/components/ui-kit/TextureEquippedCard';
+import { useHotkeys } from '@tanstack/react-hotkeys';
+import { useState } from 'react';
+import { useNavigate } from 'react-router';
+
 import KeyHint from '~/components/ui-kit/KeyHint';
 import SelectFx from '~/components/ui-kit/SelectFx';
-import Label from '../common/Label';
-import Num from '../common/Num';
+import TextureCard from '~/components/ui-kit/TextureCard';
+import TextureEquippedCard from '~/components/ui-kit/TextureEquippedCard';
+import TextureListPanel from '~/components/ui-kit/TextureListPanel';
+import TextureWeaponRows from '~/components/ui-kit/TextureWeaponRows';
+
 import CardTitle from '../common/CardTitle';
 import CompanyLogo from '../common/CompanyLogo';
-import useLoadout from '../common/store/useLoadout';
-import {EXPERIENCES, levelOf, periodOf, type Experience} from '../common/data';
-import useSort, {type SortOption} from '../common/useSort';
+import Label from '../common/Label';
+import Num from '../common/Num';
 import SortTitle from '../common/SortTitle';
+import { EXPERIENCES, type Experience, levelOf, periodOf } from '../common/data';
+import useLoadout from '../common/store/useLoadout';
+import useSort, { type SortOption } from '../common/useSort';
 import ExperienceStats from './ExperienceStats';
+import Highlights from './Highlights';
 import LevelBlock from './LevelBlock';
 import StackIcons from './StackIcons';
-import Highlights from './Highlights';
 
 // Measured on the video: selected row at (200, 310), normal at (244, 404); centers 85px apart. Hovered rows get the
 // home screen's selection, stretched to the row.
 const FIRST_CENTER = 356;
 const PITCH = 85;
 const ROW = {
-  selected: {x: 200, center: 46, width: 488, height: 92, top: 10},
-  normal: {x: 244, center: 37, width: 420, height: 74, top: 6},
+  selected: { x: 200, center: 46, width: 488, height: 92, top: 10 },
+  normal: { x: 244, center: 37, width: 420, height: 74, top: 6 }
 };
 
 // Chronological: by end date, current positions last (first when descending), then by start date.
 const SORTS: SortOption<Experience>[] = [
-  {label: 'Chronological', compare: (a, b) => (a.end ?? '9999').localeCompare(b.end ?? '9999') || a.start.localeCompare(b.start), descending: true},
-  {label: 'Level', compare: (a, b) => levelOf(a) - levelOf(b), descending: true},
-  {label: 'Alphabetical', compare: (a, b) => a.company.localeCompare(b.company), descending: false},
+  {
+    label: 'Chronological',
+    compare: (a, b) => (a.end ?? '9999').localeCompare(b.end ?? '9999') || a.start.localeCompare(b.start),
+    descending: true
+  },
+  { label: 'Level', compare: (a, b) => levelOf(a) - levelOf(b), descending: true },
+  { label: 'Alphabetical', compare: (a, b) => a.company.localeCompare(b.company), descending: false }
 ];
 
 const ExperiencePage = () => {
@@ -45,21 +51,22 @@ const ExperiencePage = () => {
   const [hovered, setHovered] = useState<number | null>(null);
   const current = EXPERIENCES.find((e) => e.id === equippedId) ?? EXPERIENCES[0];
   const shown = hovered === null ? current : list[hovered];
-  const move = (d: number) => setHovered((h) => Math.min(list.length - 1, Math.max(0, (h ?? list.indexOf(current)) + d)));
+  const move = (d: number) =>
+    setHovered((h) => Math.min(list.length - 1, Math.max(0, (h ?? list.indexOf(current)) + d)));
 
   useHotkeys([
-    {hotkey: 'ArrowDown', callback: () => move(1)},
-    {hotkey: 'ArrowUp', callback: () => move(-1)},
-    {hotkey: 'Enter', callback: () => hovered !== null && equip(list[hovered].id)},
-    {hotkey: 'A', callback: () => hovered !== null && equip(list[hovered].id)},
-    {hotkey: 'Escape', callback: () => navigate('/')},
-    {hotkey: 'B', callback: () => navigate('/')},
+    { hotkey: 'ArrowDown', callback: () => move(1) },
+    { hotkey: 'ArrowUp', callback: () => move(-1) },
+    { hotkey: 'Enter', callback: () => hovered !== null && equip(list[hovered].id) },
+    { hotkey: 'A', callback: () => hovered !== null && equip(list[hovered].id) },
+    { hotkey: 'Escape', callback: () => navigate('/') },
+    { hotkey: 'B', callback: () => navigate('/') }
   ]);
 
   return (
     <>
-      <TextureListPanel className="absolute left-[100px] top-[278px]"/>
-      <SortTitle title="Experience" sort={sort}/>
+      <TextureListPanel className="absolute left-[100px] top-[278px]" />
+      <SortTitle title="Experience" sort={sort} />
 
       <ul aria-label="Experience" onMouseLeave={() => setHovered(null)}>
         {list.map((e, i) => {
@@ -71,7 +78,17 @@ const ExperiencePage = () => {
               <button
                 type="button"
                 className={`Screen-item ${hovered === i ? 'Screen-item--active' : ''}`}
-                style={{left: g.x, top, width: g.width, height: g.height, zIndex: hovered === i ? 0 : 1, '--slide': '0px', '--sel-scale': 1.1} as React.CSSProperties}
+                style={
+                  {
+                    left: g.x,
+                    top,
+                    width: g.width,
+                    height: g.height,
+                    zIndex: hovered === i ? 0 : 1,
+                    '--slide': '0px',
+                    '--sel-scale': 1.1
+                  } as React.CSSProperties
+                }
                 aria-current={variant === 'selected'}
                 aria-label={`${e.title}, ${e.company}${variant === 'selected' ? ', equipped' : ''}`}
                 onMouseEnter={() => setHovered(i)}
@@ -79,11 +96,20 @@ const ExperiencePage = () => {
                 onClick={() => equip(e.id)}
               >
                 <div className="Screen-slide">
-                  <TextureWeaponRows variant={variant} icon={<CompanyLogo experience={e}/>} aside={<span className="flex flex-col items-center"><Label size={22}>Level</Label><Num size={40}>{levelOf(e)}</Num></span>}>
+                  <TextureWeaponRows
+                    variant={variant}
+                    icon={<CompanyLogo experience={e} />}
+                    aside={
+                      <span className="flex flex-col items-center">
+                        <Label size={22}>Level</Label>
+                        <Num size={40}>{levelOf(e)}</Num>
+                      </span>
+                    }
+                  >
                     <Label size={e.company.length > 10 ? 28 : 34}>{e.company}</Label>
                   </TextureWeaponRows>
                 </div>
-                <SelectFx kind="skill" active={hovered === i} fit={{width: g.width, height: g.height}}/>
+                <SelectFx kind="skill" active={hovered === i} fit={{ width: g.width, height: g.height }} />
               </button>
             </li>
           );
@@ -92,32 +118,45 @@ const ExperiencePage = () => {
 
       <TextureCard className="pointer-events-none absolute left-[740px] top-[296px] h-[262px] w-[580px]">
         <div className="absolute left-[14px] top-[-22px] h-[240px] w-[480px]">
-          <CardTitle as="div" size={shown.title.length > 20 ? 25 : undefined} className="absolute left-[62px] top-[40px] whitespace-nowrap">{shown.title}</CardTitle>
-          <Label as="div" size={20} className="absolute left-[64px] top-[90px]" style={{opacity: 0.75}}>{shown.company}{shown.freelance ? ' (freelance)' : ''} · {periodOf(shown)}</Label>
-          <span className="absolute left-[420px] top-[24px]"><LevelBlock level={levelOf(shown)}/></span>
-          <div className="absolute left-[40px] top-[136px] grid w-[430px] grid-flow-col text-center"><ExperienceStats experience={shown}/></div>
+          <CardTitle
+            as="div"
+            size={shown.title.length > 20 ? 25 : undefined}
+            className="absolute left-[62px] top-[40px] whitespace-nowrap"
+          >
+            {shown.title}
+          </CardTitle>
+          <Label as="div" size={20} className="absolute left-[64px] top-[90px]" style={{ opacity: 0.75 }}>
+            {shown.company}
+            {shown.freelance ? ' (freelance)' : ''} · {periodOf(shown)}
+          </Label>
+          <span className="absolute left-[420px] top-[24px]">
+            <LevelBlock level={levelOf(shown)} />
+          </span>
+          <div className="absolute left-[40px] top-[136px] grid w-[430px] grid-flow-col text-center">
+            <ExperienceStats experience={shown} />
+          </div>
         </div>
       </TextureCard>
 
-      <StackIcons stack={shown.stack} className="absolute left-[790px] top-[580px]"/>
-      <Highlights items={shown.highlights} className="absolute left-[150px] top-[870px]"/>
+      <StackIcons stack={shown.stack} className="absolute left-[790px] top-[580px]" />
+      <Highlights items={shown.highlights} className="absolute left-[150px] top-[870px]" />
 
       <TextureEquippedCard
         className="absolute left-[1830px] top-[918px]"
         title={<CardTitle size={36}>{current.title}</CardTitle>}
-        aside={<LevelBlock level={levelOf(current)}/>}
+        aside={<LevelBlock level={levelOf(current)} />}
       >
-        <ExperienceStats experience={current}/>
+        <ExperienceStats experience={current} />
       </TextureEquippedCard>
 
       <div className="Screen-hints absolute left-[1965px] top-[1293px]">
         {hovered !== null && list[hovered].id !== current.id && (
           <button type="button" className="contents" onClick={() => equip(list[hovered].id)}>
-            <KeyHint keyLabel="A" tone="a" label="Equip"/>
+            <KeyHint keyLabel="A" tone="a" label="Equip" />
           </button>
         )}
         <button type="button" className="contents" onClick={() => navigate('/')}>
-          <KeyHint keyLabel="B" tone="b" label="Back"/>
+          <KeyHint keyLabel="B" tone="b" label="Back" />
         </button>
       </div>
     </>

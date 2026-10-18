@@ -16,12 +16,27 @@ interface TextureButtonProps {
   buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement> & Record<`data-${string}`, unknown>;
 }
 
-const TextureButton = ({width = TEX_WIDTH, icon, marked = false, onClick, className = '', style, children, buttonProps}: TextureButtonProps) => (
-  <button type="button" {...buttonProps} className={`TextureButton ${className}`} style={{width, ...style}} onClick={onClick}>
-    <span className="TextureButton-tex" aria-hidden/>
+const TextureButton = ({
+  width = TEX_WIDTH,
+  icon,
+  marked = false,
+  onClick,
+  className = '',
+  style,
+  children,
+  buttonProps
+}: TextureButtonProps) => (
+  <button
+    type="button"
+    {...buttonProps}
+    className={`TextureButton ${className}`}
+    style={{ width, ...style }}
+    onClick={onClick}
+  >
+    <span className="TextureButton-tex" aria-hidden />
     {icon && <span className="TextureButton-icon">{icon}</span>}
     <span className="TextureButton-label">{children}</span>
-    {marked && <span className="TextureButton-dot" aria-hidden/>}
+    {marked && <span className="TextureButton-dot" aria-hidden />}
   </button>
 );
 

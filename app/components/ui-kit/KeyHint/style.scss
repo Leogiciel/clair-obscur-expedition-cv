@@ -21,7 +21,9 @@
       color: var(--ui-gold-name);
       background: radial-gradient(circle at 50% 35%, #2a2925 0%, #12120f 75%);
       border: 1.5px solid var(--ui-line);
-      box-shadow: inset 0 0 0 1.5px #0a0a08, inset 0 0 0 2.5px rgb(167 165 154 / 0.35);
+      box-shadow:
+        inset 0 0 0 1.5px #0a0a08,
+        inset 0 0 0 2.5px rgb(167 165 154 / 0.35);
 
       &--round {
         border-radius: 50%;
@@ -42,10 +44,18 @@
         font-size: 0.7rem;
       }
 
-      &--x { color: var(--key-x); }
-      &--b { color: #d04a3f; }
-      &--y { color: #d8b93e; }
-      &--a { color: #5fae4e; }
+      &--x {
+        color: var(--key-x);
+      }
+      &--b {
+        color: #d04a3f;
+      }
+      &--y {
+        color: #d8b93e;
+      }
+      &--a {
+        color: #5fae4e;
+      }
     }
   }
 }

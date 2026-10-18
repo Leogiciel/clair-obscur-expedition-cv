@@ -13,9 +13,15 @@ interface TextureListPanelProps {
 }
 
 // Meant to sit right under TextureTitleSort's title rule.
-const TextureListPanel = ({width = TEX_WIDTH, height = TEX_HEIGHT, className = '', style, children}: TextureListPanelProps) => (
-  <div className={`TextureListPanel ${className}`} style={{width, height, ...style}}>
-    <div className="TextureListPanel-tex" aria-hidden/>
+const TextureListPanel = ({
+  width = TEX_WIDTH,
+  height = TEX_HEIGHT,
+  className = '',
+  style,
+  children
+}: TextureListPanelProps) => (
+  <div className={`TextureListPanel ${className}`} style={{ width, height, ...style }}>
+    <div className="TextureListPanel-tex" aria-hidden />
     <div className="TextureListPanel-list">{children}</div>
   </div>
 );

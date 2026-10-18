@@ -9,9 +9,9 @@ interface TextureEquippedCardProps {
 }
 
 // Texture from scripts/ui-kit/extract/weapon-screen.py.
-const TextureEquippedCard = ({title, aside, className = '', style, children}: TextureEquippedCardProps) => (
+const TextureEquippedCard = ({ title, aside, className = '', style, children }: TextureEquippedCardProps) => (
   <div className={`TextureEquippedCard ${className}`} style={style}>
-    <div className="TextureEquippedCard-tex" aria-hidden/>
+    <div className="TextureEquippedCard-tex" aria-hidden />
     {title && <div className="TextureEquippedCard-title">{title}</div>}
     {aside && <div className="TextureEquippedCard-aside">{aside}</div>}
     <div className="TextureEquippedCard-content">{children}</div>

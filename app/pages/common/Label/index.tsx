@@ -8,8 +8,10 @@ interface LabelProps {
   children: React.ReactNode;
 }
 
-const Label = ({size, as: Tag = 'span', className = '', style, children}: LabelProps) => (
-  <Tag className={`Label ${className}`} style={{fontSize: size, ...style}}>{children}</Tag>
+const Label = ({ size, as: Tag = 'span', className = '', style, children }: LabelProps) => (
+  <Tag className={`Label ${className}`} style={{ fontSize: size, ...style }}>
+    {children}
+  </Tag>
 );
 
 export default Label;

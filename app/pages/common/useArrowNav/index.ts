@@ -1,8 +1,13 @@
-import {useHotkeys} from '@tanstack/react-hotkeys';
+import { useHotkeys } from '@tanstack/react-hotkeys';
 
 type Direction = 'up' | 'down' | 'left' | 'right';
 
-const VECTORS: Record<Direction, [number, number]> = {up: [0, -1], down: [0, 1], left: [-1, 0], right: [1, 0]};
+const VECTORS: Record<Direction, [number, number]> = {
+  up: [0, -1],
+  down: [0, 1],
+  left: [-1, 0],
+  right: [1, 0]
+};
 
 // Spatial navigation between the focusable elements matched by `selector`: an arrow moves focus to the nearest
 // element whose centre lies within 45° of that direction (any element further that way when none is), favouring the
@@ -11,7 +16,10 @@ const useArrowNav = (selector: string) => {
   const move = (direction: Direction) => {
     const items = [...document.querySelectorAll<HTMLElement>(selector)];
     if (!items.length) return;
-    const current = document.activeElement instanceof HTMLElement && items.includes(document.activeElement) ? document.activeElement : null;
+    const current =
+      document.activeElement instanceof HTMLElement && items.includes(document.activeElement)
+        ? document.activeElement
+        : null;
     if (!current) {
       items[0].focus();
       return;
@@ -44,10 +52,10 @@ const useArrowNav = (selector: string) => {
   };
 
   useHotkeys([
-    {hotkey: 'ArrowUp', callback: () => move('up')},
-    {hotkey: 'ArrowDown', callback: () => move('down')},
-    {hotkey: 'ArrowLeft', callback: () => move('left')},
-    {hotkey: 'ArrowRight', callback: () => move('right')},
+    { hotkey: 'ArrowUp', callback: () => move('up') },
+    { hotkey: 'ArrowDown', callback: () => move('down') },
+    { hotkey: 'ArrowLeft', callback: () => move('left') },
+    { hotkey: 'ArrowRight', callback: () => move('right') }
   ]);
 };
 

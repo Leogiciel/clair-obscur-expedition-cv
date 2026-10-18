@@ -17,16 +17,34 @@ interface TextureDiamondCardProps {
   children?: React.ReactNode;
 }
 
-const TextureDiamondCard = ({width = WIDTH, height = HEIGHT, icon, className = '', style, children}: TextureDiamondCardProps) => {
+const TextureDiamondCard = ({
+  width = WIDTH,
+  height = HEIGHT,
+  icon,
+  className = '',
+  style,
+  children
+}: TextureDiamondCardProps) => {
   const [sx, sy, sr] = SLOT;
-  const vars = {width, height, '--plate-left': `${PLATE_LEFT}px`, '--diamond': `${DIAMOND}px`, ...style} as React.CSSProperties;
+  const vars = {
+    width,
+    height,
+    '--plate-left': `${PLATE_LEFT}px`,
+    '--diamond': `${DIAMOND}px`,
+    ...style
+  } as React.CSSProperties;
   return (
     <div className={`TextureDiamondCard ${className}`} style={vars}>
-      <div className="TextureDiamondCard-plate" aria-hidden/>
+      <div className="TextureDiamondCard-plate" aria-hidden />
       <div className="TextureDiamondCard-content">{children}</div>
       <div className="TextureDiamondCard-diamond">
         {icon && (
-          <div className="TextureDiamondCard-slot" style={{left: sx - sr, top: sy - sr, width: sr * 2, height: sr * 2}}>{icon}</div>
+          <div
+            className="TextureDiamondCard-slot"
+            style={{ left: sx - sr, top: sy - sr, width: sr * 2, height: sr * 2 }}
+          >
+            {icon}
+          </div>
         )}
       </div>
     </div>

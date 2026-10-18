@@ -28,17 +28,32 @@ interface TextureMainWeaponProps {
   children?: React.ReactNode;
 }
 
-const TextureMainWeapon = ({width, icon, level, levelLabel = 'Level', className = '', style, children}: TextureMainWeaponProps) => {
+const TextureMainWeapon = ({
+  width,
+  icon,
+  level,
+  levelLabel = 'Level',
+  className = '',
+  style,
+  children
+}: TextureMainWeaponProps) => {
   const w = Math.max(width ?? TEX_W, LEFT + RIGHT);
   const [ix, iy, iw, ih] = ICON;
-  const vars = {width: w, height: TEX_H, ...style} as React.CSSProperties;
+  const vars = { width: w, height: TEX_H, ...style } as React.CSSProperties;
   return (
     <div className={`TextureMainWeapon ${className}`} style={vars}>
-      <div className="TextureMainWeapon-tex" aria-hidden/>
+      <div className="TextureMainWeapon-tex" aria-hidden />
       {icon && (
-        <div className="TextureMainWeapon-icon" style={{left: ix, top: iy, width: iw, height: ih}}>{icon}</div>
+        <div className="TextureMainWeapon-icon" style={{ left: ix, top: iy, width: iw, height: ih }}>
+          {icon}
+        </div>
       )}
-      <div className="TextureMainWeapon-name" style={{'--name-size': `${nameSize(children)}px`} as React.CSSProperties}>{children}</div>
+      <div
+        className="TextureMainWeapon-name"
+        style={{ '--name-size': `${nameSize(children)}px` } as React.CSSProperties}
+      >
+        {children}
+      </div>
       {level !== undefined && (
         <div className="TextureMainWeapon-level">
           <span className="TextureMainWeapon-levelLabel">{levelLabel}</span>

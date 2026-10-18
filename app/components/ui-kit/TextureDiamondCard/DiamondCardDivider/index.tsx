@@ -5,8 +5,8 @@ interface DiamondCardDividerProps {
   style?: React.CSSProperties;
 }
 
-const DiamondCardDivider = ({className = '', style}: DiamondCardDividerProps) => (
-  <div className={`DiamondCardDivider ${className}`} style={style} aria-hidden/>
+const DiamondCardDivider = ({ className = '', style }: DiamondCardDividerProps) => (
+  <div className={`DiamondCardDivider ${className}`} style={style} aria-hidden />
 );
 
 export default DiamondCardDivider;

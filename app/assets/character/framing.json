@@ -1,8 +1,8 @@
 {
-  "overview": {"width": 1080, "height": 1920, "x": 734, "y": -69, "scale": 1.096},
-  "experience": {"width": 1920, "height": 1080, "x": 132, "y": 95, "scale": 1.2},
-  "pictos": {"width": 1920, "height": 1080, "x": 101, "y": 0, "scale": 1.278},
-  "skills": {"width": 1920, "height": 1080, "x": -249, "y": 0, "scale": 1.278},
-  "luminas": {"width": 1920, "height": 1080, "x": 376, "y": 154, "scale": 1.05},
-  "skilltree": {"width": 1920, "height": 1080, "x": 489, "y": 291, "scale": 0.91}
+  "overview": { "width": 1080, "height": 1920, "x": 734, "y": -69, "scale": 1.096 },
+  "experience": { "width": 1920, "height": 1080, "x": 132, "y": 95, "scale": 1.2 },
+  "pictos": { "width": 1920, "height": 1080, "x": 101, "y": 0, "scale": 1.278 },
+  "skills": { "width": 1920, "height": 1080, "x": -249, "y": 0, "scale": 1.278 },
+  "luminas": { "width": 1920, "height": 1080, "x": 376, "y": 154, "scale": 1.05 },
+  "skilltree": { "width": 1920, "height": 1080, "x": 489, "y": 291, "scale": 0.91 }
 }

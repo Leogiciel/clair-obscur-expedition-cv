@@ -45,14 +45,26 @@
     }
 
     // Darkens only the plate texture (video luminance ≈ 22 → 5): crushes darks (0.086 → 0.02), keeps lights (0.7 → 0.7).
-    :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex, .TexturePlate-tex, .TextureWeaponRows-tex) {
+    :is(
+      .TextureMainPicto-tex,
+      .TextureMainWeapon-tex,
+      .TextureMainSkill-tex,
+      .TexturePlate-tex,
+      .TextureWeaponRows-tex
+    ) {
       transition: filter 0.12s ease-out;
     }
 
-    &--active :is(.TextureMainPicto-tex, .TextureMainWeapon-tex, .TextureMainSkill-tex, .TexturePlate-tex, .TextureWeaponRows-tex) {
+    &--active
+      :is(
+        .TextureMainPicto-tex,
+        .TextureMainWeapon-tex,
+        .TextureMainSkill-tex,
+        .TexturePlate-tex,
+        .TextureWeaponRows-tex
+      ) {
       filter: brightness(0.963) contrast(1.15);
     }
-
   }
 
   // Measured on the video: 42px key, 34px label.

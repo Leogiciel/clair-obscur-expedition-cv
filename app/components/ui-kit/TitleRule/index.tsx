@@ -10,7 +10,13 @@ interface TitleRuleProps {
 }
 
 // Every word gets the enlarged initial, as in the game's two-word names.
-const TitleRule = ({title, variant = 'section', as: Tag = 'h2', className = '', children}: TitleRuleProps) => {
+const TitleRule = ({
+  title,
+  variant = 'section',
+  as: Tag = 'h2',
+  className = '',
+  children
+}: TitleRuleProps) => {
   return (
     <div className={`TitleRule TitleRule--${variant} ${className}`}>
       <div className="TitleRule-row">

@@ -1,22 +1,23 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
-  --font-sans: "Cinzel", serif, ui-serif, Georgia,
-  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-serif: "IM Fell Double Pica", serif, ui-serif, Georgia;
-  --font-display: "Bebas Neue", sans-serif, ui-sans-serif, system-ui;
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace;
+  --font-sans:
+    'Cinzel', serif, ui-serif, Georgia, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  --font-serif: 'IM Fell Double Pica', serif, ui-serif, Georgia;
+  --font-display: 'Bebas Neue', sans-serif, ui-sans-serif, system-ui;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas, monospace;
 
-  --font-primary: "Cinzel", serif;
-  --font-secondary: "IM Fell Double Pica", serif;
-  --font-number: "Bebas Neue", sans-serif;
+  --font-primary: 'Cinzel', serif;
+  --font-secondary: 'IM Fell Double Pica', serif;
+  --font-number: 'Bebas Neue', sans-serif;
 }
 
 :root {
-  --font-primary: "Cinzel", serif;
-  --font-secondary: "IM Fell Double Pica", serif;
-  --font-number: "Bebas Neue", sans-serif;
-  --font-label: "EB Garamond", "IM Fell Double Pica", serif;
+  --font-primary: 'Cinzel', serif;
+  --font-secondary: 'IM Fell Double Pica', serif;
+  --font-number: 'Bebas Neue', sans-serif;
+  --font-label: 'EB Garamond', 'IM Fell Double Pica', serif;
   /* Measured against the capture: small labels are a medium Garamond, the names on the main slots (Weapon, Pictos,
      Skills) a regular one, lightly spaced. */
   --font-label-weight: 500;

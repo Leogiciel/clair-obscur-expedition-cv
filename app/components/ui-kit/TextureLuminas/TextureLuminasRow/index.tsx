@@ -9,15 +9,22 @@ interface TextureLuminasRowProps {
   children?: React.ReactNode;
 }
 
-const TextureLuminasRow = ({icon, aside, marked, className = '', style, children}: TextureLuminasRowProps) => (
+const TextureLuminasRow = ({
+  icon,
+  aside,
+  marked,
+  className = '',
+  style,
+  children
+}: TextureLuminasRowProps) => (
   <div className={`TextureLuminasRow ${className}`} style={style}>
-    <div className="TextureLuminasRow-tex" aria-hidden/>
+    <div className="TextureLuminasRow-tex" aria-hidden />
     {icon && <div className="TextureLuminasRow-slot">{icon}</div>}
     <div className="TextureLuminasRow-content">
       <div className="TextureLuminasRow-label">{children}</div>
       {aside}
     </div>
-    {marked && <div className="TextureLuminasRow-dot" aria-hidden/>}
+    {marked && <div className="TextureLuminasRow-dot" aria-hidden />}
   </div>
 );
 

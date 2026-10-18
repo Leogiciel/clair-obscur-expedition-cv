@@ -1,7 +1,7 @@
 // Generates the seamless grunge wear mask for the UI kit.
 // Usage: node scripts/ui-kit/masks.mjs  ->  public/ui/grunge.webp
-import sharp from 'sharp';
 import { mkdir } from 'node:fs/promises';
+import sharp from 'sharp';
 
 const OUT = new URL('../../public/ui/', import.meta.url);
 await mkdir(OUT, { recursive: true });
@@ -26,18 +26,25 @@ function noise2(seed, period = 0) {
     const xi = Math.floor(x);
     const yi = Math.floor(y);
     const p = period || SIZE;
-    const x0 = wrap(xi % p), x1 = wrap((xi + 1) % p);
-    const y0 = wrap(yi % p), y1 = wrap((yi + 1) % p);
+    const x0 = wrap(xi % p),
+      x1 = wrap((xi + 1) % p);
+    const y0 = wrap(yi % p),
+      y1 = wrap((yi + 1) % p);
     const u = fade(x - xi);
     const v = fade(y - yi);
-    const a = grid[y0 * SIZE + x0], b = grid[y0 * SIZE + x1];
-    const c = grid[y1 * SIZE + x0], d = grid[y1 * SIZE + x1];
+    const a = grid[y0 * SIZE + x0],
+      b = grid[y0 * SIZE + x1];
+    const c = grid[y1 * SIZE + x0],
+      d = grid[y1 * SIZE + x1];
     return (a + (b - a) * u) * (1 - v) + (c + (d - c) * u) * v;
   };
 }
 
 function fbm(n, x, y, octaves, period = 0) {
-  let sum = 0, amp = 0.5, f = 1, norm = 0;
+  let sum = 0,
+    amp = 0.5,
+    f = 1,
+    norm = 0;
   for (let o = 0; o < octaves; o++) {
     sum += amp * n(x * f, y * f, period * f);
     norm += amp;
@@ -52,7 +59,6 @@ const smooth = (e0, e1, v) => {
   const t = clamp01((v - e0) / (e1 - e0));
   return t * t * (3 - 2 * t);
 };
-
 
 function grunge(seed = 7, S = 512) {
   const n = noise2(seed);

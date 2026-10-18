@@ -8,7 +8,7 @@ interface KeyHintProps {
   className?: string;
 }
 
-const KeyHint = ({keyLabel, label, shape = 'round', tone = 'default', className = ''}: KeyHintProps) => {
+const KeyHint = ({ keyLabel, label, shape = 'round', tone = 'default', className = '' }: KeyHintProps) => {
   return (
     <span className={`KeyHint ${className}`}>
       <kbd className={`KeyHint-key KeyHint-key--${shape} KeyHint-key--${tone}`}>{keyLabel}</kbd>

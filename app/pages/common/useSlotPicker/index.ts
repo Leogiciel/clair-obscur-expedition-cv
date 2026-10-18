@@ -1,6 +1,7 @@
-import {useState} from 'react';
-import {useHotkeys} from '@tanstack/react-hotkeys';
-import type {PlateGridLayout} from '../PlateGrid';
+import { useHotkeys } from '@tanstack/react-hotkeys';
+import { useState } from 'react';
+
+import type { PlateGridLayout } from '../PlateGrid';
 
 export type PickerMode = 'slots' | 'list';
 
@@ -19,7 +20,16 @@ interface SlotPickerOptions<T> {
 // The game's two-step loadout: the cursor starts on the equipped slots (A opens one, Y clears it, B leaves), then
 // moves to the list (A equips the item into that slot and returns to the slots, B returns without change).
 // `hovered` is the list item under the pointer or the keyboard cursor: tooltips show only for it.
-const useSlotPicker = <T,>({items, layout, slotCount, slotColumns, slotItem, equip, clear, onBack}: SlotPickerOptions<T>) => {
+const useSlotPicker = <T>({
+  items,
+  layout,
+  slotCount,
+  slotColumns,
+  slotItem,
+  equip,
+  clear,
+  onBack
+}: SlotPickerOptions<T>) => {
   const [mode, setMode] = useState<PickerMode>('slots');
   const [slot, setSlot] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -48,7 +58,9 @@ const useSlotPicker = <T,>({items, layout, slotCount, slotColumns, slotItem, equ
     const col = slot % slotColumns;
     const row = Math.floor(slot / slotColumns);
     const rows = Math.ceil(slotCount / slotColumns);
-    const next = Math.min(rows - 1, Math.max(0, row + dy)) * slotColumns + Math.min(slotColumns - 1, Math.max(0, col + dx));
+    const next =
+      Math.min(rows - 1, Math.max(0, row + dy)) * slotColumns +
+      Math.min(slotColumns - 1, Math.max(0, col + dx));
     setSlot(Math.min(slotCount - 1, next));
     setSlotShown(true);
   };
@@ -65,16 +77,16 @@ const useSlotPicker = <T,>({items, layout, slotCount, slotColumns, slotItem, equ
   const cancel = () => (mode === 'list' ? leaveList() : onBack());
 
   useHotkeys([
-    {hotkey: 'ArrowUp', callback: () => move(0, -1)},
-    {hotkey: 'ArrowDown', callback: () => move(0, 1)},
-    {hotkey: 'ArrowLeft', callback: () => move(-1, 0)},
-    {hotkey: 'ArrowRight', callback: () => move(1, 0)},
-    {hotkey: 'Enter', callback: confirm},
-    {hotkey: 'A', callback: confirm},
-    {hotkey: 'Y', callback: () => mode === 'slots' && clear(slot)},
-    {hotkey: 'Delete', callback: () => mode === 'slots' && clear(slot)},
-    {hotkey: 'Escape', callback: cancel},
-    {hotkey: 'B', callback: cancel},
+    { hotkey: 'ArrowUp', callback: () => move(0, -1) },
+    { hotkey: 'ArrowDown', callback: () => move(0, 1) },
+    { hotkey: 'ArrowLeft', callback: () => move(-1, 0) },
+    { hotkey: 'ArrowRight', callback: () => move(1, 0) },
+    { hotkey: 'Enter', callback: confirm },
+    { hotkey: 'A', callback: confirm },
+    { hotkey: 'Y', callback: () => mode === 'slots' && clear(slot) },
+    { hotkey: 'Delete', callback: () => mode === 'slots' && clear(slot) },
+    { hotkey: 'Escape', callback: cancel },
+    { hotkey: 'B', callback: cancel }
   ]);
 
   const pointSlot = (s: number) => {
@@ -90,9 +102,22 @@ const useSlotPicker = <T,>({items, layout, slotCount, slotColumns, slotItem, equ
   // While a slot is being changed it keeps its selected look, so it reads as the one being edited; the other slots
   // still react to the pointer (a click there switches the slot being edited).
   const slotEditing = (s: number) => mode === 'list' && slot === s;
-  const slotActive = (s: number) => pointed === s || slotEditing(s) || (mode === 'slots' && slotShown && slot === s);
+  const slotActive = (s: number) =>
+    pointed === s || slotEditing(s) || (mode === 'slots' && slotShown && slot === s);
 
-  return {mode, slot, hovered, setHovered, open, pick, cancel, pointSlot, leaveSlot, slotActive, slotEditing};
+  return {
+    mode,
+    slot,
+    hovered,
+    setHovered,
+    open,
+    pick,
+    cancel,
+    pointSlot,
+    leaveSlot,
+    slotActive,
+    slotEditing
+  };
 };
 
 export default useSlotPicker;

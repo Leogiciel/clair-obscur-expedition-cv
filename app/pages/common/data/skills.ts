@@ -1,5 +1,5 @@
-import {TECH, type TechId} from './tech';
-import {EXPERIENCES, monthsAcross, yearsOf} from './experiences';
+import { EXPERIENCES, monthsAcross, yearsOf } from './experiences';
+import { TECH, type TechId } from './tech';
 
 export interface Skill {
   id: TechId;
@@ -12,24 +12,44 @@ export interface Skill {
 
 // The CV's skills section, in its order.
 const CV: [TechId, Skill['category']][] = [
-  ['react', 'Languages & frameworks'], ['typescript', 'Languages & frameworks'], ['graphql', 'Languages & frameworks'],
-  ['reactnative', 'Languages & frameworks'], ['remix', 'Languages & frameworks'], ['svelte', 'Languages & frameworks'],
-  ['nextjs', 'Languages & frameworks'], ['node', 'Languages & frameworks'], ['python', 'Languages & frameworks'],
-  ['django', 'Languages & frameworks'], ['rust', 'Languages & frameworks'],
-  ['sql', 'Databases'], ['mysql', 'Databases'], ['oracle', 'Databases'], ['mongodb', 'Databases'], ['postgres', 'Databases'],
+  ['react', 'Languages & frameworks'],
+  ['typescript', 'Languages & frameworks'],
+  ['graphql', 'Languages & frameworks'],
+  ['reactnative', 'Languages & frameworks'],
+  ['remix', 'Languages & frameworks'],
+  ['svelte', 'Languages & frameworks'],
+  ['nextjs', 'Languages & frameworks'],
+  ['node', 'Languages & frameworks'],
+  ['python', 'Languages & frameworks'],
+  ['django', 'Languages & frameworks'],
+  ['rust', 'Languages & frameworks'],
+  ['sql', 'Databases'],
+  ['mysql', 'Databases'],
+  ['oracle', 'Databases'],
+  ['mongodb', 'Databases'],
+  ['postgres', 'Databases']
 ];
 // Plain SQL comes with every relational database a position used.
-const IMPLIES: Partial<Record<TechId, TechId[]>> = {sql: ['postgres', 'mysql']};
+const IMPLIES: Partial<Record<TechId, TechId[]>> = { sql: ['postgres', 'mysql'] };
 
 export const SKILLS: Skill[] = CV.map(([id, category]) => {
   const ids = [id, ...(IMPLIES[id] ?? [])];
   const positions = EXPERIENCES.filter((e) => e.stack.some((t) => ids.includes(t)));
-  return {id, name: TECH[id].name, category, level: yearsOf(monthsAcross(positions)), usedAt: positions.map((e) => e.company)};
+  return {
+    id,
+    name: TECH[id].name,
+    category,
+    level: yearsOf(monthsAcross(positions)),
+    usedAt: positions.map((e) => e.company)
+  };
 });
 
 export const SKILL_SLOTS = 6;
 // Default loadout: the most practised skills (ties keep the CV order).
-export const DEFAULT_SKILLS = [...SKILLS].sort((a, b) => b.level - a.level).slice(0, SKILL_SLOTS).map((s) => s.id);
+export const DEFAULT_SKILLS = [...SKILLS]
+  .sort((a, b) => b.level - a.level)
+  .slice(0, SKILL_SLOTS)
+  .map((s) => s.id);
 
 export const skillById = (id: TechId) => SKILLS.find((s) => s.id === id)!;
 

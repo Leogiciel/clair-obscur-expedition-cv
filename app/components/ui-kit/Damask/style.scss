@@ -13,7 +13,9 @@
 
     &--vignette {
       mask-image: url('/ui/grunge.webp'), radial-gradient(ellipse at 50% 45%, #000 35%, transparent 80%);
-      mask-size: 380px, 100% 100%;
+      mask-size:
+        380px,
+        100% 100%;
       mask-composite: intersect;
     }
   }

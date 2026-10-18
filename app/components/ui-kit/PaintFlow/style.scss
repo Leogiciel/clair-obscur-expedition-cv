@@ -76,7 +76,9 @@
       opacity: 0.75;
       animation-name: paint-drift, paint-flicker;
       animation-duration: 18s, 2.3s;
-      animation-delay: -7s, -0.8s;
+      animation-delay:
+        -7s,
+        -0.8s;
     }
   }
 

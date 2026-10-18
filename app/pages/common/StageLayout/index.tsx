@@ -1,13 +1,20 @@
-import {useEffect, useRef} from 'react';
-import {Outlet, useLocation} from 'react-router';
-import Stage from '../Stage';
-import Character, {type Shot} from '../Character';
-import Petals from '../Petals';
+import { useEffect, useRef } from 'react';
+import { Outlet, useLocation } from 'react-router';
+
+import Character, { type Shot } from '../Character';
 import CharacterOcclusion from '../CharacterOcclusion';
 import CharacterStats from '../CharacterStats';
+import Petals from '../Petals';
+import Stage from '../Stage';
 import useLoadout from '../store/useLoadout';
 
-const SHOTS: Record<string, Shot> = {'/experience': 'experience', '/pictos': 'pictos', '/skills': 'skills', '/luminas': 'luminas', '/skill-tree': 'skilltree'};
+const SHOTS: Record<string, Shot> = {
+  '/experience': 'experience',
+  '/pictos': 'pictos',
+  '/skills': 'skills',
+  '/luminas': 'luminas',
+  '/skill-tree': 'skilltree'
+};
 
 export interface StageContext {
   from: string;
@@ -16,7 +23,7 @@ export interface StageContext {
 // The character and stats column persist across screens; only the outlet is swapped, which gives
 // the game's single-frame UI cut while the character runs its own transition.
 const StageLayout = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const previous = useRef(pathname);
   const from = previous.current;
   useEffect(() => {
@@ -31,12 +38,12 @@ const StageLayout = () => {
 
   return (
     <Stage>
-      <Petals layer="back"/>
-      <CharacterOcclusion shot={shot}/>
-      <Character shot={shot}/>
-      <Petals layer="front"/>
-      <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]"/>
-      <Outlet context={{from} satisfies StageContext}/>
+      <Petals layer="back" />
+      <CharacterOcclusion shot={shot} />
+      <Character shot={shot} />
+      <Petals layer="front" />
+      <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]" />
+      <Outlet context={{ from } satisfies StageContext} />
     </Stage>
   );
 };

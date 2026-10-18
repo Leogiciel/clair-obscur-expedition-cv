@@ -18,11 +18,27 @@ interface TextureLuminasProps {
   children?: React.ReactNode;
 }
 
-const TextureLuminas = ({width = 476, headWidth = 278, title, titleIcon, counter, counterIcon, className = '', style, children}: TextureLuminasProps) => {
-  const vars = {width, '--head-h': `${HEAD_HEIGHT}px`, '--head-w': `${headWidth}px`, '--row-overlap': `${ROW_OVERLAP}px`, ...style} as React.CSSProperties;
+const TextureLuminas = ({
+  width = 476,
+  headWidth = 278,
+  title,
+  titleIcon,
+  counter,
+  counterIcon,
+  className = '',
+  style,
+  children
+}: TextureLuminasProps) => {
+  const vars = {
+    width,
+    '--head-h': `${HEAD_HEIGHT}px`,
+    '--head-w': `${headWidth}px`,
+    '--row-overlap': `${ROW_OVERLAP}px`,
+    ...style
+  } as React.CSSProperties;
   return (
     <div className={`TextureLuminas ${className}`} style={vars}>
-      <div className="TextureLuminas-head" aria-hidden/>
+      <div className="TextureLuminas-head" aria-hidden />
       <div className="TextureLuminas-header">
         <div className="TextureLuminas-title">
           {titleIcon}

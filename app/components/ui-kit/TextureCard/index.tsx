@@ -7,9 +7,9 @@ interface TextureCardProps {
 }
 
 // Texture from scripts/ui-kit/extract-borders.py; it overflows the card, so content goes in the inner area.
-const TextureCard = ({className = '', style, children}: TextureCardProps) => (
+const TextureCard = ({ className = '', style, children }: TextureCardProps) => (
   <div className={`TextureCard ${className}`} style={style}>
-    <div className="TextureCard-tex" aria-hidden/>
+    <div className="TextureCard-tex" aria-hidden />
     <div className="TextureCard-content">{children}</div>
   </div>
 );
