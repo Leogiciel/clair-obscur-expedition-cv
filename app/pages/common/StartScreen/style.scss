@@ -106,7 +106,8 @@ $reveal-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   &::before {
     content: '';
     position: absolute;
-    inset: -2000px;
+    // In stage pixels, which the zoom shrinks: wide enough for any window shape.
+    inset: -20000px;
     z-index: -1;
     background: #000;
   }

@@ -1,16 +1,18 @@
 .Screen {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   background: var(--stage-bg);
   color: var(--ui-text);
 
+  // Centred by the flex parent; zoomed to the window (Stage).
   &-stage {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform-origin: center;
+    position: relative;
+    flex-shrink: 0;
   }
 
   ul {
