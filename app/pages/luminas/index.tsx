@@ -88,8 +88,8 @@ const LuminasPage = () => {
         onPick={(i) => toggle(items[i].id)}
         variant={(p) => (isActive(p) ? 'selected' : 'normal')}
         itemLabel={(p) => `${p.name}, cost ${luminaCost(p)}${isFree(p) ? ', from an equipped picto' : isActive(p) ? ', active' : ''}`}
-        icon={(p) => (isFree(p) ? <Glyph element={p.element}/> : undefined)}
-        portrait={(p) => (isFree(p) ? <Portrait/> : undefined)}
+        icon={(p) => <Glyph element={p.element}/>}
+        portrait={(p) => (isActive(p) ? <Portrait/> : undefined)}
         aside={(p) => <Num size={34} style={{color: isActive(p) ? 'var(--el-cyan)' : undefined, opacity: isActive(p) ? 1 : 0.6}}>{luminaCost(p)}</Num>}
       >
         {(p) => <Label size={p.name.length > 12 ? 23 : 26} className="block" style={{opacity: isActive(p) ? 1 : 0.7}}>{p.name}</Label>}

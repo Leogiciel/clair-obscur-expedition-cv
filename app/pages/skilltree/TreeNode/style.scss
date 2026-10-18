@@ -1,5 +1,5 @@
-// Measured on the game screenshot (design/skill-tree-screen.png, scaled to the stage): 130px diamonds with a white
-// rim; locked ones are filled white with a black padlock.
+// Measured on the game screenshot (design/skill-tree-screen.png, scaled to the stage): 130px diamonds, dark fill,
+// thin ragged white rim; locked ones are a little lighter.
 .TreeNode {
   position: absolute;
   width: 130px;
@@ -14,35 +14,42 @@
 
   &-diamond {
     position: absolute;
-    inset: 19px;
-    display: block;
-    transform: rotate(45deg);
-    border: 4px solid #e9e6de;
-    background: #0e0e0d;
-    box-shadow: 0 0 0 3px #050505;
-    transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out;
+    inset: 0;
+    overflow: visible;
+  }
+
+  &-fill {
+    fill: #121211;
+  }
+
+  &-rim {
+    fill: none;
+    stroke: #ecebe6;
+    stroke-width: 3.5;
+    stroke-linejoin: miter;
+    transition: stroke-width 0.12s ease-out;
+  }
+
+  &--locked &-fill {
+    fill: #222220;
   }
 
   &-content {
     position: absolute;
-    inset: 0;
+    inset: 22px;
     display: grid;
     place-items: center;
-    transform: rotate(-45deg);
   }
 
-  &--locked &-diamond {
-    background: #f2f0ea;
-  }
-
-  // Selected node: lifted and haloed, as the game's cursor.
+  // Selected node: lifted, brighter rim and a soft halo, as the game's cursor.
   &--active {
     z-index: 1;
     transform: scale(1.1);
+    filter: drop-shadow(0 0 10px rgb(255 255 255 / 0.3));
   }
 
-  &--active &-diamond {
-    border-color: #fff;
-    box-shadow: 0 0 0 3px #050505, 0 0 18px 4px rgb(255 255 255 / 0.35);
+  &--active &-rim {
+    stroke: #fff;
+    stroke-width: 5;
   }
 }

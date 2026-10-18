@@ -25,6 +25,8 @@ const useSlotPicker = <T,>({items, layout, slotCount, slotColumns, slotItem, equ
   const [hovered, setHovered] = useState<number | null>(null);
   // The slot cursor is kept for the keyboard, but its effect shows only while the slot is pointed at or moved to.
   const [slotShown, setSlotShown] = useState(false);
+  // Slot under the pointer, in either step.
+  const [pointed, setPointed] = useState<number | null>(null);
 
   const open = (s: number) => {
     setSlot(s);
@@ -76,14 +78,21 @@ const useSlotPicker = <T,>({items, layout, slotCount, slotColumns, slotItem, equ
   ]);
 
   const pointSlot = (s: number) => {
+    setPointed(s);
     if (mode !== 'slots') return;
     setSlot(s);
     setSlotShown(true);
   };
-  const leaveSlot = () => setSlotShown(false);
-  const slotActive = (s: number) => mode === 'slots' && slotShown && slot === s;
+  const leaveSlot = () => {
+    setPointed(null);
+    setSlotShown(false);
+  };
+  // While a slot is being changed it keeps its selected look, so it reads as the one being edited; the other slots
+  // still react to the pointer (a click there switches the slot being edited).
+  const slotEditing = (s: number) => mode === 'list' && slot === s;
+  const slotActive = (s: number) => pointed === s || slotEditing(s) || (mode === 'slots' && slotShown && slot === s);
 
-  return {mode, slot, hovered, setHovered, open, pick, cancel, pointSlot, leaveSlot, slotActive};
+  return {mode, slot, hovered, setHovered, open, pick, cancel, pointSlot, leaveSlot, slotActive, slotEditing};
 };
 
 export default useSlotPicker;

@@ -1,5 +1,4 @@
 import {useNavigate} from 'react-router';
-import TextureButton from '~/components/ui-kit/TextureButton';
 import KeyHint from '~/components/ui-kit/KeyHint';
 import TechIcon from '../common/TechIcon';
 import Label from '../common/Label';
@@ -14,6 +13,8 @@ import SortTitle from '../common/SortTitle';
 import useLoadout from '../common/store/useLoadout';
 import {SKILL_SLOTS, SKILLS, skillById, skillSummary, type Skill} from '../common/data';
 import SkillSlot from './SkillSlot';
+import SkillTreeSigil from './SkillTreeSigil';
+import IconButton from '../common/IconButton';
 
 // Measured on the capture (t38): same 69-70px rows as the Pictos list, shifted left; plates run ≈ 306px. Columns are
 // 366px apart like the Pictos list, so an equipped row's portrait clears the next column. Eight rows hold the CV's 16
@@ -53,7 +54,7 @@ const SkillsPage = () => {
     onBack: () => navigate('/'),
   });
   const hovered = picker.hovered === null ? null : sorted[picker.hovered];
-  const pointedSlot = slots.findIndex((_, i) => picker.slotActive(i));
+  const pointedSlot = slots.findIndex((_, i) => picker.slotActive(i) && !picker.slotEditing(i));
   const slotSkill = pointedSlot >= 0 && slots[pointedSlot] ? skillById(slots[pointedSlot]!) : null;
   const tip = hovered && picker.hovered !== null
     ? {skill: hovered, left: LIST_TOOLTIP_X, top: LIST.firstRow + (picker.hovered % LIST.rows) * LIST.pitch}
@@ -110,9 +111,9 @@ const SkillsPage = () => {
         ))}
       </section>
 
-      <TextureButton className="absolute left-[1915px] top-[786px]" onClick={() => navigate('/skill-tree')}>
+      <IconButton icon={<SkillTreeSigil/>} className="absolute left-[1915px] top-[786px]" width={380} onClick={() => navigate('/skill-tree')}>
         Skill Tree
-      </TextureButton>
+      </IconButton>
 
       <div className="Screen-hints absolute left-[1700px] top-[1300px] gap-[36px] [&_.KeyHint]:text-[26px] [&_.KeyHint-key]:size-[34px]">
         {picker.mode === 'slots' ? (

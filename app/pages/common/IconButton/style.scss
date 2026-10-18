@@ -26,4 +26,22 @@
     justify-content: flex-start;
     color: #f0ece2;
   }
+
+  // Hover or keyboard focus: the plate lights up and the diamond grows, like the selected slots; no focus ring.
+  &-button {
+    outline: none;
+    transition: filter 0.12s ease-out;
+
+    .TextureButton-icon {
+      transition: transform 0.12s cubic-bezier(0.2, 0.8, 0.3, 1);
+    }
+
+    &:is(:hover, :focus-visible) {
+      filter: brightness(1.25);
+
+      .TextureButton-icon {
+        transform: scale(1.1);
+      }
+    }
+  }
 }

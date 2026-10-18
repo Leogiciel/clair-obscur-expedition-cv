@@ -17,11 +17,12 @@ import useLoadout from '../common/store/useLoadout';
 import useArrowNav from '../common/useArrowNav';
 import {EXPERIENCES, LINKEDIN_URL, levelOf, pictoById, skillById} from '../common/data';
 
-// Picto slot boxes measured on the video (the 2nd is shifted 10px left).
+// Picto slots measured on the video: all three share the unselected slot's box (x 108, 522 wide). The first one
+// looked wider in the capture only because it was selected (grown 1.1).
 const PICTO_SLOTS = [
-  {x: 118, y: 1010, width: 512},
+  {x: 108, y: 1010, width: 522},
   {x: 108, y: 1121, width: 522},
-  {x: 82, y: 1233, width: 568},
+  {x: 108, y: 1233, width: 522},
 ];
 
 const SKILL_ORIGIN = {x: 836.5, y: 1106};
@@ -88,7 +89,7 @@ const Home = () => {
                     <TextureMainPicto variant="empty" width={slot.width}/>
                   )}
                 </div>
-                <SelectFx kind="picto" active={active === id}/>
+                <SelectFx kind="picto" active={active === id} fit={{width: slot.width, height: 113}}/>
               </Link>
             </li>
           );

@@ -1,4 +1,4 @@
-// Clickable panel: opens the Luminas screen. The gold focus ring matches the slots'.
+// Clickable panel: opens the Luminas screen.
 .Luminas {
   position: absolute;
   left: 1860px;
@@ -7,9 +7,4 @@
   color: inherit;
   text-decoration: none;
   outline: none;
-
-  &:focus-visible {
-    outline: 2px solid var(--ui-gold-select);
-    outline-offset: 6px;
-  }
 }

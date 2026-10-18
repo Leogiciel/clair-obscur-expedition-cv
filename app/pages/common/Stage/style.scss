@@ -53,10 +53,6 @@
       filter: brightness(0.963) contrast(1.15);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--ui-gold-select);
-      outline-offset: 6px;
-    }
   }
 
   // Measured on the video: 42px key, 34px label.
