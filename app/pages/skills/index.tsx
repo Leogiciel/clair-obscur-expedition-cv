@@ -137,12 +137,12 @@ const SkillsPage = () => {
             <Label
               as="p"
               size={20}
-              className="absolute left-[2px] top-[52px] w-[400px]"
+              className="absolute left-[27px] top-[52px] w-[380px]"
               style={{ opacity: 0.75 }}
             >
               {tip.skill.category}
             </Label>
-            <Label as="p" size={26} className="ml-[2px] w-[400px] pt-[84px]" style={{ lineHeight: 1.15 }}>
+            <Label as="p" size={26} className="ml-[27px] w-[380px] pt-[84px]" style={{ lineHeight: 1.15 }}>
               {skillSummary(tip.skill)}
             </Label>
           </div>

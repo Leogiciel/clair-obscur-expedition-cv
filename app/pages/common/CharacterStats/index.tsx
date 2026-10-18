@@ -67,12 +67,12 @@ const CharacterStats = ({ className = '' }: { className?: string }) => {
       </h2>
       <CharacterRadarChart />
       {stat && (
-        <Tooltip left={-500} top={230} width={480}>
-          <div id="stat-hint" className="relative left-[-14px] top-[2px] w-[390px]">
+        <Tooltip left={-540} top={230} width={520}>
+          <div id="stat-hint" className="relative left-[-14px] top-[2px] w-[430px]">
             <CardTitle size={30} as="div" style={{ letterSpacing: '0.03em' }}>
               {stat.label}
             </CardTitle>
-            <div className="mb-[5px] mt-[10px] flex items-baseline gap-[14px]">
+            <div className="mb-[5px] ml-[27px] mt-[10px] flex items-baseline gap-[14px]">
               <Num size={44}>{stat.value}</Num>
               <Label size={24}>{stat.hint}</Label>
             </div>

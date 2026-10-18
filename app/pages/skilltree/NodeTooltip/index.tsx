@@ -30,7 +30,7 @@ const NodeTooltip = ({ node }: { node: TreeNode }) => {
             <Num size={36}>{nodeYears(node)}</Num>
           </span>
         )}
-        <Label as="p" size={24} className="ml-[2px] w-[460px] pt-[60px]" style={{ lineHeight: 1.2 }}>
+        <Label as="p" size={24} className="ml-[27px] w-[435px] pt-[60px]" style={{ lineHeight: 1.2 }}>
           {text}
         </Label>
       </div>
