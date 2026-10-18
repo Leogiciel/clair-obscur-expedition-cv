@@ -68,7 +68,7 @@ const CharacterStats = ({ className = '' }: { className?: string }) => {
       <CharacterRadarChart />
       {stat && (
         <Tooltip left={-500} top={230} width={480} height={170}>
-          <div id="stat-hint" className="absolute left-[4px] top-[2px] w-[390px]">
+          <div id="stat-hint" className="absolute left-[-14px] top-[2px] w-[390px]">
             <CardTitle size={30} as="div" style={{ letterSpacing: '0.03em' }}>
               {stat.label}
             </CardTitle>

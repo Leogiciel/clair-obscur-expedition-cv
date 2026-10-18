@@ -115,7 +115,7 @@ const SkillsPage = () => {
 
       {tip && (
         <Tooltip {...TOOLTIP} left={tip.left} top={tip.top}>
-          <div className="absolute left-[4px] top-[1px] w-[420px]">
+          <div className="absolute left-[-14px] top-[1px] w-[420px]">
             <span className="absolute left-[2px] top-[-2px] grid size-[44px] place-items-center">
               <TechIcon id={tip.skill.id} />
             </span>

@@ -13,7 +13,7 @@ const NodeTooltip = ({ node }: { node: TreeNode }) => {
     : [node.note, positions.length ? `Used at ${positions.join(', ')}.` : ''].filter(Boolean).join(' ');
   return (
     <Tooltip left={1840} top={850} width={560} height={230}>
-      <div className="absolute left-[4px] top-[1px] w-[470px]">
+      <div className="absolute left-[-14px] top-[1px] w-[470px]">
         <span className="absolute left-[2px] top-[-4px] grid size-[48px] place-items-center">
           <NodeIcon icon={node.icon} />
         </span>
