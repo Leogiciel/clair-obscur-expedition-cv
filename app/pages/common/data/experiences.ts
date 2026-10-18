@@ -74,7 +74,8 @@ const POSITIONS: Experience[] = [
       'scss',
       'shopify',
       'remix',
-      'nextjs'
+      'nextjs',
+      'rust'
     ]
   },
   {
