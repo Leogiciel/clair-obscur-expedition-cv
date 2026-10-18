@@ -11,7 +11,8 @@ const VECTORS: Record<Direction, [number, number]> = {
 
 // Spatial navigation between the focusable elements matched by `selector`: an arrow moves focus to the nearest
 // element whose centre lies within 45° of that direction (any element further that way when none is), favouring the
-// best aligned. With nothing focused yet, any arrow focuses the first element.
+// best aligned. With nothing focused yet, any arrow focuses the first element. A activates the focused element, like
+// Enter, matching the A prompt shown on screen.
 const useArrowNav = (selector: string) => {
   const move = (direction: Direction) => {
     const items = [...document.querySelectorAll<HTMLElement>(selector)];
@@ -51,7 +52,13 @@ const useArrowNav = (selector: string) => {
     (pick(true) ?? pick(false))?.focus();
   };
 
+  const select = () => {
+    const el = document.activeElement;
+    if (el instanceof HTMLElement && el.matches(selector)) el.click();
+  };
+
   useHotkeys([
+    { hotkey: 'A', callback: select },
     { hotkey: 'ArrowUp', callback: () => move('up') },
     { hotkey: 'ArrowDown', callback: () => move('down') },
     { hotkey: 'ArrowLeft', callback: () => move('left') },
