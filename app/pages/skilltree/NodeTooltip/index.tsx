@@ -1,8 +1,9 @@
+import { type TreeNode, nodePositions, nodeYears } from '~/data';
+
 import CardTitle from '../../common/CardTitle';
 import Label from '../../common/Label';
 import Num from '../../common/Num';
 import Tooltip from '../../common/Tooltip';
-import { type TreeNode, nodePositions, nodeYears } from '../../common/data';
 import NodeIcon from '../NodeIcon';
 
 // Under the stats column, as in the game: icon and name, the years badge, then where the skill was used.

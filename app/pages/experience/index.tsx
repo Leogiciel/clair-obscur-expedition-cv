@@ -8,13 +8,13 @@ import TextureCard from '~/components/ui-kit/TextureCard';
 import TextureEquippedCard from '~/components/ui-kit/TextureEquippedCard';
 import TextureListPanel from '~/components/ui-kit/TextureListPanel';
 import TextureWeaponRows from '~/components/ui-kit/TextureWeaponRows';
+import { EXPERIENCES, type Experience, monthsOf, periodOf } from '~/data';
 
 import CardTitle from '../common/CardTitle';
 import CompanyLogo from '../common/CompanyLogo';
 import Label from '../common/Label';
 import Num from '../common/Num';
 import SortTitle from '../common/SortTitle';
-import { EXPERIENCES, type Experience, monthsOf, periodOf } from '../common/data';
 import enterHotkey from '../common/enterHotkey';
 import useLoadout from '../common/store/useLoadout';
 import useSort, { type SortOption } from '../common/useSort';

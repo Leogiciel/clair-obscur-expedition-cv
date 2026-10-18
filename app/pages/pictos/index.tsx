@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useOutletContext } from 'react-router';
 
 import KeyHint from '~/components/ui-kit/KeyHint';
+import { PICTOS, PICTO_SLOTS, type Picto, pictoById } from '~/data';
 
 import Glyph from '../common/Glyph';
 import Label from '../common/Label';
@@ -12,7 +13,6 @@ import Portrait from '../common/Portrait';
 import SortTitle from '../common/SortTitle';
 import type { StageContext } from '../common/StageLayout';
 import Tooltip from '../common/Tooltip';
-import { PICTOS, PICTO_SLOTS, type Picto, pictoById } from '../common/data';
 import useLoadout from '../common/store/useLoadout';
 import useSlotPicker from '../common/useSlotPicker';
 import useSort, { type SortOption } from '../common/useSort';

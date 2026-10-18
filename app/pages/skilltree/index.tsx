@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 import KeyHint from '~/components/ui-kit/KeyHint';
+import { TREE, careerYears, treeLinks } from '~/data';
 
-import { TREE, careerYears, treeLinks } from '../common/data';
 import useArrowNav from '../common/useArrowNav';
 import NodeTooltip from './NodeTooltip';
 import SkillPoints from './SkillPoints';

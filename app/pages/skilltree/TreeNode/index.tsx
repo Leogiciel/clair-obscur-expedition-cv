@@ -1,4 +1,5 @@
-import type { TreeNode as Node } from '../../common/data';
+import type { TreeNode as Node } from '~/data';
+
 import NodeIcon from '../NodeIcon';
 import './style.scss';
 

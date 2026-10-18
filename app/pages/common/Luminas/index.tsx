@@ -5,12 +5,12 @@ import SelectFx from '~/components/ui-kit/SelectFx';
 import TextureLowerPanel from '~/components/ui-kit/TextureLowerPanel';
 import TextureLuminas from '~/components/ui-kit/TextureLuminas';
 import TextureLuminasRow from '~/components/ui-kit/TextureLuminas/TextureLuminasRow';
+import { LUMINA_POINTS, luminaCost, luminaPointsSpent, pictoById } from '~/data';
 
 import CardTitle from '../CardTitle';
 import Glyph from '../Glyph';
 import Label from '../Label';
 import Num from '../Num';
-import { LUMINA_POINTS, luminaCost, luminaPointsSpent, pictoById } from '../data';
 import useLoadout from '../store/useLoadout';
 import './style.scss';
 

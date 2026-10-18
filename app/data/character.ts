@@ -34,6 +34,14 @@ export const CHARACTER = {
     { label: 'Attack Power', value: '200', hint: 'Paying customers of AwesomeApps' },
     { label: 'Teams Led', value: '3', hint: 'Front-end team at SAP, Coinhouse, Podspace' },
     { label: 'Devs Coached', value: '5', hint: 'Developers coached at Coinhouse' }
+  ],
+  // The radar's five attributes, in its vertex order: top, then clockwise.
+  attributes: [
+    { label: 'Vitality', value: 28 },
+    { label: 'Might', value: 24 },
+    { label: 'Agility', value: 31 },
+    { label: 'Defense', value: 22 },
+    { label: 'Luck', value: 26 }
   ]
 };
 

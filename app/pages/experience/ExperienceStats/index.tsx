@@ -1,6 +1,7 @@
+import type { Experience } from '~/data';
+
 import Label from '../../common/Label';
 import Num from '../../common/Num';
-import type { Experience } from '../../common/data';
 
 const ExperienceStats = ({ experience }: { experience: Experience }) => {
   // The duration sits in the card's corner (MonthsBlock), so the stats hold what it doesn't say.

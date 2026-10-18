@@ -2,10 +2,10 @@ import SelectFx from '~/components/ui-kit/SelectFx';
 import measures from '~/components/ui-kit/SelectFx/measures.json';
 import TextureDiamondCard from '~/components/ui-kit/TextureDiamondCard';
 import TextureEmpty from '~/components/ui-kit/TextureEmpty';
+import type { Picto } from '~/data';
 
 import Glyph from '../../common/Glyph';
 import Label from '../../common/Label';
-import type { Picto } from '../../common/data';
 import PictoDetails from '../PictoDetails';
 
 interface PictoSlotProps {

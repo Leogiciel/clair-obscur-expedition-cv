@@ -6,6 +6,7 @@ import SelectFx from '~/components/ui-kit/SelectFx';
 import TextureMainPicto from '~/components/ui-kit/TextureMainPicto';
 import TextureMainSkill from '~/components/ui-kit/TextureMainSkill';
 import TextureMainWeapon from '~/components/ui-kit/TextureMainWeapon';
+import { EXPERIENCES, GITHUB_URL, LINKEDIN_URL, monthsOf, pictoById, skillById } from '~/data';
 
 import CompanyLogo from '../common/CompanyLogo';
 import GitHubMark from '../common/GitHubMark';
@@ -16,7 +17,6 @@ import Luminas from '../common/Luminas';
 import SectionTitle from '../common/SectionTitle';
 import type { StageContext } from '../common/StageLayout';
 import TechIcon from '../common/TechIcon';
-import { EXPERIENCES, GITHUB_URL, LINKEDIN_URL, monthsOf, pictoById, skillById } from '../common/data';
 import useLoadout from '../common/store/useLoadout';
 import useArrowNav from '../common/useArrowNav';
 

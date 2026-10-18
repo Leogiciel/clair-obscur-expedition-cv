@@ -1,6 +1,3 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-
 import {
   DEFAULT_PICTOS,
   DEFAULT_SKILLS,
@@ -14,7 +11,10 @@ import {
   type TechId,
   luminaCost,
   luminaPointsSpent
-} from '../data';
+} from '~/data';
+
+import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type Slots<T> = (T | null)[];
 

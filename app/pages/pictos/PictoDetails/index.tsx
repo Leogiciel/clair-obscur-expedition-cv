@@ -1,9 +1,9 @@
 import DiamondCardDivider from '~/components/ui-kit/TextureDiamondCard/DiamondCardDivider';
+import type { Picto } from '~/data';
 
 import CardTitle from '../../common/CardTitle';
 import Label from '../../common/Label';
 import Num from '../../common/Num';
-import type { Picto } from '../../common/data';
 
 // Same layout as the game's picto cards: two stats, level on the right, then the effect under a divider.
 const PictoDetails = ({ picto }: { picto: Picto }) => (

@@ -4,14 +4,6 @@ import { useNavigate } from 'react-router';
 
 import KeyHint from '~/components/ui-kit/KeyHint';
 import TextureLuminasRow from '~/components/ui-kit/TextureLuminas/TextureLuminasRow';
-
-import Glyph from '../common/Glyph';
-import Label from '../common/Label';
-import Num from '../common/Num';
-import PlateGrid, { type PlateGridLayout } from '../common/PlateGrid';
-import Portrait from '../common/Portrait';
-import SortTitle from '../common/SortTitle';
-import Tooltip from '../common/Tooltip';
 import {
   LUMINAS,
   LUMINA_POINTS,
@@ -20,7 +12,15 @@ import {
   luminaCost,
   luminaPointsSpent,
   pictoById
-} from '../common/data';
+} from '~/data';
+
+import Glyph from '../common/Glyph';
+import Label from '../common/Label';
+import Num from '../common/Num';
+import PlateGrid, { type PlateGridLayout } from '../common/PlateGrid';
+import Portrait from '../common/Portrait';
+import SortTitle from '../common/SortTitle';
+import Tooltip from '../common/Tooltip';
 import enterHotkey from '../common/enterHotkey';
 import useLoadout from '../common/store/useLoadout';
 import useSort, { type SortOption } from '../common/useSort';

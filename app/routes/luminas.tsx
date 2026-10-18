@@ -1,12 +1,10 @@
+import { pageMeta } from '~/data';
 import LuminasPage from '~/pages/luminas';
 
 import type { Route } from './+types/luminas';
 
 export function meta({}: Route.MetaArgs) {
-  return [
-    { title: 'Luminas — Yellow Obscur: Expedition 34' },
-    { name: 'description', content: 'Qualities of Olivier Nguyen' }
-  ];
+  return pageMeta('luminas');
 }
 
 export default function Luminas() {

@@ -1,8 +1,8 @@
 import SelectFx from '~/components/ui-kit/SelectFx';
 import TextureMainSkill from '~/components/ui-kit/TextureMainSkill';
+import type { Skill } from '~/data';
 
 import TechIcon from '../../common/TechIcon';
-import type { Skill } from '../../common/data';
 
 interface SkillSlotProps {
   skill: Skill | null;

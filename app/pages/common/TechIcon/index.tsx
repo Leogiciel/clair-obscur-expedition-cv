@@ -1,5 +1,6 @@
+import { TECH, type Tech, type TechId } from '~/data';
+
 import BrandMark from '../BrandMark';
-import { TECH, type Tech, type TechId } from '../data';
 
 // Initials for techs without a mark: short names stay whole (SQL, AWS), longer ones keep their capitals.
 const initials = (name: string) =>

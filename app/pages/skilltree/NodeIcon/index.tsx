@@ -1,5 +1,6 @@
+import type { NodeIcon as Icon } from '~/data';
+
 import TechIcon from '../../common/TechIcon';
-import type { NodeIcon as Icon } from '../../common/data';
 
 // Leadership nodes have no logo: cyan sigils in the picto style (a banner for Lead, a crown for CTO / Founder).
 const SIGILS: Record<'lead' | 'cto', string> = {

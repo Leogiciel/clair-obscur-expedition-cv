@@ -1,5 +1,6 @@
+import type { Experience } from '~/data';
+
 import BrandMark from '../BrandMark';
-import type { Experience } from '../data';
 
 const CompanyLogo = ({ experience }: { experience: Experience }) => {
   const { logo, company } = experience;

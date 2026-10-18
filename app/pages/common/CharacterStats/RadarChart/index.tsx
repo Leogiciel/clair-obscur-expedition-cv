@@ -1,22 +1,18 @@
+import { CHARACTER } from '~/data';
+
 import './style.scss';
 
 // Measured on the video, in capture px, origin = top-left corner of the stats column.
 
-interface Attribute {
-  label: string;
-  value: number;
-  // Label anchor (center x, top y); the value renders 33px below.
-  at: [number, number];
-}
-
-// Vertex order: top, then clockwise.
-const ATTRIBUTES: Attribute[] = [
-  { label: 'Vitality', value: 28, at: [245, 397] },
-  { label: 'Might', value: 24, at: [372, 497] },
-  { label: 'Agility', value: 31, at: [330, 637] },
-  { label: 'Defense', value: 22, at: [157, 637] },
-  { label: 'Luck', value: 26, at: [105, 499] }
+// Label anchors (center x, top y), in the attributes' vertex order (CHARACTER.attributes); values render 33px below.
+const ANCHORS: [number, number][] = [
+  [245, 397],
+  [372, 497],
+  [330, 637],
+  [157, 637],
+  [105, 499]
 ];
+const ATTRIBUTES = CHARACTER.attributes.map((a, i) => ({ ...a, at: ANCHORS[i] }));
 
 const CENTER: [number, number] = [242, 552];
 const RINGS = [86, 50, 25];

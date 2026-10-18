@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 
+import { BUILD, CHARACTER, EXPEDITION } from '~/data';
+
 import ExpeditionLogo from './ExpeditionLogo';
 import TitleParticles from './TitleParticles';
 import './style.scss';
@@ -13,8 +15,6 @@ const POLL_MS = 200;
 // The logo dissolves over LEAVE_MS, then the overview comes up over REVEAL_MS (style.scss).
 const LEAVE_MS = 800;
 const REVEAL_MS = 1600;
-// The game prints its build number in the bottom right corner; this one is the CV's.
-const BUILD = '35.10';
 
 // A clip counts as loaded once it is buffered to its end: a camera move only plays if it can run without stalling.
 const loaded = (video: HTMLVideoElement) =>
@@ -95,9 +95,9 @@ const StartScreen = () => {
       <TitleParticles />
 
       <h1 className="StartScreen-logo">
-        <span className="StartScreen-house">Olivier Nguyen</span>
+        <span className="StartScreen-house">{CHARACTER.name}</span>
         <span className="StartScreen-rule" aria-hidden />
-        <span className="sr-only">Expedition 35</span>
+        <span className="sr-only">Expedition {EXPEDITION}</span>
         <ExpeditionLogo />
       </h1>
 

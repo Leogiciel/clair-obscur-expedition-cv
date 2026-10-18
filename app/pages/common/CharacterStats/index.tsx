@@ -3,12 +3,12 @@ import { useState } from 'react';
 import TextureStatsTop from '~/components/ui-kit/TextureStatsTop';
 import TextureStatsBar from '~/components/ui-kit/TextureStatsTop/TextureStatsBar';
 import TitleRule from '~/components/ui-kit/TitleRule';
+import { CHARACTER } from '~/data';
 
 import CardTitle from '../CardTitle';
 import Label from '../Label';
 import Num from '../Num';
 import Tooltip from '../Tooltip';
-import { CHARACTER } from '../data';
 import CharacterRadarChart from './RadarChart';
 import './style.scss';
 

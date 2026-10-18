@@ -1,4 +1,4 @@
-import type { Element } from '../data';
+import type { Element } from '~/data';
 
 const ELEMENT_COLOR: Record<Element, string> = {
   neutral: '#cfcfcf',

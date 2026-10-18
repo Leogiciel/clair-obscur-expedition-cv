@@ -1,6 +1,7 @@
+import { TECH, type TechId } from '~/data';
+
 import Label from '../../common/Label';
 import TechIcon from '../../common/TechIcon';
-import { TECH, type TechId } from '../../common/data';
 
 const StackIcons = ({ stack, className = '' }: { stack: TechId[]; className?: string }) => (
   <ul aria-label="Stack" className={`flex w-[470px] flex-wrap gap-x-[6px] gap-y-[10px] ${className}`}>

@@ -2,6 +2,7 @@ import { useHotkeys } from '@tanstack/react-hotkeys';
 import { useNavigate } from 'react-router';
 
 import KeyHint from '~/components/ui-kit/KeyHint';
+import { SKILLS, SKILL_SLOTS, type Skill, skillById, skillSummary } from '~/data';
 
 import CardTitle from '../common/CardTitle';
 import IconButton from '../common/IconButton';
@@ -13,7 +14,6 @@ import SortTitle from '../common/SortTitle';
 import { STAGE_H } from '../common/Stage';
 import TechIcon from '../common/TechIcon';
 import Tooltip from '../common/Tooltip';
-import { SKILLS, SKILL_SLOTS, type Skill, skillById, skillSummary } from '../common/data';
 import useLoadout from '../common/store/useLoadout';
 import useSlotPicker from '../common/useSlotPicker';
 import useSort, { type SortOption } from '../common/useSort';
