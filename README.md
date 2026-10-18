@@ -105,8 +105,8 @@ React Router 7 (server-rendered), React 19, Vite, Tailwind CSS 4, Sass, Zustand,
 A non-commercial fan tribute, not affiliated with or endorsed by Sandfall Interactive or Kepler Interactive.
 _Clair Obscur: Expedition 33_, its name, its interface and the textures extracted from its footage belong to their
 owners; they are used here only to pay homage to the game's menus, and will be removed on request. Company logos
-belong to their respective companies. Fonts: Cinzel, Marcellus SC, EB Garamond, IM Fell Double Pica and Bebas Neue,
-from Google Fonts.
+belong to their respective companies. Fonts: Cinzel, Marcellus SC, EB Garamond and Bebas Neue, self-hosted in
+[`public/fonts`](public/fonts) under the SIL Open Font License (licenses alongside).
 
 ## License
 

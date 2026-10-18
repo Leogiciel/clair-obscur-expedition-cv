@@ -192,7 +192,7 @@ const ExpeditionLogo = () => (
           fontFamily: 'var(--font-primary)',
           fontSize: 168,
           fontWeight: 400,
-          letterSpacing: '0.045em'
+          letterSpacing: '0.028em'
         }}
       >
         EXPEDITION
