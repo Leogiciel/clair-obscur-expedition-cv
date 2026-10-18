@@ -4,6 +4,11 @@
 
 // Upright phones and small tablets only: a desktop window is never this narrow in portrait.
 @media (orientation: portrait) and (max-width: 1024px) {
+  // The stage behind is not laid out at all: shrunk to unreadable, it only cost rendering time.
+  .Screen {
+    display: none;
+  }
+
   .RotateScreen {
     position: fixed;
     inset: 0;

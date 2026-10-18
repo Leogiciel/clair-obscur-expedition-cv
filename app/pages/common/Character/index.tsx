@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import experienceToOverview from '~/assets/character/experience-overview.mp4';
 import experienceClip from '~/assets/character/experience.mp4';
@@ -59,10 +59,28 @@ const HANDOVER_MS = 250;
 
 const SHOTS = Object.keys(framing) as Shot[];
 
+// Phones held upright only see RotateScreen (its media query, repeated here): no clip loads until they turn.
+const UPRIGHT = '(orientation: portrait) and (max-width: 1024px)';
+
+// The clips are given their sources on the client only, once the orientation is known: in the server render, a
+// phone held upright downloaded all 16 MB of them behind the screen asking to turn it.
+const useClipsWanted = () => {
+  const [wanted, setWanted] = useState(false);
+  useEffect(() => {
+    const upright = window.matchMedia(UPRIGHT);
+    const update = () => setWanted((was) => was || !upright.matches);
+    update();
+    upright.addEventListener('change', update);
+    return () => upright.removeEventListener('change', update);
+  }, []);
+  return wanted;
+};
+
 const Character = ({ shot }: { shot: Shot }) => {
   const loops = useRef<Partial<Record<Shot, HTMLDivElement | null>>>({});
   const moves = useRef<Partial<Record<string, HTMLVideoElement | null>>>({});
   const shown = useRef<Shot | null>(null);
+  const wanted = useClipsWanted();
 
   useLayoutEffect(() => {
     const show = (s: Shot | null, restart: boolean) => {
@@ -112,7 +130,7 @@ const Character = ({ shot }: { shot: Shot }) => {
       move.removeEventListener('ended', onEnded);
       window.clearTimeout(handover);
     };
-  }, [shot]);
+  }, [shot, wanted]);
 
   return (
     <>
@@ -124,7 +142,7 @@ const Character = ({ shot }: { shot: Shot }) => {
           }}
           className="Character-move"
           style={{ transform: `scale(${CANVAS_SCALE})` }}
-          src={src}
+          src={wanted ? src : undefined}
           muted
           playsInline
           preload="auto"
@@ -148,7 +166,14 @@ const Character = ({ shot }: { shot: Shot }) => {
             }}
             aria-hidden
           >
-            <video autoPlay={s === shot} loop muted playsInline preload="auto" src={LOOPS[s]} />
+            <video
+              autoPlay={s === shot}
+              loop
+              muted
+              playsInline
+              preload="auto"
+              src={wanted ? LOOPS[s] : undefined}
+            />
           </div>
         );
       })}

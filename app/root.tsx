@@ -1,5 +1,7 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
+import { FIT_STAGE_SCRIPT } from '~/pages/common/Stage';
+
 import type { Route } from './+types/root';
 import './app.css';
 
@@ -8,25 +10,28 @@ export const links: Route.LinksFunction = () => [
   { rel: 'icon', href: '/favicon.ico', sizes: '16x16 32x32 48x48' },
   { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
   { rel: 'manifest', href: '/site.webmanifest' },
-  { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-  {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
-    crossOrigin: 'anonymous'
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cinzel:wght@100..900&family=EB+Garamond:wght@400..700&family=IM+Fell+Double+Pica:ital@0;1&family=Marcellus+SC&display=swap'
-  }
+  // The ink plume is the largest paint of the start screen and of RotateScreen: fetched with the page, not found
+  // late in their CSS.
+  { rel: 'preload', href: '/ui/start-ink.webp', as: 'image', fetchPriority: 'high' },
+  // The fonts of the first screens (start screen, RotateScreen, menu titles), fetched with the page rather than
+  // discovered in the CSS; Bebas Neue, for the menus' numbers only, loads when they show.
+  ...['cinzel', 'eb-garamond', 'marcellus-sc'].map((font) => ({
+    rel: 'preload',
+    href: `/fonts/${font}-latin.woff2`,
+    as: 'font',
+    type: 'font/woff2',
+    crossOrigin: 'anonymous' as const
+  }))
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#070707" />
+        <script dangerouslySetInnerHTML={{ __html: FIT_STAGE_SCRIPT }} />
         <Meta />
         <Links />
       </head>
