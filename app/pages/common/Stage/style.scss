@@ -97,3 +97,21 @@
     }
   }
 }
+
+// Touch screens held sideways: Safari (and Chrome on Android) only fold their bars away when the visitor scrolls the
+// page, and a page the size of the screen gives nothing to scroll. The page is made a little taller and the stage
+// pinned, so a swipe up hides the bar while the stage stays put, rescaled to the height it frees (Stage).
+@media (pointer: coarse) and (orientation: landscape) {
+  body::after {
+    content: '';
+    display: block;
+    height: calc(100lvh + 120px);
+  }
+
+  .Screen {
+    position: fixed;
+    inset: 0;
+    width: auto;
+    height: auto;
+  }
+}
