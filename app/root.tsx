@@ -29,6 +29,11 @@ export const links: Route.LinksFunction = () => [
 // painted and its interface rasterised under the stage's transform, the heaviest frames on a phone.
 const START_FLAG_SCRIPT = `if(location.pathname.replace(/\\/?$/,'/')===${JSON.stringify(import.meta.env.BASE_URL)})document.documentElement.dataset.start=''`;
 
+// Tailwind's cascade layers, in its order, declared before any stylesheet: the bundler minifies Tailwind's own
+// declaration away and emits the components' styles first, which made `components` the weakest layer, under the
+// preflight's `border: 0 solid` that resets every texture's border-image.
+const LAYER_ORDER = '@layer properties, theme, base, components, utilities;';
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -42,6 +47,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="apple-mobile-web-app-title" content="Expedition 35" />
         <script dangerouslySetInnerHTML={{ __html: FIT_STAGE_SCRIPT }} />
         <script dangerouslySetInnerHTML={{ __html: START_FLAG_SCRIPT }} />
+        <style dangerouslySetInnerHTML={{ __html: LAYER_ORDER }} />
         <Meta />
         <Links />
       </head>
