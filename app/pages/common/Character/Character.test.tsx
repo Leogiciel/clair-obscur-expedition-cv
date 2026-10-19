@@ -46,6 +46,11 @@ const visibleLoops = (container: HTMLElement) =>
     return video?.parentElement?.style.visibility === 'visible';
   });
 
+const visibleMoves = (container: HTMLElement) =>
+  [...container.querySelectorAll<HTMLVideoElement>('.Character-move')].filter(
+    (v) => v.style.visibility === 'visible'
+  ).length;
+
 const moveOf = (container: HTMLElement, key: keyof typeof TRANSITIONS) =>
   container.querySelector(`video[src="${TRANSITIONS[key]}"]`)!;
 
@@ -88,13 +93,6 @@ describe('Character', () => {
     expect(attached(container)).toContain('skills-skilltree');
   });
 
-  it('keeps the return move when the visitor goes back before the move has ended', () => {
-    const { container, rerender } = render(<Character shot="overview" />);
-    rerender(<Character shot="skills" />);
-    rerender(<Character shot="overview" />);
-    expect(attached(container)).toContain('skills-overview');
-  });
-
   it('lets go of the screen it left once the move has played and handed over', () => {
     vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
     const { container, rerender } = render(<Character shot="skills" />);
@@ -113,8 +111,45 @@ describe('Character', () => {
     expect(visibleLoops(container)).toEqual(['skills']);
     rerender(<Character shot="skilltree" />);
     expect(visibleLoops(container)).toEqual(['skills']);
-    act(() => void vi.advanceTimersByTime(500));
-    expect(visibleLoops(container)).toEqual(['skilltree']);
+    expect(visibleMoves(container)).toBe(0);
+    fireEvent(moveOf(container, 'skills-skilltree'), new Event('loadeddata'));
+    expect(visibleLoops(container)).toEqual([]);
+    expect(visibleMoves(container)).toBe(1);
+  });
+
+  it('stays on the old screen, with no move, when the visitor goes back before the move started', () => {
+    // A regression: the return move was played from the screen that never appeared, jumping to its pose first.
+    const { container, rerender } = render(<Character shot="skills" />);
+    rerender(<Character shot="skilltree" />);
+    rerender(<Character shot="skills" />);
+    expect(visibleLoops(container)).toEqual(['skills']);
+    expect(visibleMoves(container)).toBe(0);
+    // Nothing moved: the screen settles at once, and the return move is not even kept.
+    expect(attached(container)).not.toContain('skilltree-skills');
+  });
+
+  it('plays the return move when the visitor goes back once the move started', () => {
+    const { container, rerender } = render(<Character shot="overview" />);
+    rerender(<Character shot="skills" />);
+    fireEvent(moveOf(container, 'overview-skills'), new Event('loadeddata'));
+    rerender(<Character shot="overview" />);
+    expect(attached(container)).toContain('skills-overview');
+    const back = moveOf(container, 'skills-overview');
+    fireEvent(back, new Event('loadeddata'));
+    expect((back as HTMLVideoElement).style.visibility).toBe('visible');
+  });
+
+  it('drops the abandoned move’s fallback when the visitor goes back while it loads', () => {
+    vi.useFakeTimers({ toFake: ['setTimeout', 'clearTimeout'] });
+    const { container, rerender } = render(<Character shot="skills" />);
+    rerender(<Character shot="skilltree" />);
+    act(() => void vi.advanceTimersByTime(200));
+    rerender(<Character shot="skills" />);
+    // The first move never started, so skills stayed on screen: its abandoned fallback must not cut to skilltree.
+    act(() => void vi.advanceTimersByTime(300));
+    expect(visibleLoops(container)).toEqual(['skills']);
+    act(() => void vi.advanceTimersByTime(200));
+    expect(visibleLoops(container)).toEqual(['skills']);
   });
 
   it('cuts to the new screen when the move is not ready in time, and lets go of the old one', () => {

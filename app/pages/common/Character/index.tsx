@@ -43,6 +43,7 @@ const fileFor = (set: 'small' | 'full', name: string, full: string) =>
 const Character = ({ shot }: { shot: Shot }) => {
   const loops = useRef<Partial<Record<Shot, HTMLDivElement | null>>>({});
   const moves = useRef<Partial<Record<string, HTMLVideoElement | null>>>({});
+  // The screen on screen: its loop, or the one a playing move lands on. A move still loading leaves the old one there.
   const shown = useRef<Shot | null>(null);
   const wanted = useClipsWanted();
   // The screen the move starts from, set during the render that changes screen (React's pattern for state derived
@@ -69,6 +70,7 @@ const Character = ({ shot }: { shot: Shot }) => {
   useLayoutEffect(() => {
     const settle = () => setScreens((s) => (s.shot === shot && s.from !== null ? { shot, from: null } : s));
     const show = (s: Shot | null, restart: boolean) => {
+      if (s) shown.current = s;
       for (const other of SHOTS) {
         const box = loops.current[other];
         const video = box?.querySelector('video');
@@ -90,7 +92,6 @@ const Character = ({ shot }: { shot: Shot }) => {
     };
 
     const previous = shown.current;
-    shown.current = shot;
     const move = previous && previous !== shot ? moves.current[`${previous}-${shot}`] : null;
     const cut = () => {
       hideMoves();
@@ -110,6 +111,7 @@ const Character = ({ shot }: { shot: Shot }) => {
       window.clearTimeout(waited);
       hideMoves();
       show(null, false);
+      shown.current = shot;
       move.currentTime = 0;
       move.style.visibility = 'visible';
       void move.play().catch(() => {});
