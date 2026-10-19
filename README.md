@@ -8,7 +8,7 @@ loop and every move between screens its own camera transition, as in the game.
 
 [![A 30-second tour: the start screen, then every screen and the camera moves between them](docs/demo-preview.webp)](https://oliviernguyen.github.io/clair-obscur-expedition-cv/demo.mp4)
 
-_The full tour, 42 s: [watch it](https://oliviernguyen.github.io/clair-obscur-expedition-cv/demo.mp4)._
+_The full tour, 32 s: [watch it](https://oliviernguyen.github.io/clair-obscur-expedition-cv/demo.mp4)._
 
 |                                                                 |                                                                          |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------ |
