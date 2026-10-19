@@ -21,6 +21,7 @@ import skilltreeToSkills from '~/assets/character/skilltree-skills.mp4';
 import skilltreeClip from '~/assets/character/skilltree.mp4';
 
 import { clipUrl, clipsVersion, preloadClips, subscribeClips } from './clips';
+import { clipsOf } from './plan';
 import './style.scss';
 
 export type Shot = keyof typeof framing;
@@ -61,6 +62,7 @@ const HANDOVER_MS = 250;
 const MOVE_WAIT_MS = 500;
 
 const SHOTS = Object.keys(framing) as Shot[];
+const MOVE_KEYS = Object.keys(TRANSITIONS);
 
 // The phone variant of each clip (scripts/character/encode_mobile.py): 1280 px on the long side, half the decoder
 // memory and a third of the download, for screens too small to show the full resolution.
@@ -94,16 +96,8 @@ const useClipsWanted = () => {
   return wanted;
 };
 
-// iOS keeps a decoder per loaded clip and kills the tab past its memory cap ("A problem repeatedly occurred"): only the
-// clips a screen can play next stay loaded, its loop, the moves out of it and the loops they land on; the others are
-// unloaded. While a move plays, the screen it leaves keeps its clips too.
-const clipsOf = (shots: Set<Shot>) => {
-  const moves = Object.keys(TRANSITIONS).filter((key) => shots.has(key.split('-')[0] as Shot));
-  return {
-    moves: new Set(moves),
-    loops: new Set<Shot>([...shots, ...moves.map((key) => key.split('-')[1] as Shot)])
-  };
-};
+const fileFor = (set: 'small' | 'full', name: string, full: string) =>
+  set === 'small' ? mobile(name) : full;
 
 const Character = ({ shot }: { shot: Shot }) => {
   const loops = useRef<Partial<Record<Shot, HTMLDivElement | null>>>({});
@@ -112,21 +106,26 @@ const Character = ({ shot }: { shot: Shot }) => {
   const wanted = useClipsWanted();
   // The screen whose clips stay loaded once the move into the current one has ended.
   const [settled, setSettled] = useState(shot);
-  const needed = clipsOf(new Set([shot, settled, ...(shown.current ? [shown.current] : [])]));
+  // The screen the move starts from, updated during the render that changes screen (React's pattern for state derived
+  // from a previous prop): its clips, the move among them, stay loaded while it plays.
+  const [screens, setScreens] = useState<{ shot: Shot; from: Shot | null }>({ shot, from: null });
+  if (screens.shot !== shot) setScreens({ shot, from: screens.shot });
+  const from = screens.shot !== shot ? screens.shot : screens.from;
+  const needed = clipsOf(new Set([shot, settled, ...(from ? [from] : [])]), MOVE_KEYS);
   useSyncExternalStore(subscribeClips, clipsVersion, () => 0);
-  const fileOf = (name: string, full: string) => (wanted === 'small' ? mobile(name) : full);
   // A clip is given to its <video> once in memory, and only while the current screen may play it.
   const srcOf = (name: string, full: string, isNeeded: boolean) =>
-    wanted !== 'none' && isNeeded ? clipUrl(fileOf(name, full)) : undefined;
+    wanted !== 'none' && isNeeded ? clipUrl(fileFor(wanted, name, full)) : undefined;
 
+  // Every clip is fetched once the set to load is known, the current screen's first; running again on a screen change
+  // fetches nothing new, as a clip is never fetched twice.
   useEffect(() => {
     if (wanted === 'none') return;
-    const loops = SHOTS.map((s) => fileOf(s, LOOPS[s]));
-    const moves = Object.entries(TRANSITIONS).map(([key, src]) => fileOf(key, src as string));
-    const now = [...needed.loops].map((s) => fileOf(s, LOOPS[s]));
+    const now = [...clipsOf(new Set([shot]), MOVE_KEYS).loops].map((s) => fileFor(wanted, s, LOOPS[s]));
+    const loops = SHOTS.map((s) => fileFor(wanted, s, LOOPS[s]));
+    const moves = Object.entries(TRANSITIONS).map(([key, src]) => fileFor(wanted, key, src as string));
     preloadClips([...now, ...loops, ...moves]);
-    // Started once, when the set to load is known; the order only matters for the first screen.
-  }, [wanted]);
+  }, [wanted, shot]);
 
   useLayoutEffect(() => {
     const show = (s: Shot | null, restart: boolean) => {

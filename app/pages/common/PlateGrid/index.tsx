@@ -1,5 +1,6 @@
 import SelectFx from '~/components/ui-kit/SelectFx';
-import TexturePlate, { type TexturePlateVariant, plateBox } from '~/components/ui-kit/TexturePlate';
+import TexturePlate, { type TexturePlateVariant } from '~/components/ui-kit/TexturePlate';
+import { plateBox } from '~/components/ui-kit/TexturePlate/textures';
 
 import './style.scss';
 

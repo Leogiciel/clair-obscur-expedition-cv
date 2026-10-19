@@ -8,7 +8,11 @@
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "format": "prettier --write ."
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@react-router/node": "^7.18.4",
@@ -22,19 +26,27 @@
     "zustand": "5.0.15"
   },
   "devDependencies": {
+    "@eslint/js": "10.0.1",
     "@react-router/dev": "^7.18.4",
     "@tailwindcss/vite": "^4.3.3",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "eslint": "10.13.0",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.7",
+    "globals": "17.13.0",
+    "jsdom": "^27.4.0",
     "prettier": "3.9.9",
     "sass": "^1.105.2",
     "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.8.3",
+    "typescript-eslint": "8.71.2",
     "vite": "^6.4.4",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "4.1.12"
   },
   "packageManager": "pnpm@11.11.0"
 }

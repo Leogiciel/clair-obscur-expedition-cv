@@ -1,9 +1,7 @@
 import { pageMeta } from '~/data';
 import LuminasPage from '~/pages/luminas';
 
-import type { Route } from './+types/luminas';
-
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return pageMeta('luminas');
 }
 

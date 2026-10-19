@@ -11,7 +11,7 @@ import Num from '../common/Num';
 import PlateGrid, { type PlateGridLayout } from '../common/PlateGrid';
 import Portrait from '../common/Portrait';
 import SortTitle from '../common/SortTitle';
-import { STAGE_H } from '../common/Stage';
+import { STAGE_H } from '../common/Stage/size';
 import TechIcon from '../common/TechIcon';
 import Tooltip from '../common/Tooltip';
 import useLoadout from '../common/store/useLoadout';

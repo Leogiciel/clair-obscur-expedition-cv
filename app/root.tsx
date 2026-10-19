@@ -1,6 +1,6 @@
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, isRouteErrorResponse } from 'react-router';
 
-import { FIT_STAGE_SCRIPT } from '~/pages/common/Stage';
+import { FIT_STAGE_SCRIPT } from '~/pages/common/Stage/size';
 import { publicUrl } from '~/publicUrl';
 
 import type { Route } from './+types/root';

@@ -1,6 +1,7 @@
 import { publicUrl } from '~/publicUrl';
 
-import TextureSortSlab, { SLAB } from './TextureSortSlab';
+import TextureSortSlab from './TextureSortSlab';
+import { SLAB } from './TextureSortSlab/slab';
 import './style.scss';
 
 // Measured by scripts/ui-kit/extract/title-sort.py (px, 1x).

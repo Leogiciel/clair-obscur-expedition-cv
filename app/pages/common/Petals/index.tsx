@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { publicUrl } from '~/publicUrl';
 
@@ -81,7 +81,9 @@ const Fall = ({ petal, layer, onDone }: { petal: Petal; layer: Layer; onDone: ()
   const ref = useRef<HTMLSpanElement>(null);
   // The parent re-renders as petals come and go: the latest callback is read at the end, so the path never restarts.
   const done = useRef(onDone);
-  done.current = onDone;
+  useLayoutEffect(() => {
+    done.current = onDone;
+  });
   useEffect(() => {
     const animation = ref.current?.animate(petal.path, {
       duration: petal.duration * 1000,

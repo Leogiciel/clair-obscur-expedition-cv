@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { STAGE_H, STAGE_W } from '../../Stage';
+import { STAGE_H, STAGE_W } from '../../Stage/size';
 
 // The title screen's petals, drawn on one canvas: hundreds of DOM petals with a CSS blur each dropped the screen to
 // ≈ 20 fps. As in the game (design/ref/loading), glowing crimson flakes gather in a band on the left and white specks

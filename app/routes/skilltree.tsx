@@ -1,9 +1,7 @@
 import { pageMeta } from '~/data';
 import SkillTreePage from '~/pages/skilltree';
 
-import type { Route } from './+types/skilltree';
-
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return pageMeta('skillTree');
 }
 
