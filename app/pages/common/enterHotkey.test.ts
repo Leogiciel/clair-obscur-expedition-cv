@@ -30,11 +30,23 @@ describe('enterHotkey', () => {
     expect(event.defaultPrevented).toBe(false);
   });
 
-  it('stands down on a focused link too', () => {
-    document.body.innerHTML = '<a href="/skills">Skills</a>';
-    document.querySelector('a')!.focus();
+  it.each([
+    ['a link', '<a href="/skills">Skills</a>'],
+    ['a text field', '<input />'],
+    ['an element acting as a button', '<div role="button" tabindex="0">Slot</div>']
+  ])('stands down on %s too', (_, html) => {
+    document.body.innerHTML = html;
+    document.body.querySelector<HTMLElement>('*')!.focus();
     const action = vi.fn();
     press(action);
     expect(action).not.toHaveBeenCalled();
+  });
+
+  it('still acts when focus is on an element that does not take Enter', () => {
+    document.body.innerHTML = '<div tabindex="0">Panel</div>';
+    document.querySelector('div')!.focus();
+    const action = vi.fn();
+    press(action);
+    expect(action).toHaveBeenCalledOnce();
   });
 });

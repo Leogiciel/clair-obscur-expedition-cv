@@ -1,12 +1,16 @@
-# Formatting, lint, typecheck, tests and both builds (server-rendered and the static GitHub Pages one). Runs on pull
-# requests and branches; on main, the Pages workflow calls it before deploying, so a push runs it once.
+# Formatting, lint, typecheck, tests and both builds (server-rendered and the static GitHub Pages site). Runs on pull
+# requests; on main, the Pages workflow calls it and deploys the site it built, so a push builds once.
 name: CI
 
 on:
   pull_request:
-  push:
-    branches-ignore: [main]
+  workflow_dispatch:
   workflow_call:
+    inputs:
+      upload-pages:
+        description: Upload the Pages site as the artifact to deploy.
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -21,16 +25,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
-      # Reads the pnpm version pinned in package.json's packageManager.
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      # Reads the pnpm version pinned in package.json's packageManager. Third-party: pinned to a commit.
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm build
-      - run: pnpm build
-        env:
-          GITHUB_PAGES: 'true'
+      - run: pnpm build:pages
+      - if: inputs.upload-pages
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: site

@@ -66,9 +66,7 @@ describe('EXPERIENCES', () => {
   it('has unique ids and dates that read as year-month, the end after the start', async () => {
     const { EXPERIENCES } = await load();
     expect(new Set(EXPERIENCES.map((e) => e.id)).size).toBe(EXPERIENCES.length);
-    for (const e of EXPERIENCES) {
-      expect(e.start).toMatch(/^\d{4}-(0[1-9]|1[0-2])$/);
-      if (e.end) expect(e.end > e.start).toBe(true);
-    }
+    for (const e of EXPERIENCES) expect(e.start).toMatch(/^\d{4}-(0[1-9]|1[0-2])$/);
+    for (const e of EXPERIENCES.filter((e) => e.end)) expect(e.end! > e.start).toBe(true);
   });
 });

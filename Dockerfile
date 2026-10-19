@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:24-alpine AS base
 RUN corepack enable
 WORKDIR /app
 
@@ -20,4 +20,5 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY --from=production-dependencies-env /app/node_modules ./node_modules
 COPY --from=build-env /app/build ./build
 USER node
-CMD ["pnpm", "run", "start"]
+# The server binary directly: pnpm itself is not in the image (corepack would download it at each start).
+CMD ["./node_modules/.bin/react-router-serve", "./build/server/index.js"]

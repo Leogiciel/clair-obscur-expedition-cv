@@ -45,7 +45,8 @@ describe('equipping', () => {
 describe('Lumina budget', () => {
   it('refuses a Lumina past the budget', async () => {
     const { useLoadout, data } = await loadStore();
-    // Music and Sports cost 5 each: the second does not fit in 8 points.
+    // Music and Sports cost 5 each (their levels are fixed, not counted from a date): the second does not fit in 8
+    // points.
     useLoadout.getState().toggleLumina('music');
     useLoadout.getState().toggleLumina('sports');
     expect(useLoadout.getState().luminas).toEqual(['music']);
@@ -148,5 +149,41 @@ describe('saved loadout', () => {
     const { luminas, pictos } = useLoadout.getState();
     expect(luminas).toEqual(['music']);
     expect(data.luminaPointsSpent(luminas, pictos)).toBeLessThanOrEqual(data.LUMINA_POINTS);
+  });
+
+  it('drops a paid Lumina whose picto the save also equips, since that one is free', async () => {
+    save({ pictos: ['music', null, null], skills: [], experience: 'podspace', luminas: ['music'] });
+    const { useLoadout } = await loadStore();
+    await useLoadout.persist.rehydrate();
+    expect(useLoadout.getState().luminas).toEqual([]);
+  });
+
+  it('keeps an item equipped once when a save repeats it', async () => {
+    save({
+      pictos: ['music', 'music', null],
+      skills: ['react', 'react'],
+      experience: 'podspace',
+      luminas: []
+    });
+    const { useLoadout } = await loadStore();
+    await useLoadout.persist.rehydrate();
+    expect(useLoadout.getState().pictos).toEqual(['music', null, null]);
+    expect(useLoadout.getState().skills.slice(0, 2)).toEqual(['react', null]);
+  });
+
+  it('does not read the browser storage before it is rehydrated, so the server render and hydration match', async () => {
+    save({ pictos: ['music', null, null], skills: [], experience: 'coinhouse', luminas: [] });
+    const { useLoadout, data } = await loadStore();
+    expect(useLoadout.getState().pictos).toEqual(data.DEFAULT_PICTOS);
+    expect(useLoadout.getState().experience).toBe(data.EXPERIENCES[0].id);
+  });
+
+  it('saves only the loadout, under the current version', async () => {
+    const { useLoadout } = await loadStore();
+    useLoadout.getState().equipExperience('coinhouse');
+    const saved = JSON.parse(localStorage.getItem(KEY)!) as { state: object; version: number };
+    expect(saved.version).toBe(2);
+    expect(Object.keys(saved.state).sort()).toEqual(['experience', 'luminas', 'pictos', 'skills']);
+    expect(saved.state).toMatchObject({ experience: 'coinhouse' });
   });
 });

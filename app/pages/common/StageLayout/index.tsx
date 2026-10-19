@@ -22,7 +22,7 @@ const StageLayout = () => {
   // derived from a previous prop), so the new screen reads it on its first render.
   const [route, setRoute] = useState({ path: pathname, from: pathname });
   if (route.path !== pathname) setRoute({ path: pathname, from: route.path });
-  const from = route.path === pathname ? route.from : route.path;
+  const { from } = route;
   // The saved loadout is applied after mount, so the server render and hydration both use the default one.
   useEffect(() => {
     void useLoadout.persist.rehydrate();

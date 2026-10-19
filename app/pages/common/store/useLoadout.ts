@@ -53,11 +53,15 @@ const clear = <T>(slots: Slots<T>, slot: number): Slots<T> => slots.map((s, i) =
 
 type Saved = Pick<Loadout, 'pictos' | 'skills' | 'experience' | 'luminas'>;
 
-const known = <T>(ids: readonly T[], value: unknown, count: number): Slots<T> =>
-  Array.from({ length: count }, (_, i) => {
+// Each slot keeps an item the data still has, and not already equipped in an earlier slot.
+const known = <T>(ids: readonly T[], value: unknown, count: number): Slots<T> => {
+  const slots: Slots<T> = [];
+  for (let i = 0; i < count; i++) {
     const id = Array.isArray(value) ? (value[i] as T) : null;
-    return ids.includes(id as T) ? id : null;
-  });
+    slots.push(ids.includes(id as T) && !slots.includes(id) ? id : null);
+  }
+  return slots;
+};
 
 // A save from an older version of the data can name items that no longer exist: they are dropped, and paid Luminas
 // are kept only while they fit the budget, so a stale save never breaks the screens.

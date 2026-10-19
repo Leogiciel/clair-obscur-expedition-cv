@@ -45,29 +45,29 @@ const Character = ({ shot }: { shot: Shot }) => {
   const moves = useRef<Partial<Record<string, HTMLVideoElement | null>>>({});
   const shown = useRef<Shot | null>(null);
   const wanted = useClipsWanted();
-  // The screen whose clips stay loaded once the move into the current one has ended.
-  const [settled, setSettled] = useState(shot);
-  // The screen the move starts from, updated during the render that changes screen (React's pattern for state derived
-  // from a previous prop): its clips, the move among them, stay loaded while it plays.
+  // The screen the move starts from, set during the render that changes screen (React's pattern for state derived
+  // from a previous prop) and cleared once the move has ended: its clips, the move among them, stay loaded meanwhile.
   const [screens, setScreens] = useState<{ shot: Shot; from: Shot | null }>({ shot, from: null });
   if (screens.shot !== shot) setScreens({ shot, from: screens.shot });
-  const needed = clipsOf(liveShots(shot, settled, screens), MOVE_KEYS);
+  const needed = clipsOf(liveShots(shot, screens.from), MOVE_KEYS);
   useSyncExternalStore(subscribeClips, clipsVersion, () => 0);
   // A clip is given to its <video> once in memory, and only while the current screen may play it.
   const srcOf = (name: string, full: string, isNeeded: boolean) =>
     wanted !== 'none' && isNeeded ? clipUrl(fileFor(wanted, name, full)) : undefined;
 
-  // Every clip is fetched once the set to load is known, the first screen's own first.
-  const [firstShot] = useState(shot);
+  // Every clip is fetched once the set to load is known, the screen showing then first (a phone turned to landscape
+  // may have changed screen while upright).
   useEffect(() => {
     if (wanted === 'none') return;
-    const now = [...clipsOf(new Set([firstShot]), MOVE_KEYS).loops].map((s) => fileFor(wanted, s, LOOPS[s]));
+    const current = shown.current ? [shown.current] : [];
+    const now = [...clipsOf(new Set(current), MOVE_KEYS).loops].map((s) => fileFor(wanted, s, LOOPS[s]));
     const loops = SHOTS.map((s) => fileFor(wanted, s, LOOPS[s]));
     const moves = Object.entries(TRANSITIONS).map(([key, src]) => fileFor(wanted, key, src));
     preloadClips([...now, ...loops, ...moves]);
-  }, [wanted, firstShot]);
+  }, [wanted]);
 
   useLayoutEffect(() => {
+    const settle = () => setScreens((s) => (s.shot === shot && s.from !== null ? { shot, from: null } : s));
     const show = (s: Shot | null, restart: boolean) => {
       for (const other of SHOTS) {
         const box = loops.current[other];
@@ -95,7 +95,7 @@ const Character = ({ shot }: { shot: Shot }) => {
     const cut = () => {
       hideMoves();
       show(shot, previous !== null && previous !== shot);
-      setSettled(shot);
+      settle();
     };
     if (!move || !move.getAttribute('src') || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       cut();
@@ -127,7 +127,7 @@ const Character = ({ shot }: { shot: Shot }) => {
       loops.current[shot]?.animate([{ opacity: 0 }, { opacity: 1 }], { duration: HANDOVER_MS });
       handover = window.setTimeout(() => {
         hideMoves();
-        setSettled(shot);
+        settle();
       }, HANDOVER_MS);
     };
     move.addEventListener('ended', onEnded, { once: true });

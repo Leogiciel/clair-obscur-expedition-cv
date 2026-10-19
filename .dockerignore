@@ -8,3 +8,7 @@ design
 .git
 scripts
 docs
+.github
+.idea
+.gstack
+site

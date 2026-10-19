@@ -62,6 +62,17 @@ describe('preloadClips', () => {
     await vi.waitFor(() => expect(clips.clipUrl('/missing.mp4')).toBe('/missing.mp4'));
   });
 
+  it('streams the file instead when offline, and still counts it as loaded', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() => Promise.reject(new TypeError('Failed to fetch')))
+    );
+    const clips = await load();
+    clips.preloadClips(['/a.mp4']);
+    await vi.waitFor(() => expect(clips.clipsProgress()).toBe(1));
+    expect(clips.clipUrl('/a.mp4')).toBe('/a.mp4');
+  });
+
   it('tells subscribers when a clip is ready', async () => {
     vi.stubGlobal('fetch', vi.fn(ok));
     const clips = await load();

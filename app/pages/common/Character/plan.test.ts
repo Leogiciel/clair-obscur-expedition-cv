@@ -36,23 +36,19 @@ describe('clipsOf', () => {
 
 describe('liveShots', () => {
   it('keeps the screen being left while the move into the new one plays', () => {
-    expect(liveShots<Shot>('skills', 'overview', { shot: 'skills', from: 'overview' })).toEqual(
-      new Set(['skills', 'overview'])
-    );
+    expect(liveShots<Shot>('skills', 'overview')).toEqual(new Set(['skills', 'overview']));
   });
 
   it('drops the screen left behind once the move has settled', () => {
     // A regression: the left screen's clips stayed attached after the move, undoing the iOS memory cap.
-    const live = liveShots<Shot>('skilltree', 'skilltree', { shot: 'skilltree', from: 'skills' });
+    const live = liveShots<Shot>('skilltree', null);
     expect(live).toEqual(new Set(['skilltree']));
     expect(clipCount([...live])).toBe(3);
   });
 
-  it('keeps the move in flight through a quick second navigation', () => {
-    // Overview → skills, then skill tree before the first move settled: the render of the new screen still holds
-    // the previous one.
-    expect(liveShots<Shot>('skilltree', 'overview', { shot: 'skills', from: 'overview' })).toEqual(
-      new Set(['skilltree', 'overview', 'skills'])
-    );
+  it('keeps the return move when the visitor goes back before the move has ended', () => {
+    // A regression: overview → skills → overview mid-move cut instead of playing skills → overview.
+    const { moves } = clipsOf(liveShots<Shot>('overview', 'skills'), MOVE_KEYS);
+    expect(moves.has('skills-overview')).toBe(true);
   });
 });

@@ -72,6 +72,19 @@ describe('useSlotPicker, on the slots', () => {
   });
 });
 
+describe('useSlotPicker, with a slot button focused', () => {
+  // A regression: Enter both clicked the focused slot and ran the screen's shortcut, opening the list and
+  // confirming in one press.
+  it('leaves Enter to the button instead of acting twice', () => {
+    const { result } = setup();
+    const button = document.body.appendChild(document.createElement('button'));
+    button.focus();
+    act(() => void fireEvent.keyDown(button, { key: 'Enter' }));
+    expect(result.current.mode).toBe('slots');
+    button.remove();
+  });
+});
+
 describe('useSlotPicker, in the list', () => {
   it('moves through the columns and clamps to the items there are', () => {
     const { result } = setup([null, null, null]);

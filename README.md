@@ -33,10 +33,12 @@ _The full tour, 32 s: [watch it](https://oliviernguyen.github.io/clair-obscur-ex
 
 ## Run it
 
-The live demo is deployed to GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to `main`, once the checks pass
-(`GITHUB_PAGES=true pnpm build` prerenders every screen as static HTML).
+The live demo is deployed to GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every
+push to `main`, once the checks pass (`pnpm build:pages` prerenders every screen as static HTML into `site/`). It is
+also rebuilt daily, since the level's XP bar moves each day; GitHub turns off a public repository's scheduled
+workflows after 60 days without a commit, and enabling the workflow again in the Actions tab resumes it.
 
-Requires Node 22+ (`.nvmrc`) and pnpm 11 (`corepack enable` installs the version pinned in `package.json`).
+Requires Node 24+ (`.nvmrc`) and pnpm 11 (`corepack enable` installs the version pinned in `package.json`).
 
 ```bash
 pnpm install
@@ -58,10 +60,10 @@ pnpm test:watch   # tests while editing
 pnpm format       # fix the formatting
 ```
 
-[CI](.github/workflows/ci.yml) runs `pnpm check` and both builds on every pull request, and gates each deploy to
-GitHub Pages. The tests ([Vitest](https://vitest.dev), next to the code they cover as `*.test.ts`) cover the logic that
+[CI](.github/workflows/ci.yml) runs `pnpm check` and both builds on every pull request; on `main`, the same run
+builds the site that is deployed to GitHub Pages. Lint warnings fail it too. The tests ([Vitest](https://vitest.dev), next to the code they cover as `*.test.ts`) cover the logic that
 breaks silently: durations and levels, the Lumina budget, saved loadouts, which character clips stay loaded on phones,
-the keyboard navigation and the start screen.
+the keyboard navigation, the stage's scale and the start screen.
 
 ## Make it yours
 

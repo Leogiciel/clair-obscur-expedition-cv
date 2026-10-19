@@ -1,7 +1,17 @@
-# Keeps the workflows' actions up to date.
+# Keeps the workflows' actions and the npm packages up to date, each ecosystem in one grouped pull request.
 version: 2
 updates:
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: weekly
+    groups:
+      actions:
+        patterns: ['*']
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      npm:
+        patterns: ['*']

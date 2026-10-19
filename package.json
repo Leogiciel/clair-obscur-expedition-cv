@@ -3,15 +3,16 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "build:pages": "GITHUB_PAGES=true react-router build && sh scripts/pages/site.sh",
     "dev": "react-router dev",
     "start": "react-router-serve ./build/server/index.js",
     "typecheck": "react-router typegen && tsc",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "test": "vitest run",
     "test:watch": "vitest",
     "format": "prettier --write .",
@@ -36,10 +37,12 @@
     "@testing-library/dom": "10.4.2",
     "@testing-library/react": "16.3.3",
     "@trivago/prettier-plugin-sort-imports": "6.0.2",
-    "@types/node": "^22.20.5",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "@vitest/eslint-plugin": "^1.6.27",
     "eslint": "10.13.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.7",
     "globals": "17.13.0",
