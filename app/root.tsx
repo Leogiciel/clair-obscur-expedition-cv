@@ -25,6 +25,10 @@ export const links: Route.LinksFunction = () => [
   }))
 ];
 
+// The start screen's flag (StartScreen), set before the first paint too: until hydration, the menu behind it was
+// painted and its interface rasterised under the stage's transform, the heaviest frames on a phone.
+const START_FLAG_SCRIPT = `if(location.pathname.replace(/\\/?$/,'/')===${JSON.stringify(import.meta.env.BASE_URL)})document.documentElement.dataset.start=''`;
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -37,6 +41,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Expedition 35" />
         <script dangerouslySetInnerHTML={{ __html: FIT_STAGE_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: START_FLAG_SCRIPT }} />
         <Meta />
         <Links />
       </head>

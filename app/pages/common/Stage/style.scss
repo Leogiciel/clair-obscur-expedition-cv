@@ -1,8 +1,5 @@
 .Screen {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 100vw;
   height: 100vh;
   // The visible height: on iOS, 100vh is the height with Safari's bars hidden, so the stage, scaled to the visible
@@ -12,10 +9,22 @@
   background: var(--stage-bg);
   color: var(--ui-text);
 
-  // Centred by the flex parent; zoomed to the window (Stage).
+  // Zoom, not a scale transform: Safari rasterises a transformed layer at its unscaled size times the screen's
+  // density, which took 1.1 GB of graphics memory on the start screen of an iPhone and got the tab killed; zoomed, a
+  // layer is laid out and painted at the size it shows. The interface, zoomed no further than its text allows in
+  // WebKit, is shrunk the rest of the way by a transform, light without the videos (size.ts).
+  // The backdrop and the interface are stacked, each centred on the window by its own margins (in stage pixels, which
+  // its zoom scales; Stage): the interface, zoomed larger than the window, is then shrunk around its centre.
   &-stage {
-    position: relative;
-    flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    zoom: var(--stage-scale, 1);
+
+    &--ui {
+      zoom: var(--stage-zoom, 1);
+      transform: var(--stage-shrink, none);
+    }
   }
 
   ul {

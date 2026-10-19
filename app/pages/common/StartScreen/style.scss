@@ -9,6 +9,16 @@
   visibility: hidden !important;
 }
 
+// The title screen's canvases cost too much under a transform, and its text is large enough for the plain zoom.
+:root[data-start] .Screen-stage--ui {
+  zoom: var(--stage-scale, 1);
+  transform: none;
+}
+
+:root[data-start] .Screen-stage--backdrop {
+  display: none;
+}
+
 // Entering (StartScreen sets data-reveal for REVEAL_MS): the overview comes up like the game's menu. The character
 // emerges from the dark and settles, then the panels slide in by columns, the left one from the left, Skills from below,
 // the right one from the right, each a beat after the last; the key hints come last. The individual translate and

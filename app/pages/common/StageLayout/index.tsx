@@ -32,11 +32,16 @@ const StageLayout = () => {
 
   return (
     <>
-      <Stage>
-        <Petals layer="back" />
-        <CharacterOcclusion shot={shot} />
-        <Character shot={shot} />
-        <Petals layer="front" />
+      <Stage
+        backdrop={
+          <>
+            <Petals layer="back" />
+            <CharacterOcclusion shot={shot} />
+            <Character shot={shot} />
+            <Petals layer="front" />
+          </>
+        }
+      >
         <CharacterStats className="absolute left-[1880px] top-[80px] h-[700px] w-[490px]" />
         <Outlet context={{ from } satisfies StageContext} />
       </Stage>
