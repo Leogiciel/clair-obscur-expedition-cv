@@ -61,9 +61,11 @@ pnpm format       # fix the formatting
 ```
 
 [CI](.github/workflows/ci.yml) runs `pnpm check` and both builds on every pull request; on `main`, the same run
-builds the site that is deployed to GitHub Pages. Lint warnings fail it too. The tests ([Vitest](https://vitest.dev), next to the code they cover as `*.test.ts`) cover the logic that
-breaks silently: durations and levels, the Lumina budget, saved loadouts, which character clips stay loaded on phones,
-the keyboard navigation, the stage's scale and the start screen.
+builds the site that is deployed to GitHub Pages. Lint warnings fail it too.
+
+The tests ([Vitest](https://vitest.dev), next to the code they cover as `*.test.ts`) cover the logic that breaks
+silently: durations and levels, the Lumina budget, saved loadouts, which character clips stay loaded on phones (and
+none on a phone held upright), the keyboard navigation, the stage's scale and the start screen.
 
 ## Make it yours
 

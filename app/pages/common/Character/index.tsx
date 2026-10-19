@@ -183,8 +183,7 @@ const Character = ({ shot }: { shot: Shot }) => {
             style={{
               width: f.width,
               height: f.height,
-              transform: `translate(${f.x}px, ${f.y}px) scale(${f.scale})`,
-              visibility: s === shot ? 'visible' : 'hidden'
+              transform: `translate(${f.x}px, ${f.y}px) scale(${f.scale})`
             }}
             aria-hidden
           >

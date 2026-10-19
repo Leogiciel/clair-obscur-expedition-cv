@@ -12,6 +12,9 @@
       linear-gradient(to bottom, transparent, #000 6%, #000 78%, transparent);
     mask-composite: intersect;
     pointer-events: none;
+    // Shown by the component's layout effect only, so a move still loading keeps the old loop on screen instead of
+    // the render switching to the new one first.
+    visibility: hidden;
 
     video {
       display: block;

@@ -13,5 +13,7 @@ updates:
     schedule:
       interval: monthly
     groups:
+      # Majors come separately, so one breaking update does not hold back the rest.
       npm:
         patterns: ['*']
+        update-types: [minor, patch]

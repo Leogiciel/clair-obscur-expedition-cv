@@ -35,6 +35,17 @@ describe('clipsOf', () => {
 });
 
 describe('liveShots', () => {
+  // While a move plays both screens keep their clips: overview → Luminas holds twelve, the most at once, still a third
+  // fewer than all eighteen.
+  it('keeps at most twelve clips loaded during any move', () => {
+    const during = MOVE_KEYS.map((key) => {
+      const [from, to] = key.split('-') as [Shot, Shot];
+      return clipCount([...liveShots(to, from)]);
+    });
+    expect(Math.max(...during)).toBe(12);
+    expect(Math.max(...during)).toBeLessThan(SHOTS.length + MOVE_KEYS.length);
+  });
+
   it('keeps the screen being left while the move into the new one plays', () => {
     expect(liveShots<Shot>('skills', 'overview')).toEqual(new Set(['skills', 'overview']));
   });
