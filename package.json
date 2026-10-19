@@ -51,7 +51,7 @@
     "sass": "^1.105.2",
     "sharp": "0.35.5",
     "tailwindcss": "^4.3.3",
-    "typescript": "^5.8.3",
+    "typescript": "^5.9.3",
     "typescript-eslint": "8.71.2",
     "vite": "^6.4.4",
     "vite-tsconfig-paths": "^5.1.4",
