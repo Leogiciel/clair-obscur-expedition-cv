@@ -12,6 +12,10 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    ignore:
+      # Node's types follow the Node the site runs on (.nvmrc), not the latest release.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
     groups:
       # Majors come separately, so one breaking update does not hold back the rest.
       npm:
