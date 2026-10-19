@@ -85,6 +85,17 @@ describe('Character', () => {
     const { container, rerender } = render(<Character shot="skills" />);
     rerender(<Character shot="skilltree" />);
     expect(attached(container)).toEqual(['skills', 'skilltree', 'skilltree-skills']);
+    expect(visibleLoops(container)).toEqual(['skilltree']);
+    expect(visibleMoves(container)).toBe(0);
+  });
+
+  it('cuts to a third screen picked before the move to the second one started', () => {
+    // The move in flight is dropped, from the screen still shown: no move from a screen that never appeared.
+    const { container, rerender } = render(<Character shot="luminas" />);
+    rerender(<Character shot="pictos" />);
+    rerender(<Character shot="overview" />);
+    expect(visibleLoops(container)).toEqual(['overview']);
+    expect(visibleMoves(container)).toBe(0);
   });
 
   it('keeps the screen it leaves while the move plays', () => {
