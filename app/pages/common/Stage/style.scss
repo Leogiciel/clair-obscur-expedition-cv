@@ -5,6 +5,9 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  // The visible height: on iOS, 100vh is the height with Safari's bars hidden, so the stage, scaled to the visible
+  // height, sat partly under the bottom bar.
+  height: 100dvh;
   overflow: hidden;
   background: var(--stage-bg);
   color: var(--ui-text);
