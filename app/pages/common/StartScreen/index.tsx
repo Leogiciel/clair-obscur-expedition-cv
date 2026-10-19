@@ -62,7 +62,7 @@ const StartScreen = () => {
         // The overview fades in from black; the flag outlives this screen, which unmounts with the navigation.
         const root = document.documentElement.dataset;
         root.reveal = '';
-        navigate('/overview');
+        void navigate('/overview');
         window.setTimeout(() => delete root.reveal, REVEAL_MS);
       }, LEAVE_MS);
     };

@@ -56,7 +56,7 @@ const SkillsPage = () => {
   const equip = useLoadout((s) => s.equipSkill);
   const clear = useLoadout((s) => s.clearSkill);
   const equipped = (s: Skill) => slots.includes(s.id);
-  useHotkeys([{ hotkey: 'C', callback: () => navigate('/skill-tree') }]);
+  useHotkeys([{ hotkey: 'C', callback: () => void navigate('/skill-tree') }]);
   const picker = useSlotPicker<Skill>({
     items: sorted,
     layout: LIST,
@@ -65,11 +65,11 @@ const SkillsPage = () => {
     slotItem: (i) => (slots[i] ? skillById(slots[i]) : null),
     equip: (i, s) => equip(i, s.id),
     clear,
-    onBack: () => navigate('/overview')
+    onBack: () => void navigate('/overview')
   });
   const hovered = picker.hovered === null ? null : sorted[picker.hovered];
   const pointedSlot = slots.findIndex((_, i) => picker.slotActive(i) && !picker.slotEditing(i));
-  const slotSkill = pointedSlot >= 0 && slots[pointedSlot] ? skillById(slots[pointedSlot]!) : null;
+  const slotSkill = pointedSlot >= 0 && slots[pointedSlot] ? skillById(slots[pointedSlot]) : null;
   const tip =
     hovered && picker.hovered !== null
       ? {
@@ -169,7 +169,7 @@ const SkillsPage = () => {
         icon={<SkillTreeSigil />}
         keyLabel="C"
         className="absolute left-[1866px] top-[786px]"
-        onClick={() => navigate('/skill-tree')}
+        onClick={() => void navigate('/skill-tree')}
       >
         Skill Tree
       </IconButton>

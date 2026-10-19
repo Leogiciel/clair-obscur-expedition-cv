@@ -21,8 +21,8 @@ const SkillTreePage = () => {
   const shown = TREE.find((n) => n.id === hovered) ?? null;
   useArrowNav('[data-tree]');
   useHotkeys([
-    { hotkey: 'Escape', callback: () => navigate('/skills') },
-    { hotkey: 'B', callback: () => navigate('/skills') }
+    { hotkey: 'Escape', callback: () => void navigate('/skills') },
+    { hotkey: 'B', callback: () => void navigate('/skills') }
   ]);
 
   return (
@@ -91,7 +91,7 @@ const SkillTreePage = () => {
       {shown && <NodeTooltip node={shown} />}
 
       <div className="Screen-hints absolute left-[1965px] top-[1293px]">
-        <button type="button" className="contents" onClick={() => navigate('/skills')}>
+        <button type="button" className="contents" onClick={() => void navigate('/skills')}>
           <KeyHint keyLabel="B" tone="b" label="Back" />
         </button>
       </div>

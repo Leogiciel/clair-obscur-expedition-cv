@@ -8,7 +8,7 @@ export const STAGE_H = 1380;
 // stage shows at its size on the first frame instead of waiting for hydration (which delayed the first paint).
 export const FIT_STAGE_SCRIPT = `(function(){var r=document.documentElement;function f(){r.style.setProperty('--stage-scale',Math.min(innerWidth/${STAGE_W},innerHeight/${STAGE_H}))}f();addEventListener('resize',f)})()`;
 
-const fitStage = () =>
+export const fitStage = () =>
   document.documentElement.style.setProperty(
     '--stage-scale',
     String(Math.min(window.innerWidth / STAGE_W, window.innerHeight / STAGE_H))

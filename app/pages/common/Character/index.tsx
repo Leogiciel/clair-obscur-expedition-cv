@@ -1,77 +1,18 @@
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 
-import experienceToOverview from '~/assets/character/experience-overview.mp4';
-import experienceClip from '~/assets/character/experience.mp4';
-import framing from '~/assets/character/framing.json';
-import luminasToOverview from '~/assets/character/luminas-overview.mp4';
-import luminasToPictos from '~/assets/character/luminas-pictos.mp4';
-import luminasClip from '~/assets/character/luminas.mp4';
-import overviewToExperience from '~/assets/character/overview-experience.mp4';
-import overviewToLuminas from '~/assets/character/overview-luminas.mp4';
-import overviewToPictos from '~/assets/character/overview-pictos.mp4';
-import overviewToSkills from '~/assets/character/overview-skills.mp4';
-import overviewClip from '~/assets/character/overview.mp4';
-import pictosToLuminas from '~/assets/character/pictos-luminas.mp4';
-import pictosToOverview from '~/assets/character/pictos-overview.mp4';
-import pictosClip from '~/assets/character/pictos.mp4';
-import skillsToOverview from '~/assets/character/skills-overview.mp4';
-import skillsToSkilltree from '~/assets/character/skills-skilltree.mp4';
-import skillsClip from '~/assets/character/skills.mp4';
-import skilltreeToSkills from '~/assets/character/skilltree-skills.mp4';
-import skilltreeClip from '~/assets/character/skilltree.mp4';
-
 import { clipUrl, clipsVersion, preloadClips, subscribeClips } from './clips';
-import { clipsOf } from './plan';
+import { clipsOf, liveShots } from './plan';
+import { LOOPS, MOVE_KEYS, SHOTS, type Shot, TRANSITIONS, framing, mobile } from './sources';
 import './style.scss';
 
-export type Shot = keyof typeof framing;
+export type { Shot } from './sources';
 
-// framing.json places each loop on the stage (also read by scripts/character/canvas.py). Game framings: overview
-// head ≈ 29 % of the stage height with the face at 48 %; weapon head ≈ 22 % with the face at 61 %, kept right of the
-// experience card; pictos head ≈ 31 % in profile, nose at 58 %; skills (arms crossed, face kept in frame unlike the
-// game) head ≈ 27 % with the face at 56 %, above the slots.
-const LOOPS: Record<Shot, string> = {
-  overview: overviewClip,
-  experience: experienceClip,
-  pictos: pictosClip,
-  skills: skillsClip,
-  luminas: luminasClip,
-  skilltree: skilltreeClip
-};
-
-// Camera moves rendered on 16:9 canvases covering the stage width (2510 × 1412), ending on the next loop's first frame.
-const TRANSITIONS: Partial<Record<`${Shot}-${Shot}`, string>> = {
-  'overview-experience': overviewToExperience,
-  'experience-overview': experienceToOverview,
-  'overview-pictos': overviewToPictos,
-  'pictos-overview': pictosToOverview,
-  'overview-skills': overviewToSkills,
-  'skills-overview': skillsToOverview,
-  'overview-luminas': overviewToLuminas,
-  'luminas-overview': luminasToOverview,
-  'luminas-pictos': luminasToPictos,
-  // The generated return turned through the back of the head: it is the outward move played backwards.
-  'pictos-luminas': pictosToLuminas,
-  'skills-skilltree': skillsToSkilltree,
-  'skilltree-skills': skilltreeToSkills
-};
 const CANVAS_SCALE = 2510 / 1920;
 // Cross-fades the transition's last frame into the loop: same position, but the clips differ in exposure (≈ 9 %) and ribbons.
 const HANDOVER_MS = 250;
 // How long a move that is not decoded yet is waited for before the screen cuts to the new loop instead.
 const MOVE_WAIT_MS = 500;
 
-const SHOTS = Object.keys(framing) as Shot[];
-const MOVE_KEYS = Object.keys(TRANSITIONS);
-
-// The phone variant of each clip (scripts/character/encode_mobile.py): 1280 px on the long side, half the decoder
-// memory and a third of the download, for screens too small to show the full resolution.
-const MOBILE = import.meta.glob<string>('../../../assets/character/mobile/*.mp4', {
-  eager: true,
-  query: '?url',
-  import: 'default'
-});
-const mobile = (name: string) => MOBILE[`../../../assets/character/mobile/${name}.mp4`];
 // Landscape phones; tablets and computers are taller.
 const SMALL = '(max-height: 540px)';
 
@@ -110,22 +51,21 @@ const Character = ({ shot }: { shot: Shot }) => {
   // from a previous prop): its clips, the move among them, stay loaded while it plays.
   const [screens, setScreens] = useState<{ shot: Shot; from: Shot | null }>({ shot, from: null });
   if (screens.shot !== shot) setScreens({ shot, from: screens.shot });
-  const from = screens.shot !== shot ? screens.shot : screens.from;
-  const needed = clipsOf(new Set([shot, settled, ...(from ? [from] : [])]), MOVE_KEYS);
+  const needed = clipsOf(liveShots(shot, settled, screens), MOVE_KEYS);
   useSyncExternalStore(subscribeClips, clipsVersion, () => 0);
   // A clip is given to its <video> once in memory, and only while the current screen may play it.
   const srcOf = (name: string, full: string, isNeeded: boolean) =>
     wanted !== 'none' && isNeeded ? clipUrl(fileFor(wanted, name, full)) : undefined;
 
-  // Every clip is fetched once the set to load is known, the current screen's first; running again on a screen change
-  // fetches nothing new, as a clip is never fetched twice.
+  // Every clip is fetched once the set to load is known, the first screen's own first.
+  const [firstShot] = useState(shot);
   useEffect(() => {
     if (wanted === 'none') return;
-    const now = [...clipsOf(new Set([shot]), MOVE_KEYS).loops].map((s) => fileFor(wanted, s, LOOPS[s]));
+    const now = [...clipsOf(new Set([firstShot]), MOVE_KEYS).loops].map((s) => fileFor(wanted, s, LOOPS[s]));
     const loops = SHOTS.map((s) => fileFor(wanted, s, LOOPS[s]));
-    const moves = Object.entries(TRANSITIONS).map(([key, src]) => fileFor(wanted, key, src as string));
+    const moves = Object.entries(TRANSITIONS).map(([key, src]) => fileFor(wanted, key, src));
     preloadClips([...now, ...loops, ...moves]);
-  }, [wanted, shot]);
+  }, [wanted, firstShot]);
 
   useLayoutEffect(() => {
     const show = (s: Shot | null, restart: boolean) => {
@@ -224,7 +164,7 @@ const Character = ({ shot }: { shot: Shot }) => {
           }}
           className="Character-move"
           style={{ transform: `scale(${CANVAS_SCALE})` }}
-          src={srcOf(key, src as string, needed.moves.has(key))}
+          src={srcOf(key, src, needed.moves.has(key))}
           muted
           playsInline
           preload="auto"

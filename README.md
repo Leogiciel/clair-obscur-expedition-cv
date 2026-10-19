@@ -33,10 +33,10 @@ _The full tour, 32 s: [watch it](https://oliviernguyen.github.io/clair-obscur-ex
 
 ## Run it
 
-The live demo is deployed to GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to `main`
+The live demo is deployed to GitHub Pages by [`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to `main`, once the checks pass
 (`GITHUB_PAGES=true pnpm build` prerenders every screen as static HTML).
 
-Requires Node 22+ and pnpm 11 (`corepack enable` installs the version pinned in `package.json`).
+Requires Node 22+ (`.nvmrc`) and pnpm 11 (`corepack enable` installs the version pinned in `package.json`).
 
 ```bash
 pnpm install
@@ -49,6 +49,19 @@ docker build -t expedition . && docker run -p 3000:3000 expedition
 ```
 
 `DEV_KIT=true pnpm dev` also mounts `/dev/kit`, a bench of every UI-kit component, never part of the public build.
+
+### Checks
+
+```bash
+pnpm check        # formatting, lint, typecheck and tests: what CI runs, ≈ 15 s
+pnpm test:watch   # tests while editing
+pnpm format       # fix the formatting
+```
+
+[CI](.github/workflows/ci.yml) runs `pnpm check` and both builds on every pull request, and gates each deploy to
+GitHub Pages. The tests ([Vitest](https://vitest.dev), next to the code they cover as `*.test.ts`) cover the logic that
+breaks silently: durations and levels, the Lumina budget, saved loadouts, which character clips stay loaded on phones,
+the keyboard navigation and the start screen.
 
 ## Make it yours
 

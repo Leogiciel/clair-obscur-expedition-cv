@@ -7,6 +7,8 @@ export default defineConfig({
   test: {
     include: ['app/**/*.test.{ts,tsx}'],
     environment: 'node',
-    restoreMocks: true
+    restoreMocks: true,
+    unstubGlobals: true,
+    unstubEnvs: true
   }
 });

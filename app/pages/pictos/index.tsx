@@ -58,7 +58,7 @@ const PictosPage = () => {
     slotItem: (s) => (slots[s] ? pictoById(slots[s]) : null),
     equip: (s, p) => equip(s, p.id),
     clear,
-    onBack: () => navigate(backTo)
+    onBack: () => void navigate(backTo)
   });
   const hovered = picker.hovered === null ? null : sorted[picker.hovered];
   const inSlot = slots[picker.slot];

@@ -60,8 +60,8 @@ const ExperiencePage = () => {
     { hotkey: 'ArrowUp', callback: () => move(-1) },
     enterHotkey(() => hovered !== null && equip(list[hovered].id)),
     { hotkey: 'A', callback: () => hovered !== null && equip(list[hovered].id) },
-    { hotkey: 'Escape', callback: () => navigate('/overview') },
-    { hotkey: 'B', callback: () => navigate('/overview') }
+    { hotkey: 'Escape', callback: () => void navigate('/overview') },
+    { hotkey: 'B', callback: () => void navigate('/overview') }
   ]);
 
   return (
@@ -156,7 +156,7 @@ const ExperiencePage = () => {
             <KeyHint keyLabel="A" tone="a" label="Equip" />
           </button>
         )}
-        <button type="button" className="contents" onClick={() => navigate('/overview')}>
+        <button type="button" className="contents" onClick={() => void navigate('/overview')}>
           <KeyHint keyLabel="B" tone="b" label="Back" />
         </button>
       </div>

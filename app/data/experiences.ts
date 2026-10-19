@@ -157,11 +157,14 @@ const index = (ym: string) => parse(ym).y * 12 + parse(ym).m - 1;
 
 export const monthsOf = (e: Experience) => Math.max(1, index(e.end ?? today) - index(e.start));
 
-// Months covered by several positions, counting overlaps (AwesomeApps ran alongside salaried jobs) once.
+// Months covered by several positions, counting overlaps (AwesomeApps ran alongside salaried jobs) once. A position
+// within a single month counts that month, as in monthsOf.
 export const monthsAcross = (positions: Experience[]) => {
   const months = new Set<number>();
   for (const e of positions) {
-    for (let m = index(e.start); m < index(e.end ?? today); m++) months.add(m);
+    const start = index(e.start);
+    const end = Math.max(start + 1, index(e.end ?? today));
+    for (let m = start; m < end; m++) months.add(m);
   }
   return months.size;
 };

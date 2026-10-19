@@ -1,33 +1,35 @@
-# Formatting, lint, typecheck, tests and both builds (server-rendered and the static GitHub Pages one) on every push and pull
-# request.
+# Formatting, lint, typecheck, tests and both builds (server-rendered and the static GitHub Pages one). Runs on pull
+# requests and branches; on main, the Pages workflow calls it before deploying, so a push runs it once.
 name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
+  push:
+    branches-ignore: [main]
+  workflow_call:
 
 permissions:
   contents: read
 
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  # A newer push to a pull request supersedes the run in progress; a run gating a deploy is never cut short.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   check:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      # Reads the pnpm version pinned in package.json's packageManager.
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: corepack enable
+          node-version-file: .nvmrc
+          cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm format:check
-      - run: pnpm lint
-      - run: pnpm typecheck
-      - run: pnpm test
+      - run: pnpm check
       - run: pnpm build
       - run: pnpm build
         env:

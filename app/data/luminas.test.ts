@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { LUMINA_POINTS, luminaCost, luminaPointsSpent } from './luminas';
+import { LUMINAS, LUMINA_POINTS, luminaCost, luminaPointsSpent } from './luminas';
 import { type Picto, pictoById } from './pictos';
 
 const picto = (level: number) => ({ level }) as Picto;
@@ -21,7 +21,12 @@ describe('luminaPointsSpent', () => {
     expect(luminaPointsSpent(['music'], ['music', null, null])).toBe(0);
   });
 
-  it('has a budget that cannot hold every Lumina at once', () => {
-    expect(LUMINA_POINTS).toBe(8);
+  it('has a budget that cannot hold every Lumina at once, so the screen is a choice', () => {
+    const all = LUMINAS.map((l) => l.id);
+    expect(luminaPointsSpent(all, [])).toBeGreaterThan(LUMINA_POINTS);
+  });
+
+  it('has a budget that holds at least the costliest Lumina', () => {
+    expect(Math.max(...LUMINAS.map(luminaCost))).toBeLessThanOrEqual(LUMINA_POINTS);
   });
 });

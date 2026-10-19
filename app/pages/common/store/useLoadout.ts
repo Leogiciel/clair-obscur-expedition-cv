@@ -113,7 +113,7 @@ const useLoadout = create<Loadout>()(
     {
       name: 'cv-loadout',
       version: 2,
-      migrate: (state) => ({ luminas: [], ...(state as object) }) as unknown as Loadout,
+      migrate: (state) => ({ luminas: [], ...(state as object) }),
       storage: createJSONStorage(() => localStorage),
       // Called even when nothing is saved: the defaults then stay, and fields missing from a save keep theirs.
       merge: (saved, current) =>

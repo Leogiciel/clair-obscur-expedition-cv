@@ -1,21 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router';
 
-import Character, { type Shot } from '../Character';
+import Character from '../Character';
 import CharacterOcclusion from '../CharacterOcclusion';
 import CharacterStats from '../CharacterStats';
 import Petals from '../Petals';
 import RotateScreen from '../RotateScreen';
 import Stage from '../Stage';
 import useLoadout from '../store/useLoadout';
-
-const SHOTS: Record<string, Shot> = {
-  '/experience': 'experience',
-  '/pictos': 'pictos',
-  '/skills': 'skills',
-  '/luminas': 'luminas',
-  '/skill-tree': 'skilltree'
-};
+import { routeOf, shotOf } from './screen';
 
 export interface StageContext {
   from: string;
@@ -24,8 +17,7 @@ export interface StageContext {
 // The character and stats column persist across screens; only the outlet is swapped, which gives
 // the game's single-frame UI cut while the character runs its own transition.
 const StageLayout = () => {
-  // Static hosting (GitHub Pages) serves each screen as a folder, so its URL may end in a slash: /skills/ is /skills.
-  const pathname = useLocation().pathname.replace(/(.)\/$/, '$1');
+  const pathname = routeOf(useLocation().pathname);
   // The screen the visitor came from, updated during the render that changes screen (React's pattern for state
   // derived from a previous prop), so the new screen reads it on its first render.
   const [route, setRoute] = useState({ path: pathname, from: pathname });
@@ -36,7 +28,7 @@ const StageLayout = () => {
     void useLoadout.persist.rehydrate();
   }, []);
 
-  const shot = SHOTS[pathname] ?? 'overview';
+  const shot = shotOf(pathname);
 
   return (
     <>

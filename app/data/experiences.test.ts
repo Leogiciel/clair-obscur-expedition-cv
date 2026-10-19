@@ -31,6 +31,16 @@ describe('monthsAcross', () => {
     expect(monthsAcross([position('2020-01', '2020-07'), position('2020-04', '2020-10')])).toBe(9);
   });
 
+  it('counts a position within a single month as one month, as monthsOf does', async () => {
+    // A regression: these counted 0 in Health while monthsOf gave them 1.
+    const { monthsAcross, monthsOf } = await load();
+    const sameMonth = position('2024-03', '2024-03');
+    const startedThisMonth = position('2026-10');
+    expect(monthsAcross([sameMonth])).toBe(1);
+    expect(monthsAcross([startedThisMonth])).toBe(1);
+    expect(monthsAcross([sameMonth])).toBe(monthsOf(sameMonth));
+  });
+
   it('adds up positions that do not overlap', async () => {
     const { monthsAcross } = await load();
     expect(monthsAcross([position('2020-01', '2020-04'), position('2021-01', '2021-03')])).toBe(5);

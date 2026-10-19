@@ -27,6 +27,13 @@ describe('equipping', () => {
     expect(useLoadout.getState().pictos.slice(0, 2)).toEqual([b, a]);
   });
 
+  it('swaps skills the same way', async () => {
+    const { useLoadout } = await loadStore();
+    const [a, b] = useLoadout.getState().skills;
+    useLoadout.getState().equipSkill(1, a!);
+    expect(useLoadout.getState().skills.slice(0, 2)).toEqual([b, a]);
+  });
+
   it('clears one slot only', async () => {
     const { useLoadout } = await loadStore();
     const [, b, c] = useLoadout.getState().skills;
@@ -45,6 +52,14 @@ describe('Lumina budget', () => {
     expect(
       data.luminaPointsSpent(useLoadout.getState().luminas, useLoadout.getState().pictos)
     ).toBeLessThanOrEqual(data.LUMINA_POINTS);
+  });
+
+  it('turns a Lumina off again, giving its points back', async () => {
+    const { useLoadout } = await loadStore();
+    useLoadout.getState().toggleLumina('music');
+    useLoadout.getState().toggleLumina('music');
+    useLoadout.getState().toggleLumina('sports');
+    expect(useLoadout.getState().luminas).toEqual(['sports']);
   });
 
   it('cannot toggle an equipped picto’s Lumina, which is free', async () => {
@@ -105,6 +120,20 @@ describe('saved loadout', () => {
     expect(s.skills).toEqual([null, 'react', null, null, null, null]);
     expect(s.experience).toBe(data.EXPERIENCES[0].id);
     expect(s.luminas).toEqual([]);
+  });
+
+  it('migrates a save from before Luminas existed (version 1)', async () => {
+    localStorage.setItem(
+      KEY,
+      JSON.stringify({
+        state: { pictos: ['music', null, null], skills: [], experience: 'coinhouse' },
+        version: 1
+      })
+    );
+    const { useLoadout } = await loadStore();
+    await useLoadout.persist.rehydrate();
+    expect(useLoadout.getState().luminas).toEqual([]);
+    expect(useLoadout.getState().pictos[0]).toBe('music');
   });
 
   it('keeps paid Luminas only while they fit the budget', async () => {

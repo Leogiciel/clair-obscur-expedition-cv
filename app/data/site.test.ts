@@ -20,10 +20,10 @@ describe('pageMeta', () => {
       'luminas',
       'skills',
       'skillTree'
-    ] as const)
-      expect(pageMeta(page)[1]).toEqual({
-        name: 'description',
-        content: expect.stringContaining('Olivier Nguyen')
-      });
+    ] as const) {
+      const [, description] = pageMeta(page);
+      expect(description.name).toBe('description');
+      expect(description.content).toContain('Olivier Nguyen');
+    }
   });
 });
