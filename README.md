@@ -6,7 +6,7 @@ loop and every move between screens its own camera transition, as in the game.
 
 **[▶ Live demo](https://oliviernguyen.github.io/clair-obscur-expedition-cv/)** · best in a desktop browser, in landscape on a phone.
 
-[![The start screen, the entrance into the overview and a camera move to Experience](docs/demo-preview.webp)](https://oliviernguyen.github.io/clair-obscur-expedition-cv/demo.mp4)
+[![A 30-second tour: the start screen, then every screen and the camera moves between them](docs/demo-preview.webp)](https://oliviernguyen.github.io/clair-obscur-expedition-cv/demo.mp4)
 
 _The full tour, 42 s: [watch it](https://oliviernguyen.github.io/clair-obscur-expedition-cv/demo.mp4)._
 
