@@ -10,7 +10,9 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export default defineConfig(
-  { ignores: ['build', 'site', '.react-router', 'node_modules', 'design'] },
+  {
+    ignores: ['build', 'site', 'playwright-report', 'test-results', '.react-router', 'node_modules', 'design']
+  },
   // Every file, configs and the asset scripts included.
   js.configs.recommended,
   {

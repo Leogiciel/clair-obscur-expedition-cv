@@ -57,11 +57,13 @@ docker build -t expedition . && docker run -p 3000:3000 expedition
 ```bash
 pnpm check        # formatting, lint, typecheck and tests: what CI runs, ≈ 15 s
 pnpm test:watch   # tests while editing
+pnpm build:pages && pnpm test:e2e   # every screen of the built site in a browser
 pnpm format       # fix the formatting
 ```
 
 [CI](.github/workflows/ci.yml) runs `pnpm check` and both builds on every pull request; on `main`, the same run
-builds the site that is deployed to GitHub Pages. Lint warnings fail it too.
+builds the site that is deployed to GitHub Pages, once a browser has checked every screen of it ([`e2e`](e2e): each
+texture has its image, every file loads). Lint warnings fail it too.
 
 The tests ([Vitest](https://vitest.dev), next to the code they cover as `*.test.ts`) cover the logic that breaks
 silently: durations and levels, the Lumina budget, saved loadouts, which character clips stay loaded on phones (and

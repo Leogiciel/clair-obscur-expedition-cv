@@ -1,5 +1,6 @@
-# Formatting, lint, typecheck, tests and both builds (server-rendered and the static GitHub Pages site). Runs on pull
-# requests; on main, the Pages workflow calls it and deploys the site it built, so a push builds once.
+# Formatting, lint, typecheck, tests, both builds (server-rendered and the static GitHub Pages site) and browser
+# checks of the latter. Runs on pull requests; on main, the Pages workflow calls it and deploys the site it built,
+# so a push builds once.
 name: CI
 
 on:
@@ -38,6 +39,13 @@ jobs:
       - run: pnpm check
       - run: pnpm build
       - run: pnpm build:pages
+      # Every screen of the built site in Chromium: each texture has its image, every file loads (e2e/).
+      - uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('pnpm-lock.yaml') }}
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
       - if: inputs.upload-pages
         uses: actions/upload-pages-artifact@v5
         with:
